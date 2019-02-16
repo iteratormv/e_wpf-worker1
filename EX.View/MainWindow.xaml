@@ -18,7 +18,7 @@
     <Grid>
         <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch">
             <TabItem Header="Главная">
-                <Grid Name="ms" Background="#FFE5E5E5" >
+                <Grid Background="#FFE5E5E5" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="12*"/>
                         <RowDefinition Height="60*"/>
