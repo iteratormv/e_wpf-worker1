@@ -1,0 +1,1050 @@
+﻿<Window x:Class="EX.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EX.View"
+        xmlns:vm="clr-namespace:EX.ViewModel;assembly=EX.ViewModel"
+        xmlns:vmi="clr-namespace:EX.ViewModel.Infrastructure;assembly=EX.ViewModel"
+        mc:Ignorable="d"
+        xmlns:i = "http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        Title="Exhibition Manager" Height="722" Width="1234" WindowState="Maximized">
+
+    <Window.DataContext>
+        <vm:MainVM/>
+    </Window.DataContext>
+
+    <Grid>
+        <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch">
+            <TabItem Header="Главная">
+                <Grid Name="ms" Background="#FFE5E5E5" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="12*"/>
+                        <RowDefinition Height="60*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal">
+                        <Label
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center" 
+                            Margin="20,20,0,20"
+                            Content="код:"/>
+                        <ComboBox
+                            IsEditable="True"
+                            Name="tb_code"
+                            Visibility="Visible" 
+                            Text="Введите код или фамилию"
+                            Foreground="Gray"
+                            Width="300" 
+                            Height="50" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center" 
+                            Margin="20" 
+                            Padding="10" 
+                            FontSize="20"/>
+                        <TextBox 
+                            Width="100"
+                            TextAlignment="Center"
+                            Margin="5" 
+                            Background="#FFE5E5E5" 
+                            Foreground="Gray" 
+                            TextWrapping="Wrap"
+                            VerticalContentAlignment="Center"
+                            Text="Цвет бейджа"/>
+                        <TextBox 
+                            Width="150" 
+                            TextAlignment="Center" 
+                            Margin="5" 
+                            Background="#FFE5E5E5" 
+                            VerticalContentAlignment="Center"
+                            Foreground="Gray"
+                            Text="Статус оплаты"/>
+                        <StackPanel 
+                            Orientation="Vertical" 
+                            Width="120" 
+                            Margin="5">
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                Text="Зарегистрировано"/>
+                            <TextBlock
+                                FontSize="50"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Text="5555"/>
+                        </StackPanel>
+                        <StackPanel 
+                            Orientation="Vertical" 
+                            Width="180" 
+                            Margin="5">
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                Text="Актуализировано"/>
+                            <TextBlock
+                                FontSize="65"
+                                FontStyle="Normal"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Text="5555"/>
+                        </StackPanel>
+                        <StackPanel 
+                            Orientation="Vertical" 
+                            Width="120" 
+                            Margin="5">
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                Text="Создано"/>
+                            <TextBlock
+                                FontSize="50"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Text="5555"/>
+                        </StackPanel>
+                        <StackPanel 
+                            Orientation="Vertical" 
+                            Width="120" 
+                            Margin="5">
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                Text="Не пришло"/>
+                            <TextBlock
+                                FontSize="50"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Text="5555"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <DataGrid 
+                        x:Name="workgrid"
+                        Grid.Row="1" 
+                        Margin="10" 
+                        AutoGenerateColumns="True" >
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Файл">
+                <Grid Background="#FFE5E5E5"  >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200*"/>
+                        <ColumnDefinition Width="600*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel >
+                        <Label
+                            Margin="10" 
+                            Content="{
+                            Binding _ProgressBar.Status, 
+                            UpdateSourceTrigger=PropertyChanged}"/>
+                        <Button 
+                            Margin="10"  
+                            Content="Загрузить данные из файла"
+                            Command="{Binding AddDataFromFileToDatabase}"/>
+                        <Button Margin="10" Content="Удалить данные файл"/>
+                        <Button Margin="10" Content="Выгрузить данные в файл Exel"/>
+                    </StackPanel>
+                    <DataGrid Grid.Column="1"
+                              Margin="10,55,10,10" 
+                              AutoGenerateColumns="True" 
+                              ItemsSource="{Binding  Visitors, UpdateSourceTrigger=PropertyChanged}"/>
+                    <ProgressBar Grid.Column="1"
+                                 HorizontalAlignment="Left" 
+                                 Height="30" Margin="10,10,0,0" 
+                                 VerticalAlignment="Top" 
+                                 Width="538" 
+                                 RenderTransformOrigin="0.6,-2"
+                                 Value="{Binding _ProgressBar.Progress}"
+                                 Visibility="Visible"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Конфигурации">
+                <Grid Background="#FFE5E5E5">
+                    <TabControl TabStripPlacement="Left">
+                        <TabControl.Resources>
+                            <Style TargetType="{x:Type TabItem}">
+                                <Setter Property="HeaderTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <ContentPresenter Content="{TemplateBinding Content}">
+                                                <ContentPresenter.LayoutTransform>
+                                                    <RotateTransform Angle="0" />
+                                                </ContentPresenter.LayoutTransform>
+                                            </ContentPresenter>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Padding" Value="3" />
+                            </Style>
+                        </TabControl.Resources>
+                        <TabItem Header="Поля этикетки">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="300*"/>
+                                    <ColumnDefinition Width="150*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <CheckBox Margin="20" VerticalAlignment="Center"/>
+                                        <ComboBox Margin="10,20" Width="150"/>
+                                        <ComboBox Margin="10,20" Width="100"/>
+                                        <xctk:ShortUpDown Margin="20" Width="50"/>
+                                        <StackPanel/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <CheckBox Margin="20" VerticalAlignment="Center"/>
+                                        <ComboBox Margin="10,20" Width="150"/>
+                                        <ComboBox Margin="10,20" Width="100"/>
+                                        <xctk:ShortUpDown Margin="20" Width="50"/>
+                                        <StackPanel/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <CheckBox Margin="20" VerticalAlignment="Center"/>
+                                        <ComboBox Margin="10,20" Width="150"/>
+                                        <ComboBox Margin="10,20" Width="100"/>
+                                        <xctk:ShortUpDown Margin="20" Width="50"/>
+                                        <StackPanel/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <CheckBox Margin="20" VerticalAlignment="Center"/>
+                                        <ComboBox Margin="10,20" Width="150"/>
+                                        <ComboBox Margin="10,20" Width="100"/>
+                                        <xctk:ShortUpDown Margin="20" Width="50"/>
+                                        <StackPanel/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <CheckBox Margin="20" VerticalAlignment="Center"/>
+                                        <ComboBox Margin="10,20" Width="150"/>
+                                        <ComboBox Margin="10,20" Width="100"/>
+                                        <xctk:ShortUpDown Margin="20" Width="50"/>
+                                        <StackPanel/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <CheckBox Margin="20" VerticalAlignment="Center"/>
+                                        <ComboBox Margin="10,20" Width="150"/>
+                                        <ComboBox Margin="10,20" Width="100"/>
+                                        <xctk:ShortUpDown Margin="20" Width="50"/>
+                                        <StackPanel/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <CheckBox Margin="20" VerticalAlignment="Center"/>
+                                        <ComboBox Margin="10,20" Width="150"/>
+                                        <ComboBox Margin="10,20" Width="100"/>
+                                        <xctk:ShortUpDown Margin="20" Width="50"/>
+                                        <StackPanel/>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <ListBox Margin="20" x:Name="listBox" Height="100" Width="200"/>
+                                    <Button Margin="20">Создать конфигурацию</Button>
+                                    <Button Margin="20">Удалить конфигурацию</Button>
+                                    <Button Margin="20">Применить конфигурацию</Button>
+                                </StackPanel>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Цвет бейджа" />
+                        <TabItem Header="Форма ввода">
+                            <Grid  VerticalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="212*"></RowDefinition>
+                                    <RowDefinition Height="153*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="40"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <ListBox 
+                                        Grid.Row="0" 
+                                        Margin="20,20,20,5" 
+                                        VerticalContentAlignment="Stretch" 
+                                        VerticalAlignment="Stretch">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Center">
+                                                    <TextBlock
+                                                        Width="200" 
+                                                        Margin="5"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                    <WrapPanel  Grid.Row="1" Orientation="Horizontal" Margin="20,0" HorizontalAlignment="Center" Width="auto">
+                                        <Button
+                                            Margin="5"
+                                            Padding="5"
+                                            Command="{Binding AddCollumn}"
+                                            CommandParameter="form"
+                                            >Добавить колонку
+                                        </Button>
+                                        <Button 
+                                            Margin="5" 
+                                            Padding="5" 
+                                            Command="{Binding RemoveCollumn}" 
+                                            CommandParameter="form"
+                                            >Удалить колонку
+                                        </Button>
+                                    </WrapPanel>
+                                </Grid>
+                                <Grid  Grid.Column="1" Grid.Row="0" VerticalAlignment="Stretch">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" ></RowDefinition>
+                                        <RowDefinition Height="40"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <ListBox
+                                        Margin="20,20,20,5"
+                                        Grid.Row="0" >
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Center"  >
+                                                    <TextBlock 
+                                                        Margin="5" />
+                                                    <CheckBox  
+                                                        Margin="5" 
+                                                        RenderTransformOrigin="0.5,0.5">
+                                                        <CheckBox.RenderTransform>
+                                                            <TransformGroup>
+                                                                <ScaleTransform/>
+                                                                <SkewTransform/>
+                                                                <RotateTransform Angle="0.315"/>
+                                                                <TranslateTransform/>
+                                                            </TransformGroup>
+                                                        </CheckBox.RenderTransform>
+                                                    </CheckBox>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                    <WrapPanel Orientation="Horizontal" Margin="20,0" HorizontalAlignment="Center" Grid.Row="1" Width="auto">
+                                        <Button 
+                                            Margin="5" 
+                                            Padding="5" 
+                                            Command="{Binding AddSetting}"
+                                            CommandParameter="form"
+                                            >Добавить настройку
+                                        </Button>
+                                        <Button 
+                                            Margin="5"
+                                            Padding="5"
+                                            Command="{Binding DelSetting}" 
+                                            CommandParameter="form"
+                                            >Удалить настройку
+                                        </Button>
+                                        <Button 
+                                            Margin="5" 
+                                            Padding="5" 
+                                            Command="{Binding ChangeDisplaySettingDefault}" 
+                                            CommandParameter="form"
+                                            >Сделать выделенную настройку текущей
+                                        </Button>
+                                    </WrapPanel>
+                                </Grid>
+                                <StackPanel Grid.Column="1" Grid.Row="1" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <StackPanel Orientation="Horizontal" Margin="5">
+                                        <Label Margin="10,5">Настройка</Label>
+                                        <TextBox
+                                            Width="200"
+                                            Margin="5"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="5">
+                                        <Label Margin="10,5">Имя</Label>
+                                        <TextBox 
+                                            Width="200" 
+                                            Margin="5"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="5">
+                                        <Label Margin="5">Алиас</Label>
+                                        <TextBox 
+                                            Width="200" 
+                                            Margin="5"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="5">
+                                        <Label Margin="5">Видимость</Label>
+                                        <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding SelectedCollumnSetting.Visible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <Label Margin="20,5,5,5">Ширина</Label>
+                                        <xctk:ShortUpDown
+                                            Margin="8" 
+                                            Width="75"
+                                            />
+                                    </StackPanel>
+                                    <Button 
+                                        Margin="5"
+                                        Padding="5" 
+                                        Command="{Binding SaveSettingChanges}"
+                                        CommandParameter="form"
+                                        >Сохранить изменения
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Рабочий стол">
+                            <Grid  VerticalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="212*"></RowDefinition>
+                                    <RowDefinition Height="153*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="40"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <ListBox 
+                                        Grid.Row="0" 
+                                        Margin="20,20,20,5" 
+                                        VerticalContentAlignment="Stretch" 
+                                        VerticalAlignment="Stretch">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Center">
+                                                    <TextBlock
+                                                        Width="200" 
+                                                        Margin="5"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                    <WrapPanel  Grid.Row="1" Orientation="Horizontal" Margin="20,0" HorizontalAlignment="Center" Width="auto">
+                                        <Button
+                                            Margin="5"
+                                            Padding="5"
+                                            Command="{Binding AddCollumn}"
+                                            CommandParameter="desctop"
+                                            >Добавить колонку
+                                        </Button>
+                                        <Button 
+                                            Margin="5" 
+                                            Padding="5" 
+                                            Command="{Binding RemoveCollumn}"
+                                            CommandParameter="desctop"
+                                            >Удалить колонку
+                                        </Button>
+                                    </WrapPanel>
+                                </Grid>
+                                <Grid  Grid.Column="1" Grid.Row="0" VerticalAlignment="Stretch">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" ></RowDefinition>
+                                        <RowDefinition Height="40"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <ListBox
+                                        Margin="20,20,20,5"
+                                        Grid.Row="0" >
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Center"  >
+                                                    <TextBlock 
+                                                        Margin="5" />
+                                                    <CheckBox   
+                                                        Margin="5" 
+                                                        RenderTransformOrigin="0.5,0.5">
+                                                        <CheckBox.RenderTransform>
+                                                            <TransformGroup>
+                                                                <ScaleTransform/>
+                                                                <SkewTransform/>
+                                                                <RotateTransform Angle="0.315"/>
+                                                                <TranslateTransform/>
+                                                            </TransformGroup>
+                                                        </CheckBox.RenderTransform>
+                                                    </CheckBox>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                    <WrapPanel Orientation="Horizontal" Margin="20,0" HorizontalAlignment="Center" Grid.Row="1" Width="auto">
+                                        <Button 
+                                            Margin="5" 
+                                            Padding="5" 
+                                            Command="{Binding AddSetting}"
+                                            CommandParameter="desctop"
+                                            >Добавить настройку
+                                        </Button>
+                                        <Button 
+                                            Margin="5" 
+                                            Padding="5" 
+                                            Command="{Binding DelSetting}"
+                                            CommandParameter="desctop"
+                                            >Удалить настройку
+                                        </Button>
+                                        <Button 
+                                            Margin="5" 
+                                            Padding="5" 
+                                            Command="{Binding ChangeDisplaySettingDefault}" 
+                                            CommandParameter="desctop"
+                                            >Сделать выделенную настройку текущей
+                                        </Button>
+                                    </WrapPanel>
+                                </Grid>
+                                <StackPanel Grid.Column="1" Grid.Row="1" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <StackPanel Orientation="Horizontal" Margin="5">
+                                        <Label Margin="10,5">Настройка</Label>
+                                        <TextBox
+                                            Width="200"
+                                            Margin="5" 
+                                            />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="5">
+                                        <Label Margin="10,5">Имя</Label>
+                                        <TextBox 
+                                            Width="200" 
+                                            Margin="5"
+                                            />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="5">
+                                        <Label Margin="5">Алиас</Label>
+                                        <TextBox 
+                                            Width="200" 
+                                            Margin="5"
+                                            />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="5">
+                                        <Label Margin="5">Видимость</Label>
+                                        <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding SelectedCollumnSetting.Visible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <Label Margin="20,5,5,5">Ширина</Label>
+                                        <xctk:ShortUpDown Margin="8" Width="75" Text="{Binding SelectedCollumnSetting.Width, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </StackPanel>
+                                    <Button 
+                                        Margin="5" 
+                                        Padding="5" 
+                                        Command="{Binding SaveSettingChanges}"
+                                        CommandParameter="desctop"
+                                        >Сохранить изменения
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Отчёты">
+                            <Grid  VerticalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="212*"></RowDefinition>
+                                    <RowDefinition Height="153*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="40"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <ListBox 
+                                        Grid.Row="0" 
+                                        ItemsSource="{Binding DSCollumnSettingsRaport}" 
+                                        SelectedItem="{
+                                        Binding SelectedCollumnSettingRaport,
+                                        Mode=TwoWay, 
+                                        UpdateSourceTrigger=PropertyChanged}" 
+                                        Margin="20,20,20,5" 
+                                        VerticalContentAlignment="Stretch" 
+                                        VerticalAlignment="Stretch">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Center">
+                                                    <TextBlock Width="200" Margin="5" Text="{Binding Name}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+
+                                    <WrapPanel  Grid.Row="1" Orientation="Horizontal" Margin="20,0" HorizontalAlignment="Center" Width="auto">
+                                        <Button
+                                            Margin="5"
+                                            Padding="5"
+                                            Command="{Binding AddCollumnRaport}"
+                                            CommandParameter="raport"
+                                            >Добавить колонку
+                                        </Button>
+                                        <Button 
+                                            Margin="5"
+                                            Padding="5"
+                                            Command="{Binding DelCollumnRaport}" 
+                                            CommandParameter="raport"
+                                            >Удалить колонку
+                                        </Button>
+                                    </WrapPanel>
+                                </Grid>
+                                <Grid  Grid.Column="1" Grid.Row="0" VerticalAlignment="Stretch">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" ></RowDefinition>
+                                        <RowDefinition Height="40"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <ListBox 
+                                        ItemsSource="{Binding DisplaySettingsRaport}" 
+                                        SelectedItem="{
+                                        Binding SelectedDisplaySettingRaport, 
+                                        UpdateSourceTrigger=PropertyChanged, 
+                                        Mode=TwoWay}" Margin="20,20,20,5" Grid.Row="0" >
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Center"  >
+                                                    <TextBlock 
+                                                        Margin="5"
+                                                        Text="{Binding Name}" />
+                                                    <CheckBox 
+                                                        IsChecked="{
+                                                        Binding IsSelected,
+                                                        Mode=OneWay}"  
+                                                        Margin="5"
+                                                        RenderTransformOrigin="0.5,0.5">
+                                                        <CheckBox.RenderTransform>
+                                                            <TransformGroup>
+                                                                <ScaleTransform/>
+                                                                <SkewTransform/>
+                                                                <RotateTransform Angle="0.315"/>
+                                                                <TranslateTransform/>
+                                                            </TransformGroup>
+                                                        </CheckBox.RenderTransform>
+                                                    </CheckBox>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                    <WrapPanel Orientation="Horizontal" Margin="20,0" HorizontalAlignment="Center" Grid.Row="1" Width="auto">
+                                        <Button 
+                                            Margin="5" 
+                                            Padding="5" 
+                                            Command="{Binding AddSettingRaport}"
+                                            CommandParameter="raport">Добавить настройку</Button>
+                                        <Button
+                                            Margin="5"
+                                            Padding="5"
+                                            Command="{Binding DelSettingRaport}" 
+                                            CommandParameter="raport"
+                                            >Удалить настройку
+                                        </Button>
+                                        <Button 
+                                            Margin="5" 
+                                            Padding="5" 
+                                            Command="{Binding ChangeDisplaySettingDefaultRaport}" 
+                                            CommandParameter="raport"
+                                            >Сделать выделенную настройку текущей
+                                        </Button>
+                                    </WrapPanel>
+                                </Grid>
+                                <StackPanel Grid.Column="1" Grid.Row="1" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <StackPanel Orientation="Horizontal" Margin="5">
+                                        <Label Margin="10,5">Настройка</Label>
+                                        <TextBox
+                                            Width="200"
+                                            Margin="5" 
+                                            Text="{
+                                            Binding SelectedDisplaySettingRaport.Name,
+                                            Mode=TwoWay, 
+                                            UpdateSourceTrigger=PropertyChanged}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="5">
+                                        <Label Margin="10,5">Имя</Label>
+                                        <TextBox 
+                                            Width="200"
+                                            Margin="5"
+                                            Text="{
+                                            Binding SelectedCollumnSettingRaport.Name,
+                                            Mode=TwoWay, 
+                                            UpdateSourceTrigger=PropertyChanged}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="5">
+                                        <Label Margin="5">Алиас</Label>
+                                        <TextBox 
+                                            Width="200" 
+                                            Margin="5"
+                                            Text="{
+                                            Binding SelectedCollumnSettingRaport.Alias, 
+                                            Mode=TwoWay, 
+                                            UpdateSourceTrigger=PropertyChanged}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="5">
+                                        <Label Margin="5">Видимость</Label>
+                                        <CheckBox 
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center" 
+                                            IsChecked="{
+                                            Binding SelectedCollumnSettingRaport.Visible,
+                                            Mode=TwoWay, 
+                                            UpdateSourceTrigger=PropertyChanged}"/>
+                                        <Label Margin="20,5,5,5">Ширина</Label>
+                                        <xctk:ShortUpDown
+                                            Margin="8" 
+                                            Width="75" 
+                                            Text="{Binding SelectedCollumnSettingRaport.Width,
+                                            Mode=TwoWay, 
+                                            UpdateSourceTrigger=PropertyChanged}"/>
+                                    </StackPanel>
+                                    <Button 
+                                        Margin="5" 
+                                        Padding="5" 
+                                        Command="{
+                                        Binding SaveSettingChangesRaport}"
+                                        >Сохранить изменения
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Отчёты">
+                <Grid Background="#FFE5E5E5">
+                    <TabControl TabStripPlacement="Left" Grid.ColumnSpan="2">
+                        <TabControl.Resources>
+                            <Style TargetType="{x:Type TabItem}">
+                                <Setter Property="HeaderTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <ContentPresenter Content="{TemplateBinding Content}">
+                                                <ContentPresenter.LayoutTransform>
+                                                    <RotateTransform Angle="0" />
+                                                </ContentPresenter.LayoutTransform>
+                                            </ContentPresenter>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Padding" Value="3" />
+                            </Style>
+                        </TabControl.Resources>
+                        <TabItem Header="Зарегистрированные"/>
+                        <TabItem Header="Актуализированные"/>
+                        <TabItem Header="Неактуализированные"/>
+                        <TabItem Header="Созданные"/>
+                    </TabControl>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Сеть">
+                <Grid Background="#FFE5E5E5">
+                    <TabControl TabStripPlacement="Left" Grid.ColumnSpan="2">
+                        <TabControl.Resources>
+                            <Style TargetType="{x:Type TabItem}">
+                                <Setter Property="HeaderTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <ContentPresenter Content="{TemplateBinding Content}">
+                                                <ContentPresenter.LayoutTransform>
+                                                    <RotateTransform Angle="0" />
+                                                </ContentPresenter.LayoutTransform>
+                                            </ContentPresenter>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Padding" Value="3" />
+                            </Style>
+                        </TabControl.Resources>
+                        <TabItem Header="Режим работы">
+                            <Grid >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="300*"/>
+                                    <ColumnDefinition Width="450*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.Resources>
+                                </Grid.Resources>
+                                <StackPanel Margin="20" Grid.Column="0">
+                                    <RadioButton 
+                                        IsEnabled="{Binding IsEnabledDataModeChecker}"
+                                        Margin="5" 
+                                        IsChecked="True" 
+                                        Content="Локальная база данных" 
+                                        Name="LocalDB" 
+                                        Command="{Binding ChangeDataMode}" 
+                                        CommandParameter="{
+                                        Binding ElementName=LocalDB, 
+                                        Path=Content}"/>
+                                    <RadioButton 
+                                        IsEnabled="{Binding IsEnabledDataModeChecker}"
+                                        Margin="5" 
+                                        Content="Сервер службы баз данных" 
+                                        Name="ServerDB" 
+                                        Command="{Binding ChangeDataMode}" 
+                                        CommandParameter="{
+                                        Binding ElementName=ServerDB, 
+                                        Path=Content}"/>
+                                    <RadioButton 
+                                        IsEnabled="{Binding IsEnabledDataModeChecker}"
+                                        Margin="5" 
+                                        Content="Клиент службы баз данных"
+                                        Name="ClientDB" 
+                                        Command="{Binding ChangeDataMode}" 
+                                        CommandParameter="{
+                                        Binding ElementName=ClientDB, 
+                                        Path=Content}"/>
+                                </StackPanel>
+                                <Grid Grid.Column="1">
+                                    <StackPanel>
+                                        <TextBlock 
+                                            Margin="20" 
+                                            Height="150" 
+                                            Background="AliceBlue" 
+                                            Text="{ Binding ServerStatus, 
+                                            UpdateSourceTrigger=PropertyChanged}"  
+                                            ></TextBlock>
+                                        <StackPanel 
+                                            Orientation="Vertical" 
+                                            Margin="20,0,20,0">
+                                            <Button 
+                                                Margin="5"  
+                                                Command="{Binding StartServer}"
+                                                >Запустить сервер</Button>
+                                            <Button 
+                                                Margin="5" 
+                                                Command="{Binding StopServer}"
+                                                >Остановить сервер</Button>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Администрирование">
+                <Grid Background="#FFE5E5E5">
+                    <TabControl TabStripPlacement="Left" Grid.ColumnSpan="2">
+                        <TabControl.Resources>
+                            <Style TargetType="{x:Type TabItem}">
+                                <Setter Property="HeaderTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <ContentPresenter Content="{TemplateBinding Content}">
+                                                <ContentPresenter.LayoutTransform>
+                                                    <RotateTransform Angle="0" />
+                                                </ContentPresenter.LayoutTransform>
+                                            </ContentPresenter>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Padding" Value="3" />
+                            </Style>
+                        </TabControl.Resources>
+                        <TabItem Header="Регистрация">
+                            <Grid >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0">
+                                    <Grid Margin="30,0,30,0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="30"/>
+                                            <RowDefinition Height="30"/>
+                                            <RowDefinition Height="30"/>
+                                            <RowDefinition Height="30"/>
+                                            <RowDefinition Height="30"/>
+                                            <RowDefinition Height="30"/>
+                                            <RowDefinition Height="30"/>
+                                            <RowDefinition Height="30"/>
+                                            <RowDefinition Height="70"/>
+                                            <RowDefinition Height="30"/>
+                                        </Grid.RowDefinitions>
+                                        <Label Grid.Row="0">Имя</Label>
+                                        <TextBox 
+                                            Grid.Row="1" 
+                                            Margin="0,4" 
+                                            Name="tbFirstName" 
+                                            Text="{Binding RegistrationUser.FirstName, 
+                                                           Mode=TwoWay,
+                                                           UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                        <Label Grid.Row="2">Фамилия</Label>
+                                        <TextBox 
+                                            Grid.Row="3"
+                                            Margin="0,4" 
+                                            Name="tbLastName"
+                                            Text="{Binding RegistrationUser.LastName,
+                                                           Mode=TwoWay,
+                                                           UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                        <Label Grid.Row="4">Логин</Label>
+                                        <TextBox 
+                                            Grid.Row="5" 
+                                            Margin="0,4" 
+                                            Name="tbLogin"
+                                            Text="{Binding RegistrationUser.Login,
+                                                           Mode=TwoWay,
+                                                           UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                        <Label Grid.Row="6">Пароль</Label>
+                                        <PasswordBox 
+                                            Grid.Row="7" 
+                                            Margin="0,4"
+                                            Name="tbPassword" 
+                                            ></PasswordBox>
+                                        <Button Grid.Row="8" Margin="10,20" Visibility="Visible" Command="{Binding AddUser}" CommandParameter="{Binding ElementName=tbPassword}">Зарегистрироваться</Button>
+                                        <Button Grid.Row="8" Margin="10,20" Visibility="Hidden">Пройти регистрацию</Button>
+                                    </Grid>
+                                </Grid>
+                                <Grid Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="170"/>
+
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0" Margin="20" Name="statusRegistrationControl" Content="{Binding StatusRegistration}"></Label>
+                                </Grid>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Авторизация">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0">
+                                    <Grid Margin="30,0,30,0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="30"/>
+                                            <RowDefinition Height="30"/>
+                                            <RowDefinition Height="30"/>
+                                            <RowDefinition Height="30"/>
+                                            <RowDefinition Height="70"/>
+                                            <RowDefinition Height="30"/>
+                                            <RowDefinition Height="30"/>
+                                            <RowDefinition Height="30"/>
+                                            <RowDefinition Height="70"/>
+                                            <RowDefinition Height="30"/>
+                                        </Grid.RowDefinitions>
+                                        <Label Grid.Row="0">Логин</Label>
+                                        <TextBox Grid.Row="1" Margin="0,4" Text="{Binding LoginInUser, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                        <Label Grid.Row="2">Пароль</Label>
+                                        <PasswordBox Grid.Row="3" Margin="0,4" Name="tbAuthPassword"></PasswordBox>
+                                        <Button Grid.Row="4" Margin="10,20" Visibility="Visible" Command="{Binding AutorisitionUser}" CommandParameter="{Binding ElementName=tbAuthPassword}">Авторизоваться</Button>
+                                    </Grid>
+                                </Grid>
+                                <Grid Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="70"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="70"/>
+                                        <RowDefinition Height="30"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0" Margin="20" Name="statusAuhorisationControl" Content="{Binding StatusAuthorisation, UpdateSourceTrigger=PropertyChanged}"></Label>
+                                </Grid>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Управление доступом" Height="{Binding VisibleManageUserRole}">
+                            <Grid>
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="19*"></ColumnDefinition>
+                                        <ColumnDefinition Width="36*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0">
+                                        <Grid >
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="30" />
+                                                <RowDefinition Height="3*"/>
+                                                <RowDefinition Height="30" />
+                                                <RowDefinition Height="2*" />
+                                            </Grid.RowDefinitions>
+                                            <Label  Margin="10,0,10,0" Grid.Row="2">Команды</Label>
+                                            <ListBox Margin="10,0,10,0" Grid.Row="3" ItemsSource="{Binding Commands}">
+                                                <ListBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <CheckBox IsChecked="{Binding Path=IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                            <TextBlock Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ListBox.ItemTemplate>
+                                            </ListBox>
+                                            <Label Grid.Row="0" Margin="10,0,10,0">Пользователи(логин)</Label>
+                                            <ListBox Grid.Row="1" Margin="10,0,10,0" SelectedItem="{Binding SelectedUser, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Single" ItemsSource="{Binding Users}">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger  EventName="SelectionChanged">
+                                                        <i:InvokeCommandAction 
+                                                            Command="{Binding UserChanged}"
+                                                            CommandParameter="{Binding SelectedUser}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                                <ListBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="{Binding Path=FirstName, UpdateSourceTrigger=PropertyChanged}"/>
+                                                            <TextBlock Text=" " />
+                                                            <TextBlock Text="{Binding Path=LastName, UpdateSourceTrigger=PropertyChanged}"/>
+                                                            <TextBlock Text=" (" />
+                                                            <TextBlock Text="{Binding Path=Login, UpdateSourceTrigger=PropertyChanged}"/>
+                                                            <TextBlock Text=")" />
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ListBox.ItemTemplate>
+                                            </ListBox>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid Grid.Column="2">
+                                        <Grid Grid.Row="0" Margin="10,0,10,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="20*"/>
+                                                <ColumnDefinition Width="17*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="30"/>
+                                                    <RowDefinition Height="3*"/>
+                                                    <RowDefinition Height="30" />
+                                                    <RowDefinition Height="2*" />
+                                                </Grid.RowDefinitions>
+                                                <Label  Grid.Row="2">Закладки</Label>
+                                                <ListBox  Grid.Row="3" SelectedItem="{Binding SelectedTab}" SelectionMode="Single" ItemsSource="{Binding Tabs}">
+                                                    <ListBox.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                                <TextBlock Text="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}" />
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ListBox.ItemTemplate>
+                                                </ListBox>
+                                                <Label Grid.Row="0" Grid.ColumnSpan="2" >Роли</Label>
+                                                <ListBox Grid.Row="1" Grid.ColumnSpan="2" SelectedItem="{Binding SelectedRole}" SelectionMode="Single" ItemsSource="{Binding Roles}">
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger  EventName="SelectionChanged">
+                                                            <i:InvokeCommandAction 
+                                                            Command="{Binding RoleChanged}"
+                                                            CommandParameter="{Binding sele}"/>
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                    <ListBox.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                                <TextBlock Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ListBox.ItemTemplate>
+                                                </ListBox>
+                                            </Grid>
+                                            <StackPanel Orientation="Vertical" Grid.Column="1">
+                                                <Label>Добавляемая роль</Label>
+                                                <TextBox Margin="5" Text="{Binding AddedRole.Name, UpdateSourceTrigger=PropertyChanged}"/>
+                                                <Button Grid.Column="0" Margin="5" Command="{Binding AddRole}">Добавить роль</Button>
+                                                <Button Grid.Column="1" Margin="5" Command="{Binding DelRole}">Удалить роль</Button>
+                                                <Button Grid.Column="2" Margin="5" Command="{Binding SaveChanges}">Сохранить изменения</Button>
+                                                <Label Margin="0,30,0,0">Роль по умолчанию</Label>
+                                                <TextBox Margin="5" Text="{Binding DefaultRole.Name, UpdateSourceTrigger=PropertyChanged}"/>
+                                                <Button Grid.Column="2" Margin="5" Command="{Binding SetDefaulRole}">Установить роль по умолчанию</Button>
+                                                <Label Margin="0,0,0,0">Пользователь по умолчанию</Label>
+                                                <TextBox Margin="5" Text="{Binding DefaultUser.Login}" />
+                                                <Button Grid.Column="2" Margin="5" Command="{Binding SetDefaultUser}">Установить пользователя по умолчанию</Button>
+                                                <Label Margin="0,30,0,0">Роль для пользовалеля</Label>
+                                                <TextBox Margin="5" Text="{Binding SelectedRole.Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                <Button Grid.Column="0" Margin="5" Command="{Binding SetUserRole}">Установить роль пользователю</Button>
+                                                <Button Grid.Column="1" Margin="5" Command="{Binding DelUser}">Удалить пользователя</Button>
+                                            </StackPanel>
+                                        </Grid>
+
+                                    </Grid>
+                                </Grid>
+
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Помощь">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
