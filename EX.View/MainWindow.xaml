@@ -258,11 +258,17 @@
                                         Grid.Row="0" 
                                         Margin="20,20,20,5" 
                                         VerticalContentAlignment="Stretch" 
-                                        VerticalAlignment="Stretch">
+                                        VerticalAlignment="Stretch"
+                                        ItemsSource="{Binding DSCollumnSettingsForm}"
+                                        SelectedItem="{
+                                        Binding SelectedCollumnSettingForm,
+                                        Mode=TwoWay,
+                                        UpdateSourceTrigger=PropertyChanged}">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Center">
                                                     <TextBlock
+                                                        Text="{Binding Name}"
                                                         Width="200" 
                                                         Margin="5"/>
                                                 </StackPanel>
@@ -273,14 +279,14 @@
                                         <Button
                                             Margin="5"
                                             Padding="5"
-                                            Command="{Binding AddCollumn}"
+                                            Command="{Binding AddCollumnForm}"
                                             CommandParameter="form"
                                             >Добавить колонку
                                         </Button>
                                         <Button 
                                             Margin="5" 
                                             Padding="5" 
-                                            Command="{Binding RemoveCollumn}" 
+                                            Command="{Binding DelCollumnForm}" 
                                             CommandParameter="form"
                                             >Удалить колонку
                                         </Button>
@@ -293,13 +299,22 @@
                                     </Grid.RowDefinitions>
                                     <ListBox
                                         Margin="20,20,20,5"
-                                        Grid.Row="0" >
+                                        Grid.Row="0" 
+                                        ItemsSource="{Binding DisplaySettingsForm}"
+                                        SelectedItem="{
+                                        Binding SelectedDisplaySettingForm, 
+                                        Mode=TwoWay,
+                                        UpdateSourceTrigger=PropertyChanged}">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Center"  >
                                                     <TextBlock 
+                                                        Text="{Binding Name}"
                                                         Margin="5" />
                                                     <CheckBox  
+                                                        IsChecked="{
+                                                        Binding IsSelected,
+                                                        Mode=OneWay}" 
                                                         Margin="5" 
                                                         RenderTransformOrigin="0.5,0.5">
                                                         <CheckBox.RenderTransform>
@@ -319,21 +334,21 @@
                                         <Button 
                                             Margin="5" 
                                             Padding="5" 
-                                            Command="{Binding AddSetting}"
+                                            Command="{Binding AddSettingForm}"
                                             CommandParameter="form"
                                             >Добавить настройку
                                         </Button>
                                         <Button 
                                             Margin="5"
                                             Padding="5"
-                                            Command="{Binding DelSetting}" 
+                                            Command="{Binding DelSettingForm}" 
                                             CommandParameter="form"
                                             >Удалить настройку
                                         </Button>
                                         <Button 
                                             Margin="5" 
                                             Padding="5" 
-                                            Command="{Binding ChangeDisplaySettingDefault}" 
+                                            Command="{Binding ChangeDisplaySettingDefaultForm}" 
                                             CommandParameter="form"
                                             >Сделать выделенную настройку текущей
                                         </Button>
@@ -344,33 +359,54 @@
                                         <Label Margin="10,5">Настройка</Label>
                                         <TextBox
                                             Width="200"
-                                            Margin="5"/>
+                                            Margin="5"
+                                            Text="{
+                                            Binding SelectedDisplaySettingDesctop.Name,
+                                            Mode=TwoWay, 
+                                            UpdateSourceTrigger=PropertyChanged}"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Margin="5">
                                         <Label Margin="10,5">Имя</Label>
                                         <TextBox 
                                             Width="200" 
-                                            Margin="5"/>
+                                            Margin="5"
+                                            Text="{
+                                            Binding SelectedCollumnSettingForm.Name,
+                                            Mode=TwoWay, 
+                                            UpdateSourceTrigger=PropertyChanged}"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Margin="5">
                                         <Label Margin="5">Алиас</Label>
                                         <TextBox 
                                             Width="200" 
-                                            Margin="5"/>
+                                            Margin="5"
+                                            Text="{
+                                            Binding SelectedCollumnSettingForm.Alias,
+                                            Mode=TwoWay, 
+                                            UpdateSourceTrigger=PropertyChanged}"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Margin="5">
                                         <Label Margin="5">Видимость</Label>
-                                        <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding SelectedCollumnSetting.Visible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <CheckBox 
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center" 
+                                            IsChecked="{
+                                            Binding SelectedCollumnSettingForm.Visible,
+                                            Mode=TwoWay, 
+                                            UpdateSourceTrigger=PropertyChanged}"/>
                                         <Label Margin="20,5,5,5">Ширина</Label>
                                         <xctk:ShortUpDown
                                             Margin="8" 
                                             Width="75"
-                                            />
+                                            Text="{
+                                            Binding SelectedCollumnSettingForm.Width,
+                                            Mode=TwoWay, 
+                                            UpdateSourceTrigger=PropertyChanged}"/>
                                     </StackPanel>
                                     <Button 
                                         Margin="5"
                                         Padding="5" 
-                                        Command="{Binding SaveSettingChanges}"
+                                        Command="{Binding SaveSettingChangesForm}"
                                         CommandParameter="form"
                                         >Сохранить изменения
                                     </Button>
