@@ -135,6 +135,7 @@ namespace EX.ViewModel
         }
         #endregion
         #region Collection for Settings
+        #region Raport
         ObservableCollection<DisplaySettingDTO> displaySettingsRaport;
         ObservableCollection<DSCollumnSettingDTO> dSCollumnSettingsRaport;
         public ObservableCollection<DisplaySettingDTO> DisplaySettingsRaport
@@ -152,7 +153,29 @@ namespace EX.ViewModel
             }
         }
         #endregion
+        ObservableCollection<DisplaySettingDTO> displaySettingsDesctop;
+        ObservableCollection<DSCollumnSettingDTO> dSCollumnSettingsDesctop;
+        public ObservableCollection<DisplaySettingDTO> DisplaySettingsDesctop
+        {
+            get { return displaySettingsDesctop; }
+            set
+            {
+                displaySettingsDesctop = value;
+                OnPropertyChanged(nameof(DisplaySettingsDesctop));
+            }
+        }
+        public ObservableCollection<DSCollumnSettingDTO> DSCollumnSettingsDesctop
+        {
+            get { return dSCollumnSettingsDesctop; }
+            set
+            {
+                dSCollumnSettingsDesctop = value;
+                OnPropertyChanged(nameof(DSCollumnSettingsDesctop));
+            }
+        }
+        #endregion
         #region Fields for Settings
+        #region Raport
         DisplaySettingDTO selectedDisplaySettingRaport;
         DSCollumnSettingDTO selectedCollumnSettingRaport;
         public DisplaySettingDTO SelectedDisplaySettingRaport
@@ -168,7 +191,29 @@ namespace EX.ViewModel
                 OnPropertyChanged(nameof(SelectedCollumnSettingRaport)); }
         }
         #endregion
+        DisplaySettingDTO selectedDisplaySettingDesctop;
+        DSCollumnSettingDTO selectedCollumnSettingDesctop;
+        public DisplaySettingDTO SelectedDisplaySettingDesctop
+        {
+            get { return selectedDisplaySettingDesctop; }
+            set
+            {
+                selectedDisplaySettingDesctop = value;
+                OnPropertyChanged(nameof(SelectedDisplaySettingDesctop));
+            }
+        }
+        public DSCollumnSettingDTO SelectedCollumnSettingDesctop
+        {
+            get { return selectedCollumnSettingDesctop; }
+            set
+            {
+                selectedCollumnSettingDesctop = value;
+                OnPropertyChanged(nameof(SelectedCollumnSettingDesctop));
+            }
+        }
+        #endregion
         #region Commands for Setings
+        #region Raport
         RelayCommand addCollumnRaport;
         public RelayCommand AddCollumnRaport
         {
@@ -179,12 +224,6 @@ namespace EX.ViewModel
         public RelayCommand DelCollumnRaport
         {
             get { return delCollumnRaport; }
-        }
-
-        RelayCommand saveColumn;
-        public RelayCommand SeveCollumnRaport
-        {
-            get { return saveColumn; }
         }
 
         RelayCommand addSettingRaport;
@@ -209,6 +248,43 @@ namespace EX.ViewModel
         public RelayCommand ChangeDisplaySettingDefaultRaport
         {
             get { return changeDisplaySettingDefaultRaport; }
+        }
+        #endregion
+
+        RelayCommand addCollumnDesctop;
+        public RelayCommand AddCollumnDesctop
+        {
+            get { return addCollumnDesctop; }
+        }
+
+        RelayCommand delCollumnDesctop;
+        public RelayCommand DelCollumnDesctop
+        {
+            get { return delCollumnDesctop; }
+        }
+
+        RelayCommand addSettingDesctop;
+        public RelayCommand AddSettingDesctop
+        {
+            get { return addSettingDesctop; }
+        }
+
+        RelayCommand delSettingDesctop;
+        public RelayCommand DelSettingDesctop
+        {
+            get { return delSettingDesctop; }
+        }
+
+        RelayCommand saveSettingChangesDesctop;
+        public RelayCommand SaveSettingChangesDesctop
+        {
+            get { return saveSettingChangesDesctop; }
+        }
+
+        RelayCommand changeDisplaySettingDefaultDesctop;
+        public RelayCommand ChangeDisplaySettingDefaultDesctop
+        {
+            get { return changeDisplaySettingDefaultDesctop; }
         }
         #endregion
         #endregion
@@ -357,8 +433,10 @@ namespace EX.ViewModel
             #region Init value for Settings
             displaySettingDTORepository = new DisplaySettingDTORepository();
             dSCollumnSettingDTORepository = new DSCollumnSettingDTORepository();
+            #region Raport
             displaySettingsRaport = new ObservableCollection<DisplaySettingDTO>
-                (displaySettingDTORepository.GetAllDisplaySettingDTOs());
+                (displaySettingDTORepository.GetAllDisplaySettingDTOs().
+                Where(s=>s.Intendant == "raport"));
             DisplaySettingDTO defaultDisplayRaportSetting;
             if (displaySettingsRaport.Count() == 0)
             {
@@ -371,13 +449,14 @@ namespace EX.ViewModel
             }
             else defaultDisplayRaportSetting = displaySettingDTORepository.
                   GetAllDisplaySettingDTOs().
-                  Where(s => s.IsSelected == true&&s.Intendant=="raport").
+                  Where(s => s.IsSelected == true && s.Intendant == "raport").
                   FirstOrDefault();
             var defaultDisplayRaportSettingId = displaySettingDTORepository.
                 AddOrUpdate(defaultDisplayRaportSetting).Id;
 
             dSCollumnSettingsRaport = new ObservableCollection<DSCollumnSettingDTO>
-                (dSCollumnSettingDTORepository.GetAllDSCollumnSettingDTOs());
+                (dSCollumnSettingDTORepository.GetAllDSCollumnSettingDTOs().
+                Where(s=>s.Intendant == "raport"));
 
             if (dSCollumnSettingsRaport.Count() == 0)
             {
@@ -436,7 +515,87 @@ namespace EX.ViewModel
                     DisplaySettingId = defaultDisplayRaportSettingId
                 });
             }
-            updateAllSettings("raport");
+            updateAllSettingsRaport("raport");
+            #endregion
+
+            displaySettingsDesctop = new ObservableCollection<DisplaySettingDTO>
+                (displaySettingDTORepository.GetAllDisplaySettingDTOs().
+                Where(s => s.Intendant == "desctop"));
+            DisplaySettingDTO defaultDisplayDesctopSetting;
+            if (displaySettingsDesctop.Count() == 0)
+            {
+                defaultDisplayDesctopSetting = new DisplaySettingDTO
+                {
+                    Name = "default",
+                    IsSelected = true,
+                    Intendant = "desctop"
+                };
+            }
+            else defaultDisplayDesctopSetting = displaySettingDTORepository.
+                  GetAllDisplaySettingDTOs().
+                  Where(s => s.IsSelected == true && s.Intendant == "desctop").
+                  FirstOrDefault();
+            var defaultDisplayDesctopSettingId = displaySettingDTORepository.
+                AddOrUpdate(defaultDisplayDesctopSetting).Id;
+
+            dSCollumnSettingsDesctop = new ObservableCollection<DSCollumnSettingDTO>
+                (dSCollumnSettingDTORepository.GetAllDSCollumnSettingDTOs().
+                Where(s => s.Intendant == "desctop"));
+
+            if (dSCollumnSettingsDesctop.Count() == 0)
+            {
+                dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
+                {
+                    Name = "Id",
+                    Alias = "№",
+                    Width = 100,
+                    Visible = true,
+                    IsSelected = true,
+                    Intendant = "desctop",
+                    DisplaySettingId = defaultDisplayDesctopSettingId
+                });
+                dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
+                {
+                    Name = "FirstName",
+                    Alias = "Имя",
+                    Width = 100,
+                    Visible = true,
+                    IsSelected = false,
+                    Intendant = "desctop",
+                    DisplaySettingId = defaultDisplayDesctopSettingId
+                });
+                dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
+                {
+                    Name = "LastName",
+                    Alias = "Фамилия",
+                    Width = 100,
+                    Visible = true,
+                    IsSelected = false,
+                    Intendant = "desctop",
+                    DisplaySettingId = defaultDisplayDesctopSettingId
+                });
+                dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
+                {
+                    Name = "Сompany",
+                    Alias = "Компания",
+                    Width = 100,
+                    Visible = true,
+                    IsSelected = false,
+                    Intendant = "desctop",
+                    DisplaySettingId = defaultDisplayDesctopSettingId
+                });
+                dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
+                {
+                    Name = "Jobtitle",
+                    Alias = "Должность",
+                    Width = 100,
+                    Visible = true,
+                    IsSelected = false,
+                    Intendant = "desctop",
+                    DisplaySettingId = defaultDisplayDesctopSettingId
+                });
+            }
+            updateAllSettingsDesctop("desctop");
             #endregion
             #region Init value for File
             visitorRepositoryDTO = new VisitorRepositoryDTO();
@@ -715,7 +874,7 @@ namespace EX.ViewModel
                 }
                 n_set.IsSelected = true;
                 displaySettingDTORepository.AddOrUpdate(n_set);
-                updateAllSettings(_intendant);
+                updateAllSettingsRaport(_intendant);
             });
             delSettingRaport = new RelayCommand(c =>
             {
@@ -743,29 +902,37 @@ namespace EX.ViewModel
                     dSCollumnSettingDTORepository.AddOrUpdate(new_sel_dsc);
                 }
                 displaySettingDTORepository.RemoveDisplaySettingDTO(selectedDisplaySettingRaport);
-                updateAllSettings(_intendant);
+                updateAllSettingsRaport(_intendant);
             }, c=> displaySettingsRaport.Count() > 1);
             changeDisplaySettingDefaultRaport = new RelayCommand(c =>
             {
                 var _intendant = c as string;
                 var oldSelectedDisplaySetting = displaySettingDTORepository.GetAllDisplaySettingDTOs().
-                    Where(s => s.IsSelected == true && s.Intendant == _intendant).FirstOrDefault();
+                    Where(s => s.Intendant == _intendant).
+                    Where(s => s.IsSelected == true).
+                    FirstOrDefault();
                 var oldSelectedCollumnSetting = dSCollumnSettingDTORepository.GetAllDSCollumnSettingDTOs().
-                Where(s => s.IsSelected == true && s.DisplaySettingId == oldSelectedDisplaySetting.Id).
+                    Where(s => s.Intendant == _intendant).
+                    Where(s => s.DisplaySettingId == oldSelectedDisplaySetting.Id).
+                    Where(s => s.IsSelected == true).
                 FirstOrDefault();
                 oldSelectedDisplaySetting.IsSelected = false;
                 oldSelectedCollumnSetting.IsSelected = false;
                 var newSelectedDisplaySetting = displaySettingDTORepository.GetAllDisplaySettingDTOs().
-                Where(s => s.Id == selectedDisplaySettingRaport.Id && s.Intendant == _intendant).FirstOrDefault();
+                    Where(s => s.Intendant == _intendant).
+                    Where(s => s.Id == selectedDisplaySettingRaport.Id).
+                    FirstOrDefault();
                 var newSelectedCollumnSetting = dSCollumnSettingDTORepository.GetAllDSCollumnSettingDTOs().
-                Where(s => s.DisplaySettingId == newSelectedDisplaySetting.Id).FirstOrDefault();
+                    Where(s => s.Intendant == _intendant).
+                    Where(s => s.DisplaySettingId == newSelectedDisplaySetting.Id).
+                    FirstOrDefault();
                 newSelectedDisplaySetting.IsSelected = true;
                 newSelectedCollumnSetting.IsSelected = true;
                 displaySettingDTORepository.AddOrUpdate(oldSelectedDisplaySetting);
                 displaySettingDTORepository.AddOrUpdate(newSelectedDisplaySetting);
                 dSCollumnSettingDTORepository.AddOrUpdate(newSelectedCollumnSetting);
                 dSCollumnSettingDTORepository.AddOrUpdate(oldSelectedCollumnSetting);
-                updateAllSettings(_intendant);
+                updateAllSettingsRaport(_intendant);
             });
             addCollumnRaport = new RelayCommand(c =>
             {
@@ -774,7 +941,7 @@ namespace EX.ViewModel
                     Where(s => s.IsSelected == true && s.Intendant == _intendant).
                     Select(s => s.Id).FirstOrDefault();
                 addNewCollumn(_intendant, dsid, dsid);
-                updateAllSettings(_intendant);
+                updateAllSettingsRaport(_intendant);
             }, c => dSCollumnSettingsRaport.Count() < 17);
             saveSettingChangesRaport = new RelayCommand(c =>
             {
@@ -812,9 +979,153 @@ namespace EX.ViewModel
                     new_sel_ds.IsSelected = true;
                     dSCollumnSettingDTORepository.AddOrUpdate(new_sel_ds);
                 }
-                
-                updateAllSettings(_intendant);
+
+                updateAllSettingsRaport(_intendant);
             }, c => dSCollumnSettingsRaport.Count() >1);
+
+
+
+
+
+
+            addSettingDesctop = new RelayCommand(c =>
+            {
+                var _intendant = c as string;
+                var cur_set = displaySettingDTORepository.GetAllDisplaySettingDTOs().
+                Where(s => s.IsSelected == true && s.Intendant == _intendant).
+                Select(s => s).FirstOrDefault();
+                var osid = cur_set.Id;
+                string new_set_name = "NewSetting1";
+                while (displaySettingDTORepository.GetAllDisplaySettingDTOs().
+                Where(s => s.Name == new_set_name).Count() > 0)
+                {
+                    string d_name = new_set_name.Trim(
+                        new char[] { 'N', 'e', 'w', 'S', 't', 'i', 'n', 'g' });
+                    int d = int.Parse(d_name) + 1;
+                    new_set_name = "NewSetting" + d.ToString();
+                }
+                var _n_set = new DisplaySettingDTO()
+                {
+                    Name = new_set_name,
+                    IsSelected = false,
+                    Intendant = _intendant
+                };
+                var n_set = displaySettingDTORepository.AddOrUpdate(_n_set);
+                addNewCollumn(_intendant, n_set.Id, osid);
+                if (cur_set != null)
+                {
+                    cur_set.IsSelected = false;
+                    displaySettingDTORepository.AddOrUpdate(cur_set);
+                }
+                n_set.IsSelected = true;
+                displaySettingDTORepository.AddOrUpdate(n_set);
+                updateAllSettingsDesctop(_intendant);
+            });
+            delSettingDesctop = new RelayCommand(c =>
+            {
+                var _intendant = c as string;
+                DisplaySettingDTO s_ds = displaySettingDTORepository.GetAllDisplaySettingDTOs().
+                Where(s => s.IsSelected == true && s.Intendant == _intendant).FirstOrDefault();
+                var del_cs = dSCollumnSettingDTORepository.GetAllDSCollumnSettingDTOs().
+                Where(s => s.Intendant == _intendant).
+                Where(s => s.DisplaySettingId == selectedDisplaySettingDesctop.Id);//замена
+                foreach (var dc in del_cs)
+                {
+                    dSCollumnSettingDTORepository.RemoveDSCollumnSettingDTO(dc);
+                }
+                if (selectedDisplaySettingDesctop.IsSelected == true)
+                {
+                    s_ds = displaySettingDTORepository.GetAllDisplaySettingDTOs().
+                    Where(s => s.Intendant == _intendant).
+                    FirstOrDefault();
+                    s_ds.IsSelected = true;
+                    displaySettingDTORepository.AddOrUpdate(s_ds);
+                    var new_sel_dsc = dSCollumnSettingDTORepository.
+                    GetAllDSCollumnSettingDTOs().
+                    Where(s => s.Intendant == _intendant).
+                    Where(s => s.DisplaySettingId == s_ds.Id).
+                    FirstOrDefault();
+                    new_sel_dsc.IsSelected = true;
+                    dSCollumnSettingDTORepository.AddOrUpdate(new_sel_dsc);
+                }
+                displaySettingDTORepository.RemoveDisplaySettingDTO(selectedDisplaySettingDesctop);
+                updateAllSettingsDesctop(_intendant);
+            }, c => displaySettingsDesctop.Count() > 1);
+            changeDisplaySettingDefaultDesctop = new RelayCommand(c =>
+            {
+                var _intendant = c as string;
+                var oldSelectedDisplaySetting = displaySettingDTORepository.GetAllDisplaySettingDTOs().
+                    Where(s => s.Intendant == _intendant).
+                    Where(s => s.IsSelected == true).
+                    FirstOrDefault();
+                var oldSelectedCollumnSetting = dSCollumnSettingDTORepository.GetAllDSCollumnSettingDTOs().
+                    Where(s=>s.Intendant == _intendant).
+                    Where(s => s.DisplaySettingId == oldSelectedDisplaySetting.Id).
+                    Where(s => s.IsSelected == true).
+                    FirstOrDefault();
+                oldSelectedDisplaySetting.IsSelected = false;
+                oldSelectedCollumnSetting.IsSelected = false;
+                var newSelectedDisplaySetting = displaySettingDTORepository.GetAllDisplaySettingDTOs().
+                    Where(s => s.Intendant == _intendant).
+                    Where(s => s.Id == selectedDisplaySettingDesctop.Id ).
+                    FirstOrDefault();
+                var newSelectedCollumnSetting = dSCollumnSettingDTORepository.GetAllDSCollumnSettingDTOs().
+                Where(s => s.DisplaySettingId == newSelectedDisplaySetting.Id).FirstOrDefault();
+                newSelectedDisplaySetting.IsSelected = true;
+                newSelectedCollumnSetting.IsSelected = true;
+                displaySettingDTORepository.AddOrUpdate(oldSelectedDisplaySetting);
+                displaySettingDTORepository.AddOrUpdate(newSelectedDisplaySetting);
+                dSCollumnSettingDTORepository.AddOrUpdate(newSelectedCollumnSetting);
+                dSCollumnSettingDTORepository.AddOrUpdate(oldSelectedCollumnSetting);
+                updateAllSettingsDesctop(_intendant);
+            });
+            addCollumnDesctop = new RelayCommand(c =>
+            {
+                var _intendant = c as string;
+                var dsid = displaySettingDTORepository.GetAllDisplaySettingDTOs().
+                    Where(s => s.IsSelected == true && s.Intendant == _intendant).
+                    Select(s => s.Id).FirstOrDefault();
+                addNewCollumn(_intendant, dsid, dsid);
+                updateAllSettingsDesctop(_intendant);
+            }, c => dSCollumnSettingsRaport.Count() < 17);
+            saveSettingChangesDesctop = new RelayCommand(c =>
+            {
+                var _intendant = c as string;
+                foreach (var d in DisplaySettingsDesctop)
+                {
+                    displaySettingDTORepository.AddOrUpdate(d);
+                }
+                foreach (var dc in DSCollumnSettingsDesctop)
+                {
+                    dSCollumnSettingDTORepository.AddOrUpdate(dc);
+                }
+            });
+            delCollumnDesctop = new RelayCommand(c =>
+            {
+                var _intendant = c as string;
+                var sel_ds = dSCollumnSettingDTORepository.GetAllDSCollumnSettingDTOs().
+                        Where(s => s.Intendant == _intendant).
+                        Where(s => s.IsSelected == true).
+                        FirstOrDefault();
+                var del_ds = dSCollumnSettingDTORepository.GetAllDSCollumnSettingDTOs().
+                        Where(s => s.Intendant == _intendant).
+                        Where(d => d.Id == selectedCollumnSettingDesctop.Id).
+                        FirstOrDefault();
+                dSCollumnSettingDTORepository.RemoveDSCollumnSettingDTO(selectedCollumnSettingDesctop);
+                if (sel_ds.Id == del_ds.Id)
+                {
+                    var sel_s_id = displaySettingDTORepository.GetAllDisplaySettingDTOs().
+                        Where(s => s.Intendant == _intendant).
+                        Where(d => d.IsSelected == true).FirstOrDefault().Id;
+                    var new_sel_ds = dSCollumnSettingDTORepository.GetAllDSCollumnSettingDTOs().
+                        Where(s => s.Intendant == _intendant).
+                        Where(s => s.DisplaySettingId == sel_s_id).
+                        FirstOrDefault();
+                    new_sel_ds.IsSelected = true;
+                    dSCollumnSettingDTORepository.AddOrUpdate(new_sel_ds);
+                }
+                updateAllSettingsDesctop(_intendant);
+            }, c => dSCollumnSettingsDesctop.Count() > 1);
             #endregion
             #region Implementation command for File
             addDataFromFileToDatabase = new RelayCommand(c =>
@@ -936,7 +1247,7 @@ namespace EX.ViewModel
             if (TypeDescriptor.GetProperties(this)[propertyName] == null)
                 throw new ArgumentNullException(GetType().Name + " does not contain property: " + propertyName);
         }
-        private void updateAllSettings(string intendant)
+        private void updateAllSettingsRaport(string intendant)
         {
             DisplaySettingsRaport = new ObservableCollection<DisplaySettingDTO>
                 (displaySettingDTORepository.GetAllDisplaySettingDTOs().
@@ -950,9 +1261,28 @@ namespace EX.ViewModel
             Where(s=>s.Intendant == intendant).
             Where(d=>d.DisplaySettingId == selectedDisplaySettingRaport.Id));
             SelectedCollumnSettingRaport = DSCollumnSettingsRaport.
+                Where(s=>s.Intendant == "raport").
                 Where(s => s.IsSelected == true).
                 FirstOrDefault();
         }
+        private void updateAllSettingsDesctop(string intendant)
+        {
+            DisplaySettingsDesctop = new ObservableCollection<DisplaySettingDTO>
+                (displaySettingDTORepository.GetAllDisplaySettingDTOs().
+                Where(s => s.Intendant == intendant));
+            SelectedDisplaySettingDesctop = DisplaySettingsDesctop.
+                Where(s => s.Intendant == intendant).
+                Where(s => s.IsSelected == true).
+                FirstOrDefault();
+            DSCollumnSettingsDesctop = new ObservableCollection<DSCollumnSettingDTO>
+            (dSCollumnSettingDTORepository.GetAllDSCollumnSettingDTOs().//?
+            Where(s => s.Intendant == intendant).
+            Where(d => d.DisplaySettingId == selectedDisplaySettingDesctop.Id));
+            SelectedCollumnSettingDesctop = DSCollumnSettingsDesctop.
+                Where(s => s.IsSelected == true).
+                FirstOrDefault();
+        }
+
         private void ProgressChanged(Progress_Bar progress)
         {
             _ProgressBar.Progress = progress.Progress;

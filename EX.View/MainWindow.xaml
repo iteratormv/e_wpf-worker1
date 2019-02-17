@@ -394,31 +394,35 @@
                                     </Grid.RowDefinitions>
                                     <ListBox 
                                         Grid.Row="0" 
+                                        ItemsSource="{Binding DSCollumnSettingsDesctop}" 
+                                        SelectedItem="{
+                                        Binding SelectedCollumnSettingDesctop,
+                                        Mode=TwoWay, 
+                                        UpdateSourceTrigger=PropertyChanged}" 
                                         Margin="20,20,20,5" 
                                         VerticalContentAlignment="Stretch" 
                                         VerticalAlignment="Stretch">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Center">
-                                                    <TextBlock
-                                                        Width="200" 
-                                                        Margin="5"/>
+                                                    <TextBlock Width="200" Margin="5" Text="{Binding Name}" />
                                                 </StackPanel>
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
                                     </ListBox>
+
                                     <WrapPanel  Grid.Row="1" Orientation="Horizontal" Margin="20,0" HorizontalAlignment="Center" Width="auto">
                                         <Button
                                             Margin="5"
                                             Padding="5"
-                                            Command="{Binding AddCollumn}"
+                                            Command="{Binding AddCollumnDesctop}"
                                             CommandParameter="desctop"
                                             >Добавить колонку
                                         </Button>
                                         <Button 
-                                            Margin="5" 
-                                            Padding="5" 
-                                            Command="{Binding RemoveCollumn}"
+                                            Margin="5"
+                                            Padding="5"
+                                            Command="{Binding DelCollumnDesctop}" 
                                             CommandParameter="desctop"
                                             >Удалить колонку
                                         </Button>
@@ -429,16 +433,23 @@
                                         <RowDefinition Height="*" ></RowDefinition>
                                         <RowDefinition Height="40"></RowDefinition>
                                     </Grid.RowDefinitions>
-                                    <ListBox
-                                        Margin="20,20,20,5"
-                                        Grid.Row="0" >
+                                    <ListBox 
+                                        ItemsSource="{Binding DisplaySettingsDesctop}" 
+                                        SelectedItem="{
+                                        Binding SelectedDisplaySettingDesctop, 
+                                        UpdateSourceTrigger=PropertyChanged, 
+                                        Mode=TwoWay}" Margin="20,20,20,5" Grid.Row="0" >
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Center"  >
                                                     <TextBlock 
-                                                        Margin="5" />
-                                                    <CheckBox   
-                                                        Margin="5" 
+                                                        Margin="5"
+                                                        Text="{Binding Name}" />
+                                                    <CheckBox 
+                                                        IsChecked="{
+                                                        Binding IsSelected,
+                                                        Mode=OneWay}"  
+                                                        Margin="5"
                                                         RenderTransformOrigin="0.5,0.5">
                                                         <CheckBox.RenderTransform>
                                                             <TransformGroup>
@@ -457,21 +468,19 @@
                                         <Button 
                                             Margin="5" 
                                             Padding="5" 
-                                            Command="{Binding AddSetting}"
-                                            CommandParameter="desctop"
-                                            >Добавить настройку
-                                        </Button>
-                                        <Button 
-                                            Margin="5" 
-                                            Padding="5" 
-                                            Command="{Binding DelSetting}"
+                                            Command="{Binding AddSettingDesctop}"
+                                            CommandParameter="desctop">Добавить настройку</Button>
+                                        <Button
+                                            Margin="5"
+                                            Padding="5"
+                                            Command="{Binding DelSettingDesctop}" 
                                             CommandParameter="desctop"
                                             >Удалить настройку
                                         </Button>
                                         <Button 
                                             Margin="5" 
                                             Padding="5" 
-                                            Command="{Binding ChangeDisplaySettingDefault}" 
+                                            Command="{Binding ChangeDisplaySettingDefaultDesctop}" 
                                             CommandParameter="desctop"
                                             >Сделать выделенную настройку текущей
                                         </Button>
@@ -483,33 +492,53 @@
                                         <TextBox
                                             Width="200"
                                             Margin="5" 
-                                            />
+                                            Text="{
+                                            Binding SelectedDisplaySettingDesctop.Name,
+                                            Mode=TwoWay, 
+                                            UpdateSourceTrigger=PropertyChanged}"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Margin="5">
                                         <Label Margin="10,5">Имя</Label>
                                         <TextBox 
-                                            Width="200" 
+                                            Width="200"
                                             Margin="5"
-                                            />
+                                            Text="{
+                                            Binding SelectedCollumnSettingDesctop.Name,
+                                            Mode=TwoWay, 
+                                            UpdateSourceTrigger=PropertyChanged}"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Margin="5">
                                         <Label Margin="5">Алиас</Label>
                                         <TextBox 
                                             Width="200" 
                                             Margin="5"
-                                            />
+                                            Text="{
+                                            Binding SelectedCollumnSettingDesctop.Alias, 
+                                            Mode=TwoWay, 
+                                            UpdateSourceTrigger=PropertyChanged}"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Margin="5">
                                         <Label Margin="5">Видимость</Label>
-                                        <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding SelectedCollumnSetting.Visible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <CheckBox 
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center" 
+                                            IsChecked="{
+                                            Binding SelectedCollumnSettingDesctop.Visible,
+                                            Mode=TwoWay, 
+                                            UpdateSourceTrigger=PropertyChanged}"/>
                                         <Label Margin="20,5,5,5">Ширина</Label>
-                                        <xctk:ShortUpDown Margin="8" Width="75" Text="{Binding SelectedCollumnSetting.Width, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <xctk:ShortUpDown
+                                            Margin="8" 
+                                            Width="75" 
+                                            Text="{Binding SelectedCollumnSettingDesctop.Width,
+                                            Mode=TwoWay, 
+                                            UpdateSourceTrigger=PropertyChanged}"/>
                                     </StackPanel>
                                     <Button 
                                         Margin="5" 
                                         Padding="5" 
-                                        Command="{Binding SaveSettingChanges}"
-                                        CommandParameter="desctop"
+                                        Command="{
+                                        Binding SaveSettingChangesDesctop}"
                                         >Сохранить изменения
                                     </Button>
                                 </StackPanel>
