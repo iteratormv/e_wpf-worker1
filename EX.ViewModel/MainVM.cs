@@ -6,6 +6,7 @@ using EX.Model.DTO.Setting;
 using EX.Model.Infrastructure;
 using EX.Model.Repositories;
 using EX.Model.Repositories.Administration;
+using EX.Model.Repositories.ForVisitor;
 using EX.Model.Repositories.Setting;
 using EX.Service;
 using EX.ViewModel.Infrastructure;
@@ -40,6 +41,7 @@ namespace EX.ViewModel
         UserInRoleRepositoryDTO userInRoleRepository;
         CommandRepositoryDTO commandRepository;
         TabRepositoryDTO tabRepository;
+        StatusRepositoryDTO statusRepository;
         #endregion
         #region Collection for Administration
         ObservableCollection<UserDTO> users;
@@ -171,9 +173,11 @@ namespace EX.ViewModel
             set
             {
                 dSCollumnSettingsDesctop = value;
+                initHeaderDesctop(dSCollumnSettingsDesctop);
                 OnPropertyChanged(nameof(DSCollumnSettingsDesctop));
             }
         }
+
         #endregion
         #region Form
         ObservableCollection<DisplaySettingDTO> displaySettingsForm;
@@ -217,7 +221,6 @@ namespace EX.ViewModel
         #endregion
         #region Desctop
         DisplaySettingDTO selectedDisplaySettingDesctop;
-        DSCollumnSettingDTO selectedCollumnSettingDesctop;
         public DisplaySettingDTO SelectedDisplaySettingDesctop
         {
             get { return selectedDisplaySettingDesctop; }
@@ -227,6 +230,7 @@ namespace EX.ViewModel
                 OnPropertyChanged(nameof(SelectedDisplaySettingDesctop));
             }
         }
+        DSCollumnSettingDTO selectedCollumnSettingDesctop;
         public DSCollumnSettingDTO SelectedCollumnSettingDesctop
         {
             get { return selectedCollumnSettingDesctop; }
@@ -236,6 +240,8 @@ namespace EX.ViewModel
                 OnPropertyChanged(nameof(SelectedCollumnSettingDesctop));
             }
         }
+
+
         #endregion
         #region Form
         DisplaySettingDTO selectedDisplaySettingForm;
@@ -260,6 +266,36 @@ namespace EX.ViewModel
         }
         #endregion
         #endregion
+        #region Service fields for Setting
+        const int count_headers = 16;
+
+        bool[] columnCheckedDesctop;
+        public bool[] ColumnCheckedDesctop
+        {
+            get { return columnCheckedDesctop; }
+            set {
+                columnCheckedDesctop = value;
+                OnPropertyChanged(nameof(ColumnCheckedDesctop)); }
+        }
+        string[] aliasDesctop;
+        public string[] AliasDesctop
+        {
+            get { return aliasDesctop; }
+            set {
+                aliasDesctop = value;
+                OnPropertyChanged(nameof(AliasDesctop)); }
+        }
+        int[] widthDesctop;
+        public int[] WidthDesctop
+        {
+            get { return widthDesctop; }
+            set {
+                widthDesctop = value;
+                OnPropertyChanged(nameof(WidthDesctop)); }
+        }
+
+        #endregion
+
         #region Commands for Setings
         #region Raport
         RelayCommand addCollumnRaport;
@@ -385,6 +421,14 @@ namespace EX.ViewModel
             get { return visitors; }
             set { visitors = value; OnPropertyChanged(nameof(Visitors)); }
         }
+        ObservableCollection<StatusDTO> statuses;
+        public ObservableCollection<StatusDTO> Statuses
+        {
+            get { return statuses; }
+            set { statuses = value;
+                OnPropertyChanged(nameof(Statuses));
+            }
+        }
         #endregion
         #region Filds for File
         Progress_Bar progressBar;
@@ -451,9 +495,25 @@ namespace EX.ViewModel
         IMapper mapper;
         #endregion
 
+        ObservableCollection<VisitorDTO> desctopVisitors;
+        public ObservableCollection<VisitorDTO> DesctopVisitors
+        {
+            get { return desctopVisitors; }
+            set
+            {
+                desctopVisitors = value;
+                OnPropertyChanged(nameof(DesctopVisitors));
+            }
+        }
+
+
         public MainVM()
         {
             DataMode = "Локальная база данных";
+            visitorRepositoryDTO = new VisitorRepositoryDTO();
+            Visitors = new ObservableCollection<VisitorDTO>
+                     (visitorRepositoryDTO.GetAllVisitors());
+
             #region Init value for Administration
             userRepository = new UserRepositoryDTO();
             roleRepository = new RoleRepositoryDTO();
@@ -478,6 +538,7 @@ namespace EX.ViewModel
                 };
                 checkUser = userRepository.AddOrUpdate(newUser);
             }
+            AuthorizedUser = checkUser;
 
             addedRole = new RoleDTO { Name = "NewRole1", IsDefault = false, IsSelected = false };
             var checkRole = roleRepository.GetAllRoles().FirstOrDefault();
@@ -514,7 +575,7 @@ namespace EX.ViewModel
 
             StatusAuthorisation = "Вы авторизированы как - " +
                 defaultUser.Login + "(" + defaultUser.FirstName + " " + defaultUser.LastName + ")";
-            AuthorizedUser = new UserDTO();
+//            AuthorizedUser = new UserDTO();
             #endregion
             #region Init value for Settings
             displaySettingDTORepository = new DisplaySettingDTORepository();
@@ -604,6 +665,10 @@ namespace EX.ViewModel
             updateAllSettingsRaport("raport");
             #endregion
             #region Desctop
+            columnCheckedDesctop = new bool[count_headers];
+            aliasDesctop = new string[count_headers];
+            widthDesctop = new int[count_headers];
+
             displaySettingsDesctop = new ObservableCollection<DisplaySettingDTO>
                 (displaySettingDTORepository.GetAllDisplaySettingDTOs().
                 Where(s => s.Intendant == "desctop"));
@@ -1271,6 +1336,8 @@ namespace EX.ViewModel
                 {
                     dSCollumnSettingDTORepository.AddOrUpdate(dc);
                 }
+                System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+                Application.Current.Shutdown();
             });
             delCollumnDesctop = new RelayCommand(c =>
             {
@@ -1471,6 +1538,21 @@ namespace EX.ViewModel
                         (visitorRepositoryDTO.GetAllVisitors());
                         _ProgressBar.Status = "All data added to database";
                         _ProgressBar.Progress = 0;
+                        statusRepository = new StatusRepositoryDTO();
+                        foreach(var v in visitors)
+                        {
+                            var newStatus = new StatusDTO
+                            {
+                                Name = "registered",
+                                UserId = authorizedUser.Id,
+                                VisitorId = v.Id,
+                                ActionTime = DateTime.Now
+                                
+                            };
+                            statusRepository.AddOrUpdate(newStatus);
+                        }
+                        Statuses = new ObservableCollection<StatusDTO>
+                            (statusRepository.GetAllStatuses());
                         Thread.Sleep(3000);
                         _ProgressBar.Visible = false;
                     });
@@ -1481,14 +1563,16 @@ namespace EX.ViewModel
             changeDataMode = new RelayCommand(c =>
             {
                 DataMode = (string)c;
-                if(DataMode == "Клиент службы баз данных")
+                if (DataMode == "Клиент службы баз данных")
                 {
                     var _visitors = clientExecutor.GetClient().GetAllVisitors();
 
-                    VisitorDTO visitorDTO = new VisitorDTO();
+                    //                   VisitorDTO visitorDTO = new VisitorDTO();
                     Visitors = new ObservableCollection<VisitorDTO>();
                     foreach (var v in _visitors) { Visitors.Add(mapper.Map<VisitorDTO>(v)); }
                 }
+                else Visitors = new ObservableCollection<VisitorDTO>
+                    (visitorRepositoryDTO.GetAllVisitors());
             });
             startServer = new RelayCommand(c =>
             {
@@ -1637,6 +1721,51 @@ namespace EX.ViewModel
         {
             ServerStatus = (string)obj;
         }
+        private void initHeaderDesctop(ObservableCollection<DSCollumnSettingDTO> _dSColumnSettings)
+        {
+            var sc = _dSColumnSettings.ToArray();
+            //коллекция visible
+            bool[] _columnChecked = new bool[sc.Count()];
+            for (int i = 0; i < sc.Count(); i++)
+            {
+                _columnChecked[i] = dSCollumnSettingsDesctop
+                    .Where(s => s.Id == sc[i].Id)
+                    .Select(s => s.Visible)
+                    .FirstOrDefault(); }
+            for (int i = 0; i < count_headers; i++)
+            {
+                try { columnCheckedDesctop[i] = _columnChecked[i]; }
+                catch { columnCheckedDesctop[i] = false; }
+            }
+            //коллекция алиасов
+            string[] _alias = new string[sc.Count()];
+            for (int i = 0; i < sc.Count(); i++)
+            {
+                _alias[i] = dSCollumnSettingsDesctop
+                    .Where(s => s.Id == sc[i].Id)
+                    .Select(s => s.Alias).FirstOrDefault();
+            }
+            for (int i = 0; i < count_headers; i++)
+            {
+                try { aliasDesctop[i] = _alias[i]; }
+                catch { aliasDesctop[i] = "none"; }
+            }
+            //коллекция width
+            int[] _width = new int[sc.Count()];
+            for (int i = 0; i < sc.Count(); i++)
+            {
+                _width[i] = dSCollumnSettingsDesctop
+                    .Where(s => s.Id == sc[i].Id)
+                    .Select(s => s.Width)
+                    .FirstOrDefault();
+            }
+            for (int i = 0; i < count_headers; i++)
+            {
+                try { widthDesctop[i] = _width[i]; }
+                catch { widthDesctop[i] = 100; }
+            }
+        }
+
         #endregion
 
         #region Events

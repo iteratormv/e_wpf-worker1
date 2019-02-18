@@ -13,8 +13,9 @@
 
     <Window.DataContext>
         <vm:MainVM/>
+        
     </Window.DataContext>
-
+    
     <Grid>
         <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch">
             <TabItem Header="Главная">
@@ -117,7 +118,497 @@
                         x:Name="workgrid"
                         Grid.Row="1" 
                         Margin="10" 
-                        AutoGenerateColumns="True" >
+                        AutoGenerateColumns="False"
+                        ItemsSource="{Binding Visitors}">
+                        <DataGrid.Resources>
+                            <vmi:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
+                            <vmi:BindingProxy 
+                                x:Key="ColumnChecked1Desctop"
+                                Data="{
+                                Binding ColumnCheckedDesctop[0],
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="ColumnChecked2Desctop" 
+                                Data="{
+                                Binding ColumnCheckedDesctop[1],
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="ColumnChecked3Desctop" 
+                                Data="{
+                                Binding ColumnCheckedDesctop[2], 
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="ColumnChecked4Desctop" 
+                                Data="{
+                                Binding ColumnCheckedDesctop[3],
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy
+                                x:Key="ColumnChecked5Desctop"
+                                Data="{
+                                Binding ColumnCheckedDesctop[4],
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy
+                                x:Key="ColumnChecked6Desctop"
+                                Data="{
+                                Binding ColumnCheckedDesctop[5],
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="ColumnChecked7Desctop"
+                                Data="{
+                                Binding ColumnCheckedDesctop[6], 
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="ColumnChecked8Desctop"
+                                Data="{
+                                Binding ColumnCheckedDesctop[7], 
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="ColumnChecked9Desctop"
+                                Data="{
+                                Binding ColumnCheckedDesctop[8],
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="ColumnChecked10Desctop"
+                                Data="{
+                                Binding ColumnCheckedDesctop[9], 
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="ColumnChecked11Desctop"
+                                Data="{
+                                Binding ColumnCheckedDesctop[10], 
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="ColumnChecked12Desctop"
+                                Data="{
+                                Binding ColumnCheckedDesctop[11],
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy
+                                x:Key="ColumnChecked13Desctop" 
+                                Data="{
+                                Binding ColumnCheckedDesctop[12],
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="ColumnChecked14Desctop"
+                                Data="{
+                                Binding ColumnCheckedDesctop[13], 
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="ColumnChecked15Desctop" 
+                                Data="{
+                                Binding ColumnCheckedDesctop[14],
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="ColumnChecked16Desctop"
+                                Data="{
+                                Binding ColumnCheckedDesctop[15],
+                                UpdateSourceTrigger=PropertyChanged}" />
+
+                            <vmi:BindingProxy 
+                                x:Key="Header1Desctop" 
+                                Data="{
+                                Binding AliasDesctop[0],
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="Header2Desctop"
+                                Data="{
+                                Binding AliasDesctop[1],
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="Header3Desctop"
+                                Data="{
+                                Binding AliasDesctop[2],
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="Header4Desctop" 
+                                Data="{
+                                Binding AliasDesctop[3],
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="Header5Desctop"
+                                Data="{
+                                Binding AliasDesctop[4], 
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="Header6Desctop"
+                                Data="{
+                                Binding AliasDesctop[5],
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy
+                                x:Key="Header7Desctop"
+                                Data="{
+                                Binding AliasDesctop[6], 
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy
+                                x:Key="Header8Desctop"
+                                Data="{
+                                Binding AliasDesctop[7], 
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="Header9Desctop"
+                                Data="{
+                                Binding AliasDesctop[8],
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="Header10Desctop"
+                                Data="{
+                                Binding AliasDesctop[9],
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="Header11Desctop"
+                                Data="{
+                                Binding AliasDesctop[10], 
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="Header12Desctop"
+                                Data="{
+                                Binding AliasDesctop[11],
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="Header13Desctop"
+                                Data="{
+                                Binding AliasDesctop[12],
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="Header14Desctop"
+                                Data="{
+                                Binding AliasDesctop[13],
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="Header15Desctop"
+                                Data="{
+                                Binding AliasDesctop[14], 
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="Header16Desctop"
+                                Data="{
+                                Binding AliasDesctop[15],
+                                UpdateSourceTrigger=PropertyChanged}" />
+
+                            <vmi:BindingProxy 
+                                x:Key="Width1Desctop" 
+                                Data="{
+                                Binding  WidthDesctop[0],
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy
+                                x:Key="Width2Desctop" 
+                                Data="{
+                                Binding  WidthDesctop[1], 
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="Width3Desctop"
+                                Data="{
+                                Binding  WidthDesctop[2],
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="Width4Desctop"
+                                Data="{
+                                Binding  WidthDesctop[3],
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy
+                                x:Key="Width5Desctop"
+                                Data="{
+                                Binding  WidthDesctop[4], 
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy
+                                x:Key="Width6Desctop"
+                                Data="{
+                                Binding  WidthDesctop[5], 
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy
+                                x:Key="Width7Desctop"
+                                Data="{
+                                Binding  WidthDesctop[6], 
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="Width8Desctop"
+                                Data="{
+                                Binding  WidthDesctop[7], 
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="Width9Desctop" 
+                                Data="{
+                                Binding  WidthDesctop[8],
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="Width10Desctop"
+                                Data="{
+                                Binding  WidthDesctop[9],
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy
+                                x:Key="Width11Desctop"
+                                Data="{
+                                Binding  WidthDesctop[10],
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy
+                                x:Key="Width12Desctop"
+                                Data="{
+                                Binding  WidthDesctop[11], 
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy
+                                x:Key="Width13Desctop"
+                                Data="{
+                                Binding  WidthDesctop[12],
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy 
+                                x:Key="Width14Desctop" 
+                                Data="{
+                                Binding  WidthDesctop[13], 
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy
+                                x:Key="Width15Desctop"
+                                Data="{
+                                Binding 
+                                WidthDesctop[14],
+                                UpdateSourceTrigger=PropertyChanged}" />
+                            <vmi:BindingProxy
+                                x:Key="Width16Desctop"
+                                Data="{
+                                Binding  WidthDesctop[15], 
+                                UpdateSourceTrigger=PropertyChanged}" />
+                        </DataGrid.Resources>
+                        <DataGrid.Columns >
+                            <DataGridTextColumn 
+                                Header="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged, 
+                                Source={StaticResource Header1Desctop}}" 
+                                Binding="{Binding Id}" 
+                                Width="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged, 
+                                Source={StaticResource Width1Desctop}}" 
+                                Visibility="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged,
+                                Converter={StaticResource boolToVisibilityConverter},
+                                Source={StaticResource ColumnChecked1Desctop}}"/>
+                            <DataGridTextColumn 
+                                Header="{
+                                Binding Data, 
+                                UpdateSourceTrigger=PropertyChanged, 
+                                Source={StaticResource Header2Desctop}}" 
+                                Binding="{Binding Column1}" 
+                                Width="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged,
+                                Source={StaticResource Width2Desctop}}"
+                                Visibility="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged,
+                                Converter={StaticResource boolToVisibilityConverter},
+                                Source={StaticResource ColumnChecked2Desctop}}"/>
+                            <DataGridTextColumn 
+                                Header="{
+                                Binding Data, 
+                                UpdateSourceTrigger=PropertyChanged, 
+                                Source={StaticResource Header3Desctop}}" 
+                                Binding="{Binding Column2}" 
+                                Width="{
+                                Binding Data, 
+                                UpdateSourceTrigger=PropertyChanged, 
+                                Source={StaticResource Width3Desctop}}"
+                                Visibility="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged,
+                                Converter={StaticResource boolToVisibilityConverter},
+                                Source={StaticResource ColumnChecked3Desctop}}"/>
+                            <DataGridTextColumn 
+                                Header="{
+                                Binding Data, 
+                                UpdateSourceTrigger=PropertyChanged, 
+                                Source={StaticResource Header4Desctop}}" 
+                                Binding="{Binding Column3}" 
+                                Width="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged,
+                                Source={StaticResource Width4Desctop}}"
+                                Visibility="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged,
+                                Converter={StaticResource boolToVisibilityConverter},
+                                Source={StaticResource ColumnChecked4Desctop}}"/>
+                            <DataGridTextColumn 
+                                Header="{
+                                Binding Data, 
+                                UpdateSourceTrigger=PropertyChanged,
+                                Source={StaticResource Header5Desctop}}" 
+                                Binding="{Binding Column4}" 
+                                Width="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged, 
+                                Source={StaticResource Width5Desctop}}" 
+                                Visibility="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged,
+                                Converter={StaticResource boolToVisibilityConverter},
+                                Source={StaticResource ColumnChecked5Desctop}}"/>
+                            <DataGridTextColumn 
+                                Header="{
+                                Binding Data, 
+                                UpdateSourceTrigger=PropertyChanged,
+                                Source={StaticResource Header6Desctop}}" 
+                                Binding="{Binding Column5}" 
+                                Width="{
+                                Binding Data, 
+                                UpdateSourceTrigger=PropertyChanged, 
+                                Source={StaticResource Width6Desctop}}"
+                                Visibility="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged,
+                                Converter={StaticResource boolToVisibilityConverter},
+                                Source={StaticResource ColumnChecked6Desctop}}"/>
+                            <DataGridTextColumn 
+                                Header="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged, 
+                                Source={StaticResource Header7Desctop}}" 
+                                Binding="{Binding Column6}" 
+                                Width="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged, 
+                                Source={StaticResource Width7Desctop}}"
+                                Visibility="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged,
+                                Converter={StaticResource boolToVisibilityConverter},
+                                Source={StaticResource ColumnChecked7Desctop}}"/>
+                            <DataGridTextColumn 
+                                Header="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged,
+                                Source={StaticResource Header8Desctop}}" 
+                                Binding="{Binding Column7}" 
+                                Width="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged,
+                                Source={StaticResource Width8Desctop}}"
+                                Visibility="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged,
+                                Converter={StaticResource boolToVisibilityConverter},
+                                Source={StaticResource ColumnChecked8Desctop}}"/>
+                            <DataGridTextColumn 
+                                Header="{
+                                Binding Data, 
+                                UpdateSourceTrigger=PropertyChanged,
+                                Source={StaticResource Header9Desctop}}" 
+                                Binding="{Binding Column8}" 
+                                Width="{
+                                Binding Data, 
+                                UpdateSourceTrigger=PropertyChanged,
+                                Source={StaticResource Width9Desctop}}"
+                                Visibility="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged,
+                                Converter={StaticResource boolToVisibilityConverter},
+                                Source={StaticResource ColumnChecked9Desctop}}"/>
+                            <DataGridTextColumn 
+                                Header="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged, 
+                                Source={StaticResource Header10Desctop}}" 
+                                Binding="{Binding Column9}" 
+                                Width="{
+                                Binding Data, 
+                                UpdateSourceTrigger=PropertyChanged,
+                                Source={StaticResource Width10Desctop}}"
+                                Visibility="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged,
+                                Converter={StaticResource boolToVisibilityConverter},
+                                Source={StaticResource ColumnChecked10Desctop}}"/>
+                            <DataGridTextColumn 
+                                Header="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged, 
+                                Source={StaticResource Header11Desctop}}" 
+                                Binding="{Binding Column10}" 
+                                Width="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged, 
+                                Source={StaticResource Width11Desctop}}"
+                                Visibility="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged,
+                                Converter={StaticResource boolToVisibilityConverter},
+                                Source={StaticResource ColumnChecked11Desctop}}"/>
+                            <DataGridTextColumn 
+                                Header="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged,
+                                Source={StaticResource Header12Desctop}}" 
+                                Binding="{Binding Column11}" 
+                                Width="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged,
+                                Source={StaticResource Width12Desctop}}" 
+                                Visibility="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged,
+                                Converter={StaticResource boolToVisibilityConverter},
+                                Source={StaticResource ColumnChecked12Desctop}}"/>
+                            <DataGridTextColumn 
+                                Header="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged,
+                                Source={StaticResource Header13Desctop}}" 
+                                Binding="{Binding Column12}" 
+                                Width="{
+                                Binding Data, 
+                                UpdateSourceTrigger=PropertyChanged,
+                                Source={StaticResource Width13Desctop}}"
+                                Visibility="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged,
+                                Converter={StaticResource boolToVisibilityConverter},
+                                Source={StaticResource ColumnChecked13Desctop}}"/>
+                            <DataGridTextColumn 
+                                Header="{
+                                Binding Data, 
+                                UpdateSourceTrigger=PropertyChanged,
+                                Source={StaticResource Header14Desctop}}" 
+                                Binding="{Binding Column13}" 
+                                Width="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged, 
+                                Source={StaticResource Width14Desctop}}"
+                                Visibility="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged,
+                                Converter={StaticResource boolToVisibilityConverter},
+                                Source={StaticResource ColumnChecked14Desctop}}"/>
+                            <DataGridTextColumn 
+                                Header="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged, 
+                                Source={StaticResource Header15Desctop}}" 
+                                Binding="{Binding Column14}" 
+                                Width="{
+                                Binding Data, 
+                                UpdateSourceTrigger=PropertyChanged,
+                                Source={StaticResource Width15Desctop}}"
+                                Visibility="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged,
+                                Converter={StaticResource boolToVisibilityConverter},
+                                Source={StaticResource ColumnChecked15Desctop}}"/>
+                            <DataGridTextColumn 
+                                Header="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged,
+                                Source={StaticResource Header16Desctop}}" 
+                                Binding="{Binding Column15}" 
+                                Width="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged,
+                                Source={StaticResource Width16Desctop}}"
+                                Visibility="{
+                                Binding Data,
+                                UpdateSourceTrigger=PropertyChanged,
+                                Converter={StaticResource boolToVisibilityConverter},
+                                Source={StaticResource ColumnChecked16Desctop}}"/>
+
+                        </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
             </TabItem>
@@ -238,7 +729,9 @@
                                 </StackPanel>
                             </Grid>
                         </TabItem>
-                        <TabItem Header="Цвет бейджа" />
+                        <TabItem Header="Цвет бейджа">
+                            
+                        </TabItem>
                         <TabItem Header="Форма ввода">
                             <Grid  VerticalAlignment="Stretch">
                                 <Grid.ColumnDefinitions>
