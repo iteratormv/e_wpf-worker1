@@ -15,7 +15,7 @@ namespace EX.Model.DTO
         [DataMember]
         public string Name { get; set; }
         [DataMember]
-        public DateTime? ActionTime { get; set; }
+        public string ActionTime { get; set; }
 
         [DataMember]
         public int UserId { get; set; }

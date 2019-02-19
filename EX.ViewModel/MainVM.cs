@@ -12,6 +12,7 @@ using EX.Service;
 using EX.ViewModel.Infrastructure;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -197,9 +198,11 @@ namespace EX.ViewModel
             set
             {
                 dSCollumnSettingsForm = value;
+                initLabelsForm(dSCollumnSettingsForm);
                 OnPropertyChanged(nameof(DSCollumnSettingsForm));
             }
         }
+
         #endregion
         #endregion
         #region Fields for Settings
@@ -267,8 +270,8 @@ namespace EX.ViewModel
         #endregion
         #endregion
         #region Service fields for Setting
+        #region Desctop
         const int count_headers = 16;
-
         bool[] columnCheckedDesctop;
         public bool[] ColumnCheckedDesctop
         {
@@ -293,6 +296,41 @@ namespace EX.ViewModel
                 widthDesctop = value;
                 OnPropertyChanged(nameof(WidthDesctop)); }
         }
+        #endregion
+        #region Form
+        const int count_form_fields = 16;
+        bool[] rowCheckedForm;
+        public bool[] RowChedForm
+        {
+            get { return rowCheckedForm; }
+            set
+            {
+                rowCheckedForm = value;
+                OnPropertyChanged(nameof(RowChedForm));
+            }
+        }
+        string[] aliasForm;
+        public string[] AliasForm
+        {
+            get { return aliasForm; }
+            set
+            {
+                aliasForm = value;
+                OnPropertyChanged(nameof(AliasForm));
+            }
+        }
+        int[] heightForm;
+        public int[] HeightForm
+        {
+            get { return heightForm; }
+            set
+            {
+                heightForm = value;
+                OnPropertyChanged(nameof(HeightForm));
+            }
+        }
+
+        #endregion
 
         #endregion
 
@@ -440,7 +478,10 @@ namespace EX.ViewModel
         #endregion
         #region Commands for File
         RelayCommand addDataFromFileToDatabase;
-        public RelayCommand AddDataFromFileToDatabase { get { return addDataFromFileToDatabase; } }
+        public RelayCommand AddDataFromFileToDatabase
+        {
+            get { return addDataFromFileToDatabase; }
+        }
         #endregion
         #endregion
         #region Context for Sevice
@@ -505,6 +546,189 @@ namespace EX.ViewModel
                 OnPropertyChanged(nameof(DesctopVisitors));
             }
         }
+        int countRegistredVisitors;
+        public int CountRegistredVisitors
+        {
+            get { return countRegistredVisitors; }
+            set
+            {
+                countRegistredVisitors = value;
+                OnPropertyChanged(nameof(CountRegistredVisitors));
+            }
+        }
+        int countActualVisitors;
+        public int CountActualVisitors
+        {
+            get { return countActualVisitors; }
+            set
+            {
+                countActualVisitors = value;
+                OnPropertyChanged(nameof(CountActualVisitors));
+            }
+        }
+        int countCreateVisitors;
+        public int CountCreateVisitors
+        {
+            get { return countCreateVisitors; }
+            set
+            {
+                countCreateVisitors = value;
+                OnPropertyChanged(nameof(CountCreateVisitors));
+            }
+        }
+        int countNotcameVisitors;
+        public int CountNotcameVisitors
+        {
+            get { return countNotcameVisitors; }
+            set
+            {
+                countNotcameVisitors = value;
+                OnPropertyChanged(nameof(CountNotcameVisitors));
+            }
+        }
+        int countAllVisitors;
+        public int CountAllVisitors
+        {
+            get { return countAllVisitors; }
+            set
+            {
+                countAllVisitors = value;
+                OnPropertyChanged(nameof(CountAllVisitors));
+            }
+        }
+
+        ObservableCollection<string> combo1Collection;
+        public ObservableCollection<string> Combo1Collection
+        {
+            get { return combo1Collection; }
+            set
+            {
+                combo1Collection = value;
+                OnPropertyChanged(nameof(Combo1Collection));
+            }
+        }
+        ObservableCollection<string> combo2Collection;
+        public ObservableCollection<string> Combo2Collection
+        {
+            get { return combo2Collection; }
+            set
+            {
+                combo2Collection = value;
+                OnPropertyChanged(nameof(Combo2Collection));
+            }
+        }
+        ObservableCollection<string> combo3Collection;
+        public ObservableCollection<string> Combo3Collection
+        {
+            get { return combo3Collection; }
+            set
+            {
+                combo3Collection = value;
+                OnPropertyChanged(nameof(Combo3Collection));
+            }
+        }
+
+ 
+        string authDate;
+        public string AuthDate
+        {
+            get { return authDate; }
+            set
+            {
+                authDate = value;
+                OnPropertyChanged(nameof(AuthDate));
+            }
+        }
+        VisitorDTO selectDesctopVisitor;
+        public VisitorDTO SelectDesctopVisitor
+        {
+            get { return selectDesctopVisitor; }
+            set
+            {
+                selectDesctopVisitor = value;
+                OnPropertyChanged(nameof(SelectDesctopVisitor));
+            }
+        }
+        VisitorDTO editDesctopVisitor;
+        public VisitorDTO EditDesctopVisitor
+        {
+            get { return editDesctopVisitor; }
+            set
+            {
+                editDesctopVisitor = value;
+                OnPropertyChanged(nameof(EditDesctopVisitor));
+            }
+        }
+        VisitorDTO createDesctopVisitor;
+        public VisitorDTO CreateDesctopVisitor
+        {
+            get { return createDesctopVisitor; }
+            set
+            {
+                createDesctopVisitor = value;
+                OnPropertyChanged(nameof(CreateDesctopVisitor));
+
+            }
+        }
+
+        string currentTime;
+        public string CurrentTime
+        {
+            get { return currentTime; }
+            set
+            {
+                currentTime = value;
+                OnPropertyChanged(nameof(CurrentTime));
+            }
+        }
+
+        bool canExecuteCreateVisitor;
+        public bool CanExecuteCreateVisitor
+        {
+            get { return canExecuteCreateVisitor; }
+            set
+            {
+                canExecuteCreateVisitor = value;
+                OnPropertyChanged(nameof(CanExecuteCreateVisitor));
+            }
+        }
+        bool canExecuteEditVisitor;
+        public bool CanExecuteEditVisitor
+        {
+            get { return canExecuteEditVisitor; }
+            set
+            {
+                canExecuteEditVisitor = value;
+                OnPropertyChanged(nameof(CanExecuteEditVisitor));
+            }
+        }
+        bool canExecuteSaveEditVisitor;
+        public bool CanExecuteSaveEditVisitor
+        {
+            get { return canExecuteSaveEditVisitor; }
+            set
+            {
+                canExecuteSaveEditVisitor = value;
+                OnPropertyChanged(nameof(CanExecuteSaveEditVisitor));
+            }
+        }
+
+        RelayCommand createVisitor;
+        public RelayCommand CreateVisitor
+        {
+            get { return createVisitor; }
+        }
+        RelayCommand editVisitor;
+        public RelayCommand EditVisitor
+        {
+            get { return editVisitor; }
+        }
+        RelayCommand saveEditVisitor;
+        public RelayCommand SaveEditVisitor
+        {
+            get { return saveEditVisitor; }
+        }
+
 
 
         public MainVM()
@@ -513,6 +737,8 @@ namespace EX.ViewModel
             visitorRepositoryDTO = new VisitorRepositoryDTO();
             Visitors = new ObservableCollection<VisitorDTO>
                      (visitorRepositoryDTO.GetAllVisitors());
+            UpdateAllVisitorFields(visitors);
+            StartShowTime();
 
             #region Init value for Administration
             userRepository = new UserRepositoryDTO();
@@ -747,10 +973,13 @@ namespace EX.ViewModel
             updateAllSettingsDesctop("desctop");
             #endregion
             #region Form
+            rowCheckedForm = new bool[count_form_fields];
+            aliasForm = new string[count_form_fields];
+            heightForm = new int[count_form_fields];
+
             displaySettingsForm = new ObservableCollection<DisplaySettingDTO>
                 (displaySettingDTORepository.GetAllDisplaySettingDTOs().
                 Where(s => s.Intendant == "form"));
-
             DisplaySettingDTO defaultDisplayFormSetting;
             if (displaySettingsForm.Count() == 0)
             {
@@ -855,6 +1084,32 @@ namespace EX.ViewModel
             });
             mapper = config.CreateMapper();
             #endregion
+
+            statusRepository = new StatusRepositoryDTO();
+
+            selectDesctopVisitor = new VisitorDTO();
+            editDesctopVisitor = new VisitorDTO();
+            canExecuteCreateVisitor = true;
+            canExecuteEditVisitor = true;
+            canExecuteSaveEditVisitor = false;
+
+
+            combo1Collection = new ObservableCollection<string>(new List<string>
+            {
+                "PAID", "UNPAID", "FOC", "CXLD"
+            });
+
+            combo2Collection = new ObservableCollection<string>(new List<string>
+            {
+                "Delegate", "Speakers", "Guests", "Media", "Press", "SPEX", "Organiser"
+            });
+
+            combo3Collection = new ObservableCollection<string>(new List<string>
+            {
+                "Замена"
+            });
+
+
 
             #region Implementation cammands for Administration
             addUser = new RelayCommand(c =>
@@ -1183,7 +1438,7 @@ namespace EX.ViewModel
                     Select(s => s.Id).FirstOrDefault();
                 addNewCollumn(_intendant, dsid, dsid);
                 updateAllSettingsRaport(_intendant);
-            }, c => dSCollumnSettingsRaport.Count() < 17);
+            }, c => dSCollumnSettingsRaport.Count() < 15);
             saveSettingChangesRaport = new RelayCommand(c =>
             {
                 var _intendant = c as string;
@@ -1324,7 +1579,7 @@ namespace EX.ViewModel
                     Select(s => s.Id).FirstOrDefault();
                 addNewCollumn(_intendant, dsid, dsid);
                 updateAllSettingsDesctop(_intendant);
-            }, c => dSCollumnSettingsDesctop.Count() < 17);
+            }, c => dSCollumnSettingsDesctop.Count() < 15);
             saveSettingChangesDesctop = new RelayCommand(c =>
             {
                 var _intendant = c as string;
@@ -1476,7 +1731,7 @@ namespace EX.ViewModel
                     Select(s => s.Id).FirstOrDefault();
                 addNewCollumn(_intendant, dsid, dsid);
                 updateAllSettingsForm(_intendant);
-            }, c => dSCollumnSettingsForm.Count() < 17);
+            }, c => dSCollumnSettingsForm.Count() < 15);
             saveSettingChangesForm = new RelayCommand(c =>///jcn
             {
                 var _intendant = c as string;
@@ -1488,6 +1743,8 @@ namespace EX.ViewModel
                 {
                     dSCollumnSettingDTORepository.AddOrUpdate(dc);
                 }
+                System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+                Application.Current.Shutdown();
             });
             delCollumnForm = new RelayCommand(c =>
             {
@@ -1546,15 +1803,20 @@ namespace EX.ViewModel
                                 Name = "registered",
                                 UserId = authorizedUser.Id,
                                 VisitorId = v.Id,
-                                ActionTime = DateTime.Now
+                                ActionTime = DateTime.Now.ToString()
                                 
                             };
-                            statusRepository.AddOrUpdate(newStatus);
+                            v.CurrentStatus = newStatus.Name;
+                            visitorRepositoryDTO.AddOrUpdateVisitor(v);
+                            statusRepository.Add(newStatus);
                         }
                         Statuses = new ObservableCollection<StatusDTO>
                             (statusRepository.GetAllStatuses());
-                        Thread.Sleep(3000);
+                        Thread.Sleep(1000);
                         _ProgressBar.Visible = false;
+                        Visitors = new ObservableCollection<VisitorDTO>
+                        (visitorRepositoryDTO.GetAllVisitors());
+                        UpdateAllVisitorFields(visitors);
                     });
                 }
             });
@@ -1573,6 +1835,7 @@ namespace EX.ViewModel
                 }
                 else Visitors = new ObservableCollection<VisitorDTO>
                     (visitorRepositoryDTO.GetAllVisitors());
+                UpdateAllVisitorFields(visitors);
             });
             startServer = new RelayCommand(c =>
             {
@@ -1588,6 +1851,49 @@ namespace EX.ViewModel
                 Thread.Sleep(200);
             }, c => ServerStatus == "listerning....");
             #endregion
+
+            createVisitor = new RelayCommand(c =>
+            {
+                createDesctopVisitor = editDesctopVisitor;
+                createDesctopVisitor.CurrentStatus = "create";
+                var _createVisitor = visitorRepositoryDTO
+                .AddOrUpdateVisitor(createDesctopVisitor);
+                Visitors = new ObservableCollection<VisitorDTO>
+                (visitorRepositoryDTO.GetAllVisitors());
+                UpdateAllVisitorFields(visitors);
+                statusRepository.Add(new StatusDTO
+                {
+                    Name = "create",
+                    UserId = AuthorizedUser.Id,
+                    VisitorId = _createVisitor.Id,
+                    ActionTime = DateTime.Now.ToString()                   
+                });
+            },c=> canExecuteCreateVisitor);
+            editVisitor = new RelayCommand(c =>
+            {
+                EditDesctopVisitor = selectDesctopVisitor;
+                CanExecuteCreateVisitor = false;
+                CanExecuteEditVisitor = false;
+                CanExecuteSaveEditVisitor = true;
+            },c=> canExecuteEditVisitor);
+            saveEditVisitor = new RelayCommand(c =>
+            {
+//                editDesctopVisitor.CurrentStatus = "edited";
+                var _editVisitor = visitorRepositoryDTO
+                .AddOrUpdateVisitor(editDesctopVisitor);
+                Visitors = new ObservableCollection<VisitorDTO>
+                (visitorRepositoryDTO.GetAllVisitors());
+                UpdateAllVisitorFields(visitors);
+                statusRepository.Add(new StatusDTO
+                {
+                    Name = "edited",
+                    UserId = authorizedUser.Id,
+                    VisitorId = _editVisitor.Id,
+                    ActionTime = DateTime.Now.ToString()
+                });
+            }, c => canExecuteSaveEditVisitor);
+
+
         }
 
         #region Implemetation methods
@@ -1728,7 +2034,7 @@ namespace EX.ViewModel
             bool[] _columnChecked = new bool[sc.Count()];
             for (int i = 0; i < sc.Count(); i++)
             {
-                _columnChecked[i] = dSCollumnSettingsDesctop
+                _columnChecked[i] = dSCollumnSettingsDesctop  //????????????
                     .Where(s => s.Id == sc[i].Id)
                     .Select(s => s.Visible)
                     .FirstOrDefault(); }
@@ -1741,7 +2047,7 @@ namespace EX.ViewModel
             string[] _alias = new string[sc.Count()];
             for (int i = 0; i < sc.Count(); i++)
             {
-                _alias[i] = dSCollumnSettingsDesctop
+                _alias[i] = dSCollumnSettingsDesctop  //??????????????
                     .Where(s => s.Id == sc[i].Id)
                     .Select(s => s.Alias).FirstOrDefault();
             }
@@ -1754,7 +2060,7 @@ namespace EX.ViewModel
             int[] _width = new int[sc.Count()];
             for (int i = 0; i < sc.Count(); i++)
             {
-                _width[i] = dSCollumnSettingsDesctop
+                _width[i] = dSCollumnSettingsDesctop//?????????????????
                     .Where(s => s.Id == sc[i].Id)
                     .Select(s => s.Width)
                     .FirstOrDefault();
@@ -1765,7 +2071,91 @@ namespace EX.ViewModel
                 catch { widthDesctop[i] = 100; }
             }
         }
+        private void initLabelsForm(ObservableCollection<DSCollumnSettingDTO> _dSCollumnSettingsForm)
+        {
+            var sr = _dSCollumnSettingsForm.ToArray();
+            //коллекция visible
+            bool[] _rowChecked = new bool[sr.Count()];
+            for(int i=0; i < sr.Count(); i++)
+            {
+                _rowChecked[i] = dSCollumnSettingsForm
+                    .Where(s => s.Id == sr[i].Id)
+                    .Select(s => s.Visible)
+                    .FirstOrDefault();
+            }
+            for(int i = 0; i< count_form_fields; i++)
+            {
+                try { rowCheckedForm[i] = _rowChecked[i]; }
+                catch { rowCheckedForm[i] = false; }
+            }
+            //коллекция алиасов
+            string[] _alias = new string[sr.Count()];
+            for(int i = 0; i < sr.Count(); i++)
+            {
+                _alias[i] = dSCollumnSettingsForm
+                    .Where(s => s.Id == sr[i].Id)
+                    .Select(s => s.Alias)
+                    .FirstOrDefault();
+            }
+            for(int i=0; i<count_form_fields; i++)
+            {
+                try { aliasForm[i] = _alias[i]; }
+                catch { aliasForm[i] = "none"; }
+            }
+            //коллекция height
+            int[] _height = new int[sr.Count()];
+            for(int i = 0; i < sr.Count(); i++)
+            {
+                _height[i] = dSCollumnSettingsForm
+                    .Where(s => s.Id == sr[i].Id)
+                    .Select(s => s.Width)
+                    .FirstOrDefault();
+            }
+            for( int i = 0;i < count_form_fields; i++ )
+            {
+                try { heightForm[i] = _height[i]; }
+                catch { heightForm[i] = 0; }
+            }
+        }
+        private void UpdateAllVisitorFields(ObservableCollection<VisitorDTO> visitors)
+        {
+            DesctopVisitors = new ObservableCollection<VisitorDTO>
+                (visitors
+                .Where(v => v.CurrentStatus == "actual" ||
+                v.CurrentStatus == "create" ||
+                v.CurrentStatus == "edited"));
+            CountActualVisitors = visitors
+                .Where(v => v.CurrentStatus == "actual")
+                .Count();
+            CountRegistredVisitors = visitors
+                .Where(v => v.CurrentStatus == "registered"
+                || v.CurrentStatus == "actual")
+                .Count();
+            CountCreateVisitors = visitors
+                .Where(v => v.CurrentStatus == "create")
+                .Count();
+            CountAllVisitors = visitors.Count();
+            CountNotcameVisitors = countRegistredVisitors - countActualVisitors;
 
+            //Combo1Collection = new ObservableCollection<string>
+            //    (visitors.Select(s => s.Column2));
+            //Combo2Collection = new ObservableCollection<string>
+            //    (visitors.Select(s => s.Column4));
+            //Combo3Collection = new ObservableCollection<string>
+            //    (visitors.Select(s => s.Column5));
+        }
+        private void StartShowTime()
+        {
+            Task.Factory.StartNew(ChangeCurrentTime);
+        }
+        private void ChangeCurrentTime()
+        {
+            while (true)
+            {
+                CurrentTime = DateTime.Now.ToString();
+                Thread.Sleep(1000);
+            }
+        }
         #endregion
 
         #region Events

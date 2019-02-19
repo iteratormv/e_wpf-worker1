@@ -39,10 +39,10 @@ namespace EX.Model.Exel
                 {
                     try
                     {
-                        if (vallueArray[row, col] == null) data[row - 1, col - 1] = "empty";
+                        if (vallueArray[row, col] == null) data[row - 1, col - 1] = " ";
                         else data[row - 1, col - 1] = vallueArray[row, col].ToString();
                     }
-                    catch { data[row - 1, col - 1] = "none"; }
+                    catch { data[row - 1, col - 1] = " "; }
                 }
             }
         }
@@ -91,10 +91,10 @@ namespace EX.Model.Exel
                 {
                     try
                     {
-                        if (vallueArray[row, col] == null) data[row - 1, col - 1] = "empty";
+                        if (vallueArray[row, col] == null) data[row - 1, col - 1] = " ";
                         else data[row - 1, col - 1] = vallueArray[row, col].ToString();
                     }
-                    catch { data[row - 1, col - 1] = "none"; }
+                    catch { data[row - 1, col - 1] = " "; }
                 }
             }
         }
@@ -144,10 +144,10 @@ namespace EX.Model.Exel
                 {
                     try
                     {
-                        if (vallueArray[row, col] == null) data[row - 1, col - 1] = "empty";
+                        if (vallueArray[row, col] == null) data[row - 1, col - 1] = " ";
                         else data[row - 1, col - 1] = vallueArray[row, col].ToString();
                     }
-                    catch { data[row - 1, col - 1] = "none"; }
+                    catch { data[row - 1, col - 1] = " "; }
                 }
             }
         }

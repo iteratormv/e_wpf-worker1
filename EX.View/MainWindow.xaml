@@ -9,17 +9,24 @@
         mc:Ignorable="d"
         xmlns:i = "http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        Title="Exhibition Manager" Height="722" Width="1234" WindowState="Maximized">
+        Title="Exhibition Manager" Height="722" Width="1334" WindowState="Maximized">
 
     <Window.DataContext>
         <vm:MainVM/>
-        
+
     </Window.DataContext>
-    
+
     <Grid>
-        <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="270*"/>
+            <ColumnDefinition Width="343*"/>
+        </Grid.ColumnDefinitions>
+        <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch" Grid.ColumnSpan="2">
             <TabItem Header="Главная">
                 <Grid Background="#FFE5E5E5" >
+                    <Grid.Resources>
+                        <vmi:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
+                    </Grid.Resources>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="12*"/>
                         <RowDefinition Height="60*"/>
@@ -62,7 +69,7 @@
                             Text="Статус оплаты"/>
                         <StackPanel 
                             Orientation="Vertical" 
-                            Width="120" 
+                            Width="105" 
                             Margin="5">
                             <TextBlock
                                 HorizontalAlignment="Center"
@@ -71,11 +78,11 @@
                                 FontSize="50"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                Text="5555"/>
+                                Text="{Binding CountRegistredVisitors}"/>
                         </StackPanel>
                         <StackPanel 
                             Orientation="Vertical" 
-                            Width="180" 
+                            Width="150" 
                             Margin="5">
                             <TextBlock
                                 HorizontalAlignment="Center"
@@ -85,11 +92,11 @@
                                 FontStyle="Normal"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                Text="5555"/>
+                                Text="{Binding CountActualVisitors}"/>
                         </StackPanel>
                         <StackPanel 
                             Orientation="Vertical" 
-                            Width="120" 
+                            Width="90" 
                             Margin="5">
                             <TextBlock
                                 HorizontalAlignment="Center"
@@ -98,11 +105,11 @@
                                 FontSize="50"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                Text="5555"/>
+                                Text="{Binding CountCreateVisitors}"/>
                         </StackPanel>
                         <StackPanel 
                             Orientation="Vertical" 
-                            Width="120" 
+                            Width="90" 
                             Margin="5">
                             <TextBlock
                                 HorizontalAlignment="Center"
@@ -111,263 +118,283 @@
                                 FontSize="50"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                Text="5555"/>
+                                Text="{Binding CountNotcameVisitors}"/>
+                        </StackPanel>
+                        <StackPanel 
+                            Orientation="Vertical" 
+                            Width="110" 
+                            Margin="5">
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                Text="Общее количество"/>
+                            <TextBlock
+                                FontSize="50"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Text="{Binding CountAllVisitors}"/>
                         </StackPanel>
                     </StackPanel>
-                    <DataGrid 
-                        x:Name="workgrid"
-                        Grid.Row="1" 
-                        Margin="10" 
-                        AutoGenerateColumns="False"
-                        ItemsSource="{Binding Visitors}">
-                        <DataGrid.Resources>
-                            <vmi:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
-                            <vmi:BindingProxy 
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="45*"/>
+                            <ColumnDefinition Width="15*"/>
+                        </Grid.ColumnDefinitions>
+                        <DataGrid 
+                            SelectedItem="{
+                            Binding SelectDesctopVisitor,
+                            Mode=OneWayToSource}"
+                            x:Name="workgrid"
+                            Grid.Column="0" 
+                            Margin="10" 
+                            AutoGenerateColumns="False"
+                            ItemsSource="{Binding DesctopVisitors}">
+                            <DataGrid.Resources>
+                                <vmi:BindingProxy 
                                 x:Key="ColumnChecked1Desctop"
                                 Data="{
                                 Binding ColumnCheckedDesctop[0],
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="ColumnChecked2Desctop" 
                                 Data="{
                                 Binding ColumnCheckedDesctop[1],
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="ColumnChecked3Desctop" 
                                 Data="{
                                 Binding ColumnCheckedDesctop[2], 
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="ColumnChecked4Desctop" 
                                 Data="{
                                 Binding ColumnCheckedDesctop[3],
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy
+                                <vmi:BindingProxy
                                 x:Key="ColumnChecked5Desctop"
                                 Data="{
                                 Binding ColumnCheckedDesctop[4],
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy
+                                <vmi:BindingProxy
                                 x:Key="ColumnChecked6Desctop"
                                 Data="{
                                 Binding ColumnCheckedDesctop[5],
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="ColumnChecked7Desctop"
                                 Data="{
                                 Binding ColumnCheckedDesctop[6], 
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="ColumnChecked8Desctop"
                                 Data="{
                                 Binding ColumnCheckedDesctop[7], 
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="ColumnChecked9Desctop"
                                 Data="{
                                 Binding ColumnCheckedDesctop[8],
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="ColumnChecked10Desctop"
                                 Data="{
                                 Binding ColumnCheckedDesctop[9], 
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="ColumnChecked11Desctop"
                                 Data="{
                                 Binding ColumnCheckedDesctop[10], 
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="ColumnChecked12Desctop"
                                 Data="{
                                 Binding ColumnCheckedDesctop[11],
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy
+                                <vmi:BindingProxy
                                 x:Key="ColumnChecked13Desctop" 
                                 Data="{
                                 Binding ColumnCheckedDesctop[12],
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="ColumnChecked14Desctop"
                                 Data="{
                                 Binding ColumnCheckedDesctop[13], 
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="ColumnChecked15Desctop" 
                                 Data="{
                                 Binding ColumnCheckedDesctop[14],
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="ColumnChecked16Desctop"
                                 Data="{
                                 Binding ColumnCheckedDesctop[15],
                                 UpdateSourceTrigger=PropertyChanged}" />
 
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="Header1Desctop" 
                                 Data="{
                                 Binding AliasDesctop[0],
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="Header2Desctop"
                                 Data="{
                                 Binding AliasDesctop[1],
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="Header3Desctop"
                                 Data="{
                                 Binding AliasDesctop[2],
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="Header4Desctop" 
                                 Data="{
                                 Binding AliasDesctop[3],
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="Header5Desctop"
                                 Data="{
                                 Binding AliasDesctop[4], 
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="Header6Desctop"
                                 Data="{
                                 Binding AliasDesctop[5],
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy
+                                <vmi:BindingProxy
                                 x:Key="Header7Desctop"
                                 Data="{
                                 Binding AliasDesctop[6], 
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy
+                                <vmi:BindingProxy
                                 x:Key="Header8Desctop"
                                 Data="{
                                 Binding AliasDesctop[7], 
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="Header9Desctop"
                                 Data="{
                                 Binding AliasDesctop[8],
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="Header10Desctop"
                                 Data="{
                                 Binding AliasDesctop[9],
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="Header11Desctop"
                                 Data="{
                                 Binding AliasDesctop[10], 
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="Header12Desctop"
                                 Data="{
                                 Binding AliasDesctop[11],
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="Header13Desctop"
                                 Data="{
                                 Binding AliasDesctop[12],
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="Header14Desctop"
                                 Data="{
                                 Binding AliasDesctop[13],
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="Header15Desctop"
                                 Data="{
                                 Binding AliasDesctop[14], 
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="Header16Desctop"
                                 Data="{
                                 Binding AliasDesctop[15],
                                 UpdateSourceTrigger=PropertyChanged}" />
 
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="Width1Desctop" 
                                 Data="{
                                 Binding  WidthDesctop[0],
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy
+                                <vmi:BindingProxy
                                 x:Key="Width2Desctop" 
                                 Data="{
                                 Binding  WidthDesctop[1], 
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="Width3Desctop"
                                 Data="{
                                 Binding  WidthDesctop[2],
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="Width4Desctop"
                                 Data="{
                                 Binding  WidthDesctop[3],
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy
+                                <vmi:BindingProxy
                                 x:Key="Width5Desctop"
                                 Data="{
                                 Binding  WidthDesctop[4], 
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy
+                                <vmi:BindingProxy
                                 x:Key="Width6Desctop"
                                 Data="{
                                 Binding  WidthDesctop[5], 
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy
+                                <vmi:BindingProxy
                                 x:Key="Width7Desctop"
                                 Data="{
                                 Binding  WidthDesctop[6], 
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="Width8Desctop"
                                 Data="{
                                 Binding  WidthDesctop[7], 
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="Width9Desctop" 
                                 Data="{
                                 Binding  WidthDesctop[8],
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="Width10Desctop"
                                 Data="{
                                 Binding  WidthDesctop[9],
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy
+                                <vmi:BindingProxy
                                 x:Key="Width11Desctop"
                                 Data="{
                                 Binding  WidthDesctop[10],
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy
+                                <vmi:BindingProxy
                                 x:Key="Width12Desctop"
                                 Data="{
                                 Binding  WidthDesctop[11], 
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy
+                                <vmi:BindingProxy
                                 x:Key="Width13Desctop"
                                 Data="{
                                 Binding  WidthDesctop[12],
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy 
+                                <vmi:BindingProxy 
                                 x:Key="Width14Desctop" 
                                 Data="{
                                 Binding  WidthDesctop[13], 
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy
+                                <vmi:BindingProxy
                                 x:Key="Width15Desctop"
                                 Data="{
                                 Binding 
                                 WidthDesctop[14],
                                 UpdateSourceTrigger=PropertyChanged}" />
-                            <vmi:BindingProxy
+                                <vmi:BindingProxy
                                 x:Key="Width16Desctop"
                                 Data="{
                                 Binding  WidthDesctop[15], 
                                 UpdateSourceTrigger=PropertyChanged}" />
-                        </DataGrid.Resources>
-                        <DataGrid.Columns >
-                            <DataGridTextColumn 
+                            </DataGrid.Resources>
+                            <DataGrid.Columns >
+                                <DataGridTextColumn 
                                 Header="{
                                 Binding Data,
                                 UpdateSourceTrigger=PropertyChanged, 
@@ -382,7 +409,7 @@
                                 UpdateSourceTrigger=PropertyChanged,
                                 Converter={StaticResource boolToVisibilityConverter},
                                 Source={StaticResource ColumnChecked1Desctop}}"/>
-                            <DataGridTextColumn 
+                                <DataGridTextColumn 
                                 Header="{
                                 Binding Data, 
                                 UpdateSourceTrigger=PropertyChanged, 
@@ -397,7 +424,7 @@
                                 UpdateSourceTrigger=PropertyChanged,
                                 Converter={StaticResource boolToVisibilityConverter},
                                 Source={StaticResource ColumnChecked2Desctop}}"/>
-                            <DataGridTextColumn 
+                                <DataGridTextColumn 
                                 Header="{
                                 Binding Data, 
                                 UpdateSourceTrigger=PropertyChanged, 
@@ -412,7 +439,7 @@
                                 UpdateSourceTrigger=PropertyChanged,
                                 Converter={StaticResource boolToVisibilityConverter},
                                 Source={StaticResource ColumnChecked3Desctop}}"/>
-                            <DataGridTextColumn 
+                                <DataGridTextColumn 
                                 Header="{
                                 Binding Data, 
                                 UpdateSourceTrigger=PropertyChanged, 
@@ -427,7 +454,7 @@
                                 UpdateSourceTrigger=PropertyChanged,
                                 Converter={StaticResource boolToVisibilityConverter},
                                 Source={StaticResource ColumnChecked4Desctop}}"/>
-                            <DataGridTextColumn 
+                                <DataGridTextColumn 
                                 Header="{
                                 Binding Data, 
                                 UpdateSourceTrigger=PropertyChanged,
@@ -442,7 +469,7 @@
                                 UpdateSourceTrigger=PropertyChanged,
                                 Converter={StaticResource boolToVisibilityConverter},
                                 Source={StaticResource ColumnChecked5Desctop}}"/>
-                            <DataGridTextColumn 
+                                <DataGridTextColumn 
                                 Header="{
                                 Binding Data, 
                                 UpdateSourceTrigger=PropertyChanged,
@@ -457,7 +484,7 @@
                                 UpdateSourceTrigger=PropertyChanged,
                                 Converter={StaticResource boolToVisibilityConverter},
                                 Source={StaticResource ColumnChecked6Desctop}}"/>
-                            <DataGridTextColumn 
+                                <DataGridTextColumn 
                                 Header="{
                                 Binding Data,
                                 UpdateSourceTrigger=PropertyChanged, 
@@ -472,7 +499,7 @@
                                 UpdateSourceTrigger=PropertyChanged,
                                 Converter={StaticResource boolToVisibilityConverter},
                                 Source={StaticResource ColumnChecked7Desctop}}"/>
-                            <DataGridTextColumn 
+                                <DataGridTextColumn 
                                 Header="{
                                 Binding Data,
                                 UpdateSourceTrigger=PropertyChanged,
@@ -487,7 +514,7 @@
                                 UpdateSourceTrigger=PropertyChanged,
                                 Converter={StaticResource boolToVisibilityConverter},
                                 Source={StaticResource ColumnChecked8Desctop}}"/>
-                            <DataGridTextColumn 
+                                <DataGridTextColumn 
                                 Header="{
                                 Binding Data, 
                                 UpdateSourceTrigger=PropertyChanged,
@@ -502,7 +529,7 @@
                                 UpdateSourceTrigger=PropertyChanged,
                                 Converter={StaticResource boolToVisibilityConverter},
                                 Source={StaticResource ColumnChecked9Desctop}}"/>
-                            <DataGridTextColumn 
+                                <DataGridTextColumn 
                                 Header="{
                                 Binding Data,
                                 UpdateSourceTrigger=PropertyChanged, 
@@ -517,7 +544,7 @@
                                 UpdateSourceTrigger=PropertyChanged,
                                 Converter={StaticResource boolToVisibilityConverter},
                                 Source={StaticResource ColumnChecked10Desctop}}"/>
-                            <DataGridTextColumn 
+                                <DataGridTextColumn 
                                 Header="{
                                 Binding Data,
                                 UpdateSourceTrigger=PropertyChanged, 
@@ -532,7 +559,7 @@
                                 UpdateSourceTrigger=PropertyChanged,
                                 Converter={StaticResource boolToVisibilityConverter},
                                 Source={StaticResource ColumnChecked11Desctop}}"/>
-                            <DataGridTextColumn 
+                                <DataGridTextColumn 
                                 Header="{
                                 Binding Data,
                                 UpdateSourceTrigger=PropertyChanged,
@@ -547,7 +574,7 @@
                                 UpdateSourceTrigger=PropertyChanged,
                                 Converter={StaticResource boolToVisibilityConverter},
                                 Source={StaticResource ColumnChecked12Desctop}}"/>
-                            <DataGridTextColumn 
+                                <DataGridTextColumn 
                                 Header="{
                                 Binding Data,
                                 UpdateSourceTrigger=PropertyChanged,
@@ -562,7 +589,7 @@
                                 UpdateSourceTrigger=PropertyChanged,
                                 Converter={StaticResource boolToVisibilityConverter},
                                 Source={StaticResource ColumnChecked13Desctop}}"/>
-                            <DataGridTextColumn 
+                                <DataGridTextColumn 
                                 Header="{
                                 Binding Data, 
                                 UpdateSourceTrigger=PropertyChanged,
@@ -577,7 +604,7 @@
                                 UpdateSourceTrigger=PropertyChanged,
                                 Converter={StaticResource boolToVisibilityConverter},
                                 Source={StaticResource ColumnChecked14Desctop}}"/>
-                            <DataGridTextColumn 
+                                <DataGridTextColumn 
                                 Header="{
                                 Binding Data,
                                 UpdateSourceTrigger=PropertyChanged, 
@@ -592,7 +619,7 @@
                                 UpdateSourceTrigger=PropertyChanged,
                                 Converter={StaticResource boolToVisibilityConverter},
                                 Source={StaticResource ColumnChecked15Desctop}}"/>
-                            <DataGridTextColumn 
+                                <DataGridTextColumn 
                                 Header="{
                                 Binding Data,
                                 UpdateSourceTrigger=PropertyChanged,
@@ -608,9 +635,302 @@
                                 Converter={StaticResource boolToVisibilityConverter},
                                 Source={StaticResource ColumnChecked16Desctop}}"/>
 
-                        </DataGrid.Columns>
-                    </DataGrid>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <StackPanel Grid.Column="1">
+                            <Label 
+                                Content="Дата Актуализации"
+                                Height="{Binding HeightForm[0]}"/>
+                            <TextBox 
+                                Margin="0"
+                                Text="{Binding CurrentTime}"
+                                Height="{Binding HeightForm[0]}"/>
+                            
+                            <Label 
+                                Margin="0"
+                                Content="{Binding AliasForm[1]}"
+                                Height="{Binding HeightForm[1]}"
+                                Visibility="{
+                                Binding RowChedForm[1],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+                            <TextBox 
+                                Margin="0"
+                                Text="{
+                                Binding EditDesctopVisitor.Column1,
+                                Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"
+                                Height="{Binding HeightForm[1]}"
+                                Visibility="{
+                                Binding RowChedForm[1],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+                            <Label 
+                                Margin="0"
+                                Content="{Binding AliasForm[2]}"
+                                Height="{Binding HeightForm[2]}"
+                                Visibility="{
+                                Binding RowChedForm[2],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+                            <ComboBox 
+                                ItemsSource="{Binding Combo1Collection}"
+                                Margin="0"
+                                IsEditable="True"
+                                Text="{
+                                Binding EditDesctopVisitor.Column2,
+                                Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"
+                                Height="{Binding HeightForm[2]}"
+                                Visibility="{
+                                Binding RowChedForm[2],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+                            
+                            <Label 
+                                Content="{Binding AliasForm[3]}"
+                                Height="{Binding HeightForm[3]}"
+                                Visibility="{
+                                Binding RowChedForm[3],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+                            <TextBox 
+                                Text="{
+                                Binding EditDesctopVisitor.Column3,
+                                Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"
+                                Height="{Binding HeightForm[3]}"
+                                Visibility="{
+                                Binding RowChedForm[3],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+                            <Label 
+                                Content="{Binding AliasForm[4]}"
+                                Height="{Binding HeightForm[4]}"
+                                Visibility="{
+                                Binding RowChedForm[4],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+                            <ComboBox 
+                                ItemsSource="{Binding Combo2Collection}"
+                                IsEditable="True"
+                                Text="{
+                                Binding EditDesctopVisitor.Column4,
+                                Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"
+                                Height="{Binding HeightForm[4]}"
+                                Visibility="{
+                                Binding RowChedForm[4],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+                            
+                            <Label 
+                                Content="{Binding AliasForm[5]}"
+                                Height="{Binding HeightForm[5]}"
+                                Visibility="{
+                                Binding RowChedForm[5],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+                            <TextBox 
+                                Text="{
+                                Binding EditDesctopVisitor.Column5,
+                                Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"
+                                Height="{Binding HeightForm[5]}"
+                                Visibility="{
+                                Binding RowChedForm[5],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+                            <Label 
+                                Content="{Binding AliasForm[6]}"
+                                Height="{Binding HeightForm[6]}"
+                                Visibility="{
+                                Binding RowChedForm[6],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+                            <ComboBox 
+                                ItemsSource="{Binding Combo3Collection}"
+                                IsEditable="True"
+                                Text="{
+                                Binding EditDesctopVisitor.Column6,
+                                Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"
+                                Height="{Binding HeightForm[6]}"
+                                Visibility="{
+                                Binding RowChedForm[6],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+
+                            <Label 
+                                Content="{Binding AliasForm[7]}"
+                                Height="{Binding HeightForm[7]}"
+                                Visibility="{
+                                Binding RowChedForm[7],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+                            <TextBox 
+                                Text="{
+                                Binding EditDesctopVisitor.Column7,
+                                Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"
+                                Height="{Binding HeightForm[7]}"
+                                Visibility="{
+                                Binding RowChedForm[7],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+                            <Label 
+                                Content="{Binding AliasForm[8]}"
+                                Height="{Binding HeightForm[8]}"
+                                Visibility="{
+                                Binding RowChedForm[8],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+                            <TextBox 
+                                Text="{
+                                Binding EditDesctopVisitor.Column8,
+                                Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"
+                                Height="{Binding HeightForm[8]}"
+                                Visibility="{
+                                Binding RowChedForm[8],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+                            <Label 
+                                Content="{Binding AliasForm[9]}"
+                                Height="{Binding HeightForm[9]}"
+                                Visibility="{
+                                Binding RowChedForm[9],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+                            <TextBox 
+                                Text="{
+                                Binding EditDesctopVisitor.Column9,
+                                Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"
+                                Height="{Binding HeightForm[9]}"
+                                Visibility="{
+                                Binding RowChedForm[9],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+                            <Label 
+                                Content="{Binding AliasForm[10]}"
+                                Height="{Binding HeightForm[10]}"
+                                Visibility="{
+                                Binding RowChedForm[10],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+                            <TextBox 
+                                Text="{
+                                Binding EditDesctopVisitor.Column10,
+                                Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"
+                                Height="{Binding HeightForm[10]}"
+                                Visibility="{
+                                Binding RowChedForm[10],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+                            <Label 
+                                Content="{Binding AliasForm[11]}"
+                                Height="{Binding HeightForm[11]}"
+                                Visibility="{
+                                Binding RowChedForm[11],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+                            <TextBox 
+                                Text="{
+                                Binding EditDesctopVisitor.Column11,
+                                Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"
+                                Height="{Binding HeightForm[11]}"
+                                Visibility="{
+                                Binding RowChedForm[11],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+                            <Label 
+                                Content="{Binding AliasForm[12]}"
+                                Height="{Binding HeightForm[12]}"
+                                Visibility="{
+                                Binding RowChedForm[12],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+                            <TextBox 
+                                Text="{
+                                Binding EditDesctopVisitor.Column12,
+                                Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"
+                                Height="{Binding HeightForm[12]}"
+                                Visibility="{
+                                Binding RowChedForm[12],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+                            <Label 
+                                Content="{Binding AliasForm[13]}"
+                                Height="{Binding HeightForm[13]}"
+                                Visibility="{
+                                Binding RowChedForm[13],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+                            <TextBox 
+                                Text="{
+                                Binding EditDesctopVisitor.Column13,
+                                Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"
+                                Height="{Binding HeightForm[13]}"
+                                Visibility="{
+                                Binding RowChedForm[13],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+                            <Label 
+                                Content="{Binding AliasForm[14]}"
+                                Height="{Binding HeightForm[14]}"
+                                Visibility="{
+                                Binding RowChedForm[14],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+                            <TextBox 
+                                Text="{
+                                Binding EditDesctopVisitor.Column14,
+                                Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"
+                                Height="{Binding HeightForm[14]}"
+                                Visibility="{
+                                Binding RowChedForm[14],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+                            <Label 
+                                Content="{Binding AliasForm[15]}"
+                                Height="{Binding HeightForm[15]}"
+                                Visibility="{
+                                Binding RowChedForm[15],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+                            <TextBox 
+                                Text="{
+                                Binding EditDesctopVisitor.Column15,
+                                Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"
+                                Height="{Binding HeightForm[15]}"
+                                Visibility="{
+                                Binding RowChedForm[15],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+                            <Button 
+                                Content="Создать пользователя"
+                                Margin="5,10,5,5"
+                                Command="{Binding CreateVisitor}"/>
+                            <Button 
+                                Content="Редактировать пользователя"
+                                Margin="5"
+                                Command="{Binding EditVisitor}"/>
+                            <Button 
+                                Content="Сохранить изменения"
+                                Margin="5"
+                                Command="{Binding SaveEditVisitor}"/>
+                        </StackPanel>
+                    </Grid>
+
                 </Grid>
+                    
             </TabItem>
             <TabItem Header="Файл">
                 <Grid Background="#FFE5E5E5"  >
@@ -730,7 +1050,7 @@
                             </Grid>
                         </TabItem>
                         <TabItem Header="Цвет бейджа">
-                            
+
                         </TabItem>
                         <TabItem Header="Форма ввода">
                             <Grid  VerticalAlignment="Stretch">
@@ -854,7 +1174,7 @@
                                             Width="200"
                                             Margin="5"
                                             Text="{
-                                            Binding SelectedDisplaySettingDesctop.Name,
+                                            Binding SelectedDisplaySettingForm.Name,
                                             Mode=TwoWay, 
                                             UpdateSourceTrigger=PropertyChanged}"/>
                                     </StackPanel>

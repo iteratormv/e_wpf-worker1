@@ -26,9 +26,9 @@ namespace EX.Model.Repositories.ForVisitor
             context.SaveChanges();
         }
 
-        public Status AddOrUpdateStatus(Status status)
+        public Status Add(Status status)
         {
-            context.Statuses.AddOrUpdate(status);
+            context.Statuses.Add(status);
             context.SaveChanges();
             return context.Statuses.Where(s => s.Name == status.Name &&
                                                s.UserId == status.UserId &&

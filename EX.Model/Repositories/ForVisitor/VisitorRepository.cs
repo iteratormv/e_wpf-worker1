@@ -80,7 +80,8 @@ namespace EX.Model.Repositories
                                            s.Column12 == visitor.Column12 &&
                                            s.Column13 == visitor.Column13 &&
                                            s.Column14 == visitor.Column14 &&
-                                           s.Column15 == visitor.Column15).Count() == 0)
+                                           s.Column15 == visitor.Column15&&
+                                           s.CurrentStatus == visitor.CurrentStatus).Count() == 0)
             {
                 context.Visitors.AddOrUpdate(visitor);
                 context.SaveChanges();
@@ -99,7 +100,9 @@ namespace EX.Model.Repositories
                                                s.Column12 == visitor.Column12 &&
                                                s.Column13 == visitor.Column13 &&
                                                s.Column14 == visitor.Column14 &&
-                                               s.Column15 == visitor.Column15).FirstOrDefault();
+                                               s.Column15 == visitor.Column15 &&
+                                               s.CurrentStatus == visitor.CurrentStatus)
+                                               .FirstOrDefault();
         }
 
         public IEnumerable<Visitor> GetAllVisitors()

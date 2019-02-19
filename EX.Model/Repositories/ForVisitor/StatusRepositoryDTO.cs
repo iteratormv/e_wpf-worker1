@@ -35,13 +35,13 @@ namespace EX.Model.Repositories.ForVisitor
                 mapper.Map<Status>(statusDTO));
         }
 
-        public StatusDTO AddOrUpdate(StatusDTO statusDTO)
+        public StatusDTO Add(StatusDTO statusDTO)
         {
             var status = mapper.Map<Status>(statusDTO);
             if (status != null)
             {
                 statusDTO = mapper.Map<StatusDTO>
-                    (statusRepository.AddOrUpdateStatus
+                    (statusRepository.Add
                     (status));
             }
             return statusDTO;
