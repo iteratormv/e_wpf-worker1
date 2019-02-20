@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import namespace="http://schemas.datacontract.org/2004/07/EX.Model.DTO" />
+  <xs:import namespace="http://iterator.org" />
   <xs:element name="GetAllVisitors">
     <xs:complexType>
       <xs:sequence />
@@ -9,7 +9,7 @@
   <xs:element name="GetAllVisitorsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/EX.Model.DTO" minOccurs="0" name="GetAllVisitorsResult" nillable="true" type="q1:ArrayOfVisitorDTO" />
+        <xs:element xmlns:q1="http://iterator.org" minOccurs="0" name="GetAllVisitorsResult" nillable="true" type="q1:ArrayOfVisitorDTO" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -23,14 +23,14 @@
   <xs:element name="GetVisitorByIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/EX.Model.DTO" minOccurs="0" name="GetVisitorByIdResult" nillable="true" type="q2:VisitorDTO" />
+        <xs:element xmlns:q2="http://iterator.org" minOccurs="0" name="GetVisitorByIdResult" nillable="true" type="q2:VisitorDTO" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AddOrUpdateVisitor">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/EX.Model.DTO" minOccurs="0" name="visitor" nillable="true" type="q3:VisitorDTO" />
+        <xs:element xmlns:q3="http://iterator.org" minOccurs="0" name="visitor" nillable="true" type="q3:VisitorDTO" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -42,7 +42,7 @@
   <xs:element name="RemoveVisitor">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/EX.Model.DTO" minOccurs="0" name="visitor" nillable="true" type="q4:VisitorDTO" />
+        <xs:element xmlns:q4="http://iterator.org" minOccurs="0" name="visitor" nillable="true" type="q4:VisitorDTO" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -59,6 +59,18 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="RemoveVisitorByIdResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddStatus">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://iterator.org" minOccurs="0" name="status" nillable="true" type="q5:StatusDTO" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddStatusResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>

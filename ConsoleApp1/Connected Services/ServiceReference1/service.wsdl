@@ -14,7 +14,7 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import namespace="http://tempuri.org/" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import namespace="http://schemas.datacontract.org/2004/07/EX.Model.DTO" />
+      <xsd:import namespace="http://iterator.org" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IVisitorContract_GetAllVisitors_InputMessage">
@@ -47,6 +47,12 @@
   <wsdl:message name="IVisitorContract_RemoveVisitorById_OutputMessage">
     <wsdl:part name="parameters" element="tns:RemoveVisitorByIdResponse" />
   </wsdl:message>
+  <wsdl:message name="IVisitorContract_AddStatus_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddStatus" />
+  </wsdl:message>
+  <wsdl:message name="IVisitorContract_AddStatus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddStatusResponse" />
+  </wsdl:message>
   <wsdl:portType name="IVisitorContract">
     <wsdl:operation name="GetAllVisitors">
       <wsdl:input wsaw:Action="http://tempuri.org/IVisitorContract/GetAllVisitors" message="tns:IVisitorContract_GetAllVisitors_InputMessage" />
@@ -67,6 +73,10 @@
     <wsdl:operation name="RemoveVisitorById">
       <wsdl:input wsaw:Action="http://tempuri.org/IVisitorContract/RemoveVisitorById" message="tns:IVisitorContract_RemoveVisitorById_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IVisitorContract/RemoveVisitorByIdResponse" message="tns:IVisitorContract_RemoveVisitorById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddStatus">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVisitorContract/AddStatus" message="tns:IVisitorContract_AddStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVisitorContract/AddStatusResponse" message="tns:IVisitorContract_AddStatus_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IVisitorContract" type="tns:IVisitorContract">
@@ -118,12 +128,21 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="AddStatus">
+      <soap12:operation soapAction="http://tempuri.org/IVisitorContract/AddStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="VisitorContract">
     <wsdl:port name="NetTcpBinding_IVisitorContract" binding="tns:NetTcpBinding_IVisitorContract">
-      <soap12:address location="net.tcp://192.168.0.23/Visitor" />
+      <soap12:address location="net.tcp://192.168.0.31/Visitor" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://192.168.0.23/Visitor</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.0.31/Visitor</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
   </wsdl:service>

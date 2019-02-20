@@ -68,6 +68,9 @@ namespace EX.Client.ServiceReference1 {
         private string Column9Field;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CurrentStatusField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int IdField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
@@ -271,6 +274,19 @@ namespace EX.Client.ServiceReference1 {
                 if ((object.ReferenceEquals(this.Column9Field, value) != true)) {
                     this.Column9Field = value;
                     this.RaisePropertyChanged("Column9");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CurrentStatus {
+            get {
+                return this.CurrentStatusField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CurrentStatusField, value) != true)) {
+                    this.CurrentStatusField = value;
+                    this.RaisePropertyChanged("CurrentStatus");
                 }
             }
         }

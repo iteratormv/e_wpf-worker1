@@ -735,6 +735,9 @@ namespace EX.ViewModel
         {
             DataMode = "Локальная база данных";
             visitorRepositoryDTO = new VisitorRepositoryDTO();
+
+  //          Task.Factory.StartNew(updateDataAsinc);
+
             Visitors = new ObservableCollection<VisitorDTO>
                      (visitorRepositoryDTO.GetAllVisitors());
             UpdateAllVisitorFields(visitors);
@@ -923,15 +926,85 @@ namespace EX.ViewModel
                 {
                     Name = "Id",
                     Alias = "№",
-                    Width = 100,
-                    Visible = true,
+                    Width = 0,
+                    Visible = false,
                     IsSelected = true,
                     Intendant = "desctop",
                     DisplaySettingId = defaultDisplayDesctopSettingId
                 });
                 dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
                 {
-                    Name = "FirstName",
+                    Name = "Magik ID",
+                    Alias = "Magik ID",
+                    Width = 80,
+                    Visible = true,
+                    IsSelected = false,
+                    Intendant = "desctop",
+                    DisplaySettingId = defaultDisplayDesctopSettingId
+                });
+                dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
+                {
+                    Name = "Payment Statuse",
+                    Alias = "Payment Status",
+                    Width = 100,
+                    Visible = true,
+                    IsSelected = false,
+                    Intendant = "desctop",
+                    DisplaySettingId = defaultDisplayDesctopSettingId
+                });
+                dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
+                {
+                    Name = "Пусто",
+                    Alias = "Пусто",
+                    Width = 0,
+                    Visible = false,
+                    IsSelected = false,
+                    Intendant = "desctop",
+                    DisplaySettingId = defaultDisplayDesctopSettingId
+                });
+                dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
+                {
+                    Name = "Категория",
+                    Alias = "Категория",
+                    Width = 80,
+                    Visible = true,
+                    IsSelected = false,
+                    Intendant = "desctop",
+                    DisplaySettingId = defaultDisplayDesctopSettingId
+                });
+                dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
+                {
+                    Name = "Пусто",
+                    Alias = "Пусто",
+                    Width = 0,
+                    Visible = false,
+                    IsSelected = false,
+                    Intendant = "desctop",
+                    DisplaySettingId = defaultDisplayDesctopSettingId
+                });
+                dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
+                {
+                    Name = "Замена",
+                    Alias = "Замена",
+                    Width = 70,
+                    Visible = true,
+                    IsSelected = false,
+                    Intendant = "desctop",
+                    DisplaySettingId = defaultDisplayDesctopSettingId
+                });
+                dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
+                {
+                    Name = "Коментарий",
+                    Alias = "Коментарий",
+                    Width = 100,
+                    Visible = true,
+                    IsSelected = false,
+                    Intendant = "desctop",
+                    DisplaySettingId = defaultDisplayDesctopSettingId
+                });
+                dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
+                {
+                    Name = "Name",
                     Alias = "Имя",
                     Width = 100,
                     Visible = true,
@@ -941,8 +1014,8 @@ namespace EX.ViewModel
                 });
                 dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
                 {
-                    Name = "LastName",
-                    Alias = "Фамилия",
+                    Name = "SurName",
+                    Alias = "Фамилия ",
                     Width = 100,
                     Visible = true,
                     IsSelected = false,
@@ -951,7 +1024,17 @@ namespace EX.ViewModel
                 });
                 dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
                 {
-                    Name = "Сompany",
+                    Name = "Position",
+                    Alias = "Должность",
+                    Width = 100,
+                    Visible = true,
+                    IsSelected = false,
+                    Intendant = "desctop",
+                    DisplaySettingId = defaultDisplayDesctopSettingId
+                });
+                dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
+                {
+                    Name = "Company",
                     Alias = "Компания",
                     Width = 100,
                     Visible = true,
@@ -961,10 +1044,30 @@ namespace EX.ViewModel
                 });
                 dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
                 {
-                    Name = "Jobtitle",
-                    Alias = "Должность",
+                    Name = "Дата регистрации",
+                    Alias = "Дата регистрации",
                     Width = 100,
                     Visible = true,
+                    IsSelected = false,
+                    Intendant = "desctop",
+                    DisplaySettingId = defaultDisplayDesctopSettingId
+                });
+                dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
+                {
+                    Name = "Резерв",
+                    Alias = "Резерв",
+                    Width = 0,
+                    Visible = false,
+                    IsSelected = false,
+                    Intendant = "desctop",
+                    DisplaySettingId = defaultDisplayDesctopSettingId
+                });
+                dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
+                {
+                    Name = "Резерв",
+                    Alias = "Резерв",
+                    Width = 0,
+                    Visible = false,
                     IsSelected = false,
                     Intendant = "desctop",
                     DisplaySettingId = defaultDisplayDesctopSettingId
@@ -1006,17 +1109,17 @@ namespace EX.ViewModel
                 {
                     Name = "Id",
                     Alias = "№",
-                    Width = 100,
-                    Visible = true,
+                    Width = 25,
+                    Visible = false,
                     IsSelected = true,
                     Intendant = "form",
                     DisplaySettingId = defaultDisplayFormSettingId
                 });
                 dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
                 {
-                    Name = "ActualisationDate",
-                    Alias = "Дата актуализации",
-                    Width = 100,
+                    Name = "Magik ID",
+                    Alias = "Magik ID",
+                    Width = 25,
                     Visible = true,
                     IsSelected = false,
                     Intendant = "form",
@@ -1024,9 +1127,69 @@ namespace EX.ViewModel
                 });
                 dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
                 {
-                    Name = "FirstName",
+                    Name = "Payment Status",
+                    Alias = "Статус оплаты",
+                    Width = 25,
+                    Visible = true,
+                    IsSelected = false,
+                    Intendant = "form",
+                    DisplaySettingId = defaultDisplayFormSettingId
+                });
+                dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
+                {
+                    Name = "Пусто",
+                    Alias = "Пусто",
+                    Width = 0,
+                    Visible = false,
+                    IsSelected = false,
+                    Intendant = "form",
+                    DisplaySettingId = defaultDisplayFormSettingId
+                });
+                dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
+                {
+                    Name = "Категория",
+                    Alias = "Категория",
+                    Width = 25,
+                    Visible = true,
+                    IsSelected = false,
+                    Intendant = "form",
+                    DisplaySettingId = defaultDisplayFormSettingId
+                });
+                dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
+                {
+                    Name = "Пусто",
+                    Alias = "Пусто",
+                    Width = 0,
+                    Visible = false,
+                    IsSelected = false,
+                    Intendant = "form",
+                    DisplaySettingId = defaultDisplayFormSettingId
+                });
+                dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
+                {
+                    Name = "Замена",
+                    Alias = "Замена",
+                    Width = 25,
+                    Visible = true,
+                    IsSelected = false,
+                    Intendant = "form",
+                    DisplaySettingId = defaultDisplayFormSettingId
+                });
+                dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
+                {
+                    Name = "Коментарий Замены",
+                    Alias = "Коментарий",
+                    Width = 0,
+                    Visible = false,
+                    IsSelected = false,
+                    Intendant = "form",
+                    DisplaySettingId = defaultDisplayFormSettingId
+                });
+                dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
+                {
+                    Name = "Name",
                     Alias = "Имя",
-                    Width = 100,
+                    Width = 25,
                     Visible = true,
                     IsSelected = false,
                     Intendant = "form",
@@ -1034,9 +1197,9 @@ namespace EX.ViewModel
                 });
                 dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
                 {
-                    Name = "LastName",
+                    Name = "SurName",
                     Alias = "Фамилия",
-                    Width = 100,
+                    Width = 25,
                     Visible = true,
                     IsSelected = false,
                     Intendant = "form",
@@ -1044,20 +1207,50 @@ namespace EX.ViewModel
                 });
                 dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
                 {
-                    Name = "Сompany",
-                    Alias = "Компания",
-                    Width = 100,
-                    Visible = true,
-                    IsSelected = false,
-                    Intendant = "form",
-                    DisplaySettingId = defaultDisplayFormSettingId
-                });
-                dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
-                {
-                    Name = "Jobtitle",
+                    Name = "Position",
                     Alias = "Должность",
-                    Width = 100,
+                    Width = 25,
                     Visible = true,
+                    IsSelected = false,
+                    Intendant = "form",
+                    DisplaySettingId = defaultDisplayFormSettingId
+                });
+                dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
+                {
+                    Name = "Company",
+                    Alias = "Компания",
+                    Width = 25,
+                    Visible = true,
+                    IsSelected = false,
+                    Intendant = "form",
+                    DisplaySettingId = defaultDisplayFormSettingId
+                });
+                dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
+                {
+                    Name = "Резерв",
+                    Alias = "Резерв",
+                    Width = 0,
+                    Visible = false,
+                    IsSelected = false,
+                    Intendant = "form",
+                    DisplaySettingId = defaultDisplayFormSettingId
+                });
+                dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
+                {
+                    Name = "Резерв",
+                    Alias = "Резерв",
+                    Width = 0,
+                    Visible = false,
+                    IsSelected = false,
+                    Intendant = "form",
+                    DisplaySettingId = defaultDisplayFormSettingId
+                });
+                dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
+                {
+                    Name = "Резерв",
+                    Alias = "Резерв",
+                    Width = 0,
+                    Visible = false,
                     IsSelected = false,
                     Intendant = "form",
                     DisplaySettingId = defaultDisplayFormSettingId
@@ -1825,8 +2018,7 @@ namespace EX.ViewModel
                 if (DataMode == "Клиент службы баз данных")
                 {
                     var _visitors = clientExecutor.GetClient().GetAllVisitors();
-
-                    //                   VisitorDTO visitorDTO = new VisitorDTO();
+                  VisitorDTO visitorDTO = new VisitorDTO();
                     Visitors = new ObservableCollection<VisitorDTO>();
                     foreach (var v in _visitors) { Visitors.Add(mapper.Map<VisitorDTO>(v)); }
                 }
@@ -1853,6 +2045,7 @@ namespace EX.ViewModel
             {
                 createDesctopVisitor = editDesctopVisitor;
                 createDesctopVisitor.CurrentStatus = "create";
+                createDesctopVisitor.Column12 = DateTime.Now.ToString();
                 var _createVisitor = visitorRepositoryDTO
                 .AddOrUpdateVisitor(createDesctopVisitor);
                 Visitors = new ObservableCollection<VisitorDTO>
@@ -2123,32 +2316,25 @@ namespace EX.ViewModel
                 catch { heightForm[i] = 0; }
             }
         }
-        private void UpdateAllVisitorFields(ObservableCollection<VisitorDTO> visitors)
+        private void UpdateAllVisitorFields(ObservableCollection<VisitorDTO> _visitors)
         {
             DesctopVisitors = new ObservableCollection<VisitorDTO>
-                (visitors
+                (_visitors
                 .Where(v => v.CurrentStatus == "actual" ||
                 v.CurrentStatus == "create" ||
                 v.CurrentStatus == "edited"));
-            CountActualVisitors = visitors
+            CountActualVisitors = _visitors
                 .Where(v => v.CurrentStatus == "actual")
                 .Count();
-            CountRegistredVisitors = visitors
+            CountRegistredVisitors = _visitors
                 .Where(v => v.CurrentStatus == "registered"
                 || v.CurrentStatus == "actual")
                 .Count();
-            CountCreateVisitors = visitors
+            CountCreateVisitors = _visitors
                 .Where(v => v.CurrentStatus == "create")
                 .Count();
-            CountAllVisitors = visitors.Count();
+            CountAllVisitors = _visitors.Count();
             CountNotcameVisitors = countRegistredVisitors - countActualVisitors;
-
-            //Combo1Collection = new ObservableCollection<string>
-            //    (visitors.Select(s => s.Column2));
-            //Combo2Collection = new ObservableCollection<string>
-            //    (visitors.Select(s => s.Column4));
-            //Combo3Collection = new ObservableCollection<string>
-            //    (visitors.Select(s => s.Column5));
         }
         private void StartShowTime()
         {
@@ -2162,6 +2348,25 @@ namespace EX.ViewModel
                 Thread.Sleep(1000);
             }
         }
+        private void updateDataAsinc()
+        {
+            while (true)
+            {
+                if (dataMode == "Клиент службы баз данных")
+                {
+                    var _visitors = clientExecutor.GetClient().GetAllVisitors();
+
+                    //                   VisitorDTO visitorDTO = new VisitorDTO();
+                    Visitors = new ObservableCollection<VisitorDTO>();
+                    foreach (var v in _visitors) { Visitors.Add(mapper.Map<VisitorDTO>(v)); }
+                }
+                else Visitors = new ObservableCollection<VisitorDTO>
+                    (visitorRepositoryDTO.GetAllVisitors());
+                UpdateAllVisitorFields(visitors);
+                Thread.Sleep(10000);
+            }
+        }
+
         #endregion
 
         #region Events

@@ -23,6 +23,7 @@
       <xs:element minOccurs="0" name="Column7" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Column8" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Column9" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CurrentStatus" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Id" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
