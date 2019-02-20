@@ -1093,17 +1093,14 @@ namespace EX.ViewModel
             canExecuteEditVisitor = true;
             canExecuteSaveEditVisitor = false;
 
-
             combo1Collection = new ObservableCollection<string>(new List<string>
             {
                 "PAID", "UNPAID", "FOC", "CXLD"
             });
-
             combo2Collection = new ObservableCollection<string>(new List<string>
             {
                 "Delegate", "Speakers", "Guests", "Media", "Press", "SPEX", "Organiser"
             });
-
             combo3Collection = new ObservableCollection<string>(new List<string>
             {
                 "Замена"
@@ -1868,13 +1865,18 @@ namespace EX.ViewModel
                     VisitorId = _createVisitor.Id,
                     ActionTime = DateTime.Now.ToString()                   
                 });
+                CreateDesctopVisitor = new VisitorDTO();
+                EditDesctopVisitor = new VisitorDTO();
             },c=> canExecuteCreateVisitor);
             editVisitor = new RelayCommand(c =>
             {
-                EditDesctopVisitor = selectDesctopVisitor;
-                CanExecuteCreateVisitor = false;
-                CanExecuteEditVisitor = false;
-                CanExecuteSaveEditVisitor = true;
+                if (selectDesctopVisitor != null)
+                {
+                    EditDesctopVisitor = selectDesctopVisitor;
+                    CanExecuteCreateVisitor = false;
+                    CanExecuteEditVisitor = false;
+                    CanExecuteSaveEditVisitor = true;
+                }
             },c=> canExecuteEditVisitor);
             saveEditVisitor = new RelayCommand(c =>
             {
@@ -1891,6 +1893,10 @@ namespace EX.ViewModel
                     VisitorId = _editVisitor.Id,
                     ActionTime = DateTime.Now.ToString()
                 });
+                CanExecuteCreateVisitor = true;
+                CanExecuteEditVisitor = true;
+                CanExecuteSaveEditVisitor = false;
+                EditDesctopVisitor = new VisitorDTO();
             }, c => canExecuteSaveEditVisitor);
 
 
