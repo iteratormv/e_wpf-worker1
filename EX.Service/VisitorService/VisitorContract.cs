@@ -24,9 +24,9 @@ namespace EX.Service.VisitorService
             statusRepositoryDTO = new StatusRepositoryDTO();
             userInRoleRepositoryDTO = new UserInRoleRepositoryDTO();
         }
-        public void AddOrUpdateVisitor(VisitorDTO visitor)
+        public VisitorDTO AddOrUpdateVisitor(VisitorDTO visitor)
         {
-            visitorRepositoryDTO.AddOrUpdateVisitor(visitor);
+            return visitorRepositoryDTO.AddOrUpdateVisitor(visitor);
         }
         public IEnumerable<VisitorDTO> GetAllVisitors()
         {

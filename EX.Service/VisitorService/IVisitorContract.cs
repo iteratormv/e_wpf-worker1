@@ -15,7 +15,7 @@ namespace EX.Service.VisitorService
         VisitorDTO GetVisitorById(int Id);
 
         [OperationContract]
-        void AddOrUpdateVisitor(VisitorDTO visitor);
+        VisitorDTO AddOrUpdateVisitor(VisitorDTO visitor);
 
         [OperationContract]
         void RemoveVisitor(VisitorDTO visitor);

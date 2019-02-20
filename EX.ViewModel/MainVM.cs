@@ -1274,6 +1274,8 @@ namespace EX.ViewModel
             {
                 cfg.CreateMap<VisitorDTO, EX.Client.ServiceReference1.VisitorDTO>();
                 cfg.CreateMap<EX.Client.ServiceReference1.VisitorDTO, VisitorDTO>();
+                cfg.CreateMap<StatusDTO, EX.Client.ServiceReference1.StatusDTO>();
+                cfg.CreateMap<EX.Client.ServiceReference1.StatusDTO, StatusDTO>();
             });
             mapper = config.CreateMapper();
             #endregion
@@ -2045,19 +2047,42 @@ namespace EX.ViewModel
             {
                 createDesctopVisitor = editDesctopVisitor;
                 createDesctopVisitor.CurrentStatus = "create";
-                createDesctopVisitor.Column12 = DateTime.Now.ToString();
-                var _createVisitor = visitorRepositoryDTO
-                .AddOrUpdateVisitor(createDesctopVisitor);
-                Visitors = new ObservableCollection<VisitorDTO>
-                (visitorRepositoryDTO.GetAllVisitors());
-                UpdateAllVisitorFields(visitors);
-                statusRepository.Add(new StatusDTO
+                createDesctopVisitor.Column12 = DateTime.Now.ToString(); // time collumn
+                if (dataMode != "Клиент службы баз данных")
                 {
-                    Name = "create",
-                    UserId = AuthorizedUser.Id,
-                    VisitorId = _createVisitor.Id,
-                    ActionTime = DateTime.Now.ToString()                   
-                });
+                    var _createVisitor = visitorRepositoryDTO
+                    .AddOrUpdateVisitor(createDesctopVisitor);
+                    statusRepository.Add(new StatusDTO
+                    {
+                        Name = "create",
+                        UserId = AuthorizedUser.Id,
+                        VisitorId = _createVisitor.Id,
+                        ActionTime = DateTime.Now.ToString()
+                    });
+                    Visitors = new ObservableCollection<VisitorDTO>
+                    (visitorRepositoryDTO.GetAllVisitors());
+                    UpdateAllVisitorFields(visitors);
+                }
+                else
+                {
+                    var _createVisitor = clientExecutor.GetClient()
+                    .AddOrUpdateVisitor(mapper.Map<EX.Client
+                    .ServiceReference1.VisitorDTO>(createDesctopVisitor));
+
+                    var _visitors = clientExecutor.GetClient().GetAllVisitors();
+                    clientExecutor.GetClient().AddStatus(mapper.Map
+                        <EX.Client.ServiceReference1.StatusDTO>(new StatusDTO
+                        {
+                            Name = "create",
+                            UserId = AuthorizedUser.Id,
+                            VisitorId = _createVisitor.Id,
+                            ActionTime = DateTime.Now.ToString()
+                        }));
+//                    Visitors.Add(mapper.Map<VisitorDTO>(_createVisitor));
+                    Visitors = new ObservableCollection<VisitorDTO>();
+                    foreach (var v in _visitors) { Visitors.Add(mapper.Map<VisitorDTO>(v)); }
+                    UpdateAllVisitorFields(visitors);
+                }
                 CreateDesctopVisitor = new VisitorDTO();
                 EditDesctopVisitor = new VisitorDTO();
             },c=> canExecuteCreateVisitor);
@@ -2076,16 +2101,60 @@ namespace EX.ViewModel
 //                editDesctopVisitor.CurrentStatus = "edited";
                 var _editVisitor = visitorRepositoryDTO
                 .AddOrUpdateVisitor(editDesctopVisitor);
-                Visitors = new ObservableCollection<VisitorDTO>
-                (visitorRepositoryDTO.GetAllVisitors());
-                UpdateAllVisitorFields(visitors);
-                statusRepository.Add(new StatusDTO
+
+
+                if (dataMode != "Клиент службы баз данных")
                 {
-                    Name = "edited",
-                    UserId = authorizedUser.Id,
-                    VisitorId = _editVisitor.Id,
-                    ActionTime = DateTime.Now.ToString()
-                });
+                    var _createVisitor = visitorRepositoryDTO
+                    .AddOrUpdateVisitor(createDesctopVisitor);
+                    statusRepository.Add(new StatusDTO
+                    {
+                        Name = "edited",
+                        UserId = authorizedUser.Id,
+                        VisitorId = _editVisitor.Id,
+                        ActionTime = DateTime.Now.ToString()
+                    });
+                    Visitors = new ObservableCollection<VisitorDTO>
+                    (visitorRepositoryDTO.GetAllVisitors());
+                    UpdateAllVisitorFields(visitors);
+                }
+                else
+                {
+                    var _createVisitor = clientExecutor.GetClient()
+                    .AddOrUpdateVisitor(mapper.Map<EX.Client
+                    .ServiceReference1.VisitorDTO>(createDesctopVisitor));
+
+                    var _visitors = clientExecutor.GetClient().GetAllVisitors();
+                    clientExecutor.GetClient().AddStatus(mapper.Map
+                        <EX.Client.ServiceReference1.StatusDTO>(new StatusDTO
+                        {
+                            Name = "edited",
+                            UserId = authorizedUser.Id,
+                            VisitorId = _editVisitor.Id,
+                            ActionTime = DateTime.Now.ToString()
+                        }));
+                    //                    Visitors.Add(mapper.Map<VisitorDTO>(_createVisitor));
+                    Visitors = new ObservableCollection<VisitorDTO>();
+                    foreach (var v in _visitors) { Visitors.Add(mapper.Map<VisitorDTO>(v)); }
+                    UpdateAllVisitorFields(visitors);
+                }
+
+
+
+
+
+                //Visitors = new ObservableCollection<VisitorDTO>
+                //(visitorRepositoryDTO.GetAllVisitors());
+                //UpdateAllVisitorFields(visitors);
+                //statusRepository.Add(new StatusDTO
+                //{
+                //    Name = "edited",
+                //    UserId = authorizedUser.Id,
+                //    VisitorId = _editVisitor.Id,
+                //    ActionTime = DateTime.Now.ToString()
+                //});
+
+
                 CanExecuteCreateVisitor = true;
                 CanExecuteEditVisitor = true;
                 CanExecuteSaveEditVisitor = false;

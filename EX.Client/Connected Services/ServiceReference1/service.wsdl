@@ -15,6 +15,7 @@
       <xsd:import namespace="http://tempuri.org/" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import namespace="http://iterator.org" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/EX.Model.DTO" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IVisitorContract_GetAllVisitors_InputMessage">
@@ -47,6 +48,60 @@
   <wsdl:message name="IVisitorContract_RemoveVisitorById_OutputMessage">
     <wsdl:part name="parameters" element="tns:RemoveVisitorByIdResponse" />
   </wsdl:message>
+  <wsdl:message name="IVisitorContract_AddStatus_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddStatus" />
+  </wsdl:message>
+  <wsdl:message name="IVisitorContract_AddStatus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVisitorContract_RemoveStatus_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveStatus" />
+  </wsdl:message>
+  <wsdl:message name="IVisitorContract_RemoveStatus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVisitorContract_GetAllStatuses_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllStatuses" />
+  </wsdl:message>
+  <wsdl:message name="IVisitorContract_GetAllStatuses_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllStatusesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVisitorContract_AddUserInRole_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddUserInRole" />
+  </wsdl:message>
+  <wsdl:message name="IVisitorContract_AddUserInRole_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddUserInRoleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVisitorContract_RemoveUserInRole_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveUserInRole" />
+  </wsdl:message>
+  <wsdl:message name="IVisitorContract_RemoveUserInRole_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveUserInRoleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVisitorContract_GetAllUserInRole_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllUserInRole" />
+  </wsdl:message>
+  <wsdl:message name="IVisitorContract_GetAllUserInRole_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllUserInRoleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVisitorContract_AddUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddUser" />
+  </wsdl:message>
+  <wsdl:message name="IVisitorContract_AddUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVisitorContract_RemoveUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveUser" />
+  </wsdl:message>
+  <wsdl:message name="IVisitorContract_RemoveUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVisitorContract_GetAllUsers_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllUsers" />
+  </wsdl:message>
+  <wsdl:message name="IVisitorContract_GetAllUsers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllUsersResponse" />
+  </wsdl:message>
   <wsdl:portType name="IVisitorContract">
     <wsdl:operation name="GetAllVisitors">
       <wsdl:input wsaw:Action="http://tempuri.org/IVisitorContract/GetAllVisitors" message="tns:IVisitorContract_GetAllVisitors_InputMessage" />
@@ -67,6 +122,42 @@
     <wsdl:operation name="RemoveVisitorById">
       <wsdl:input wsaw:Action="http://tempuri.org/IVisitorContract/RemoveVisitorById" message="tns:IVisitorContract_RemoveVisitorById_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IVisitorContract/RemoveVisitorByIdResponse" message="tns:IVisitorContract_RemoveVisitorById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddStatus">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVisitorContract/AddStatus" message="tns:IVisitorContract_AddStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVisitorContract/AddStatusResponse" message="tns:IVisitorContract_AddStatus_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveStatus">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVisitorContract/RemoveStatus" message="tns:IVisitorContract_RemoveStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVisitorContract/RemoveStatusResponse" message="tns:IVisitorContract_RemoveStatus_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllStatuses">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVisitorContract/GetAllStatuses" message="tns:IVisitorContract_GetAllStatuses_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVisitorContract/GetAllStatusesResponse" message="tns:IVisitorContract_GetAllStatuses_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddUserInRole">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVisitorContract/AddUserInRole" message="tns:IVisitorContract_AddUserInRole_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVisitorContract/AddUserInRoleResponse" message="tns:IVisitorContract_AddUserInRole_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveUserInRole">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVisitorContract/RemoveUserInRole" message="tns:IVisitorContract_RemoveUserInRole_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVisitorContract/RemoveUserInRoleResponse" message="tns:IVisitorContract_RemoveUserInRole_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllUserInRole">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVisitorContract/GetAllUserInRole" message="tns:IVisitorContract_GetAllUserInRole_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVisitorContract/GetAllUserInRoleResponse" message="tns:IVisitorContract_GetAllUserInRole_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVisitorContract/AddUser" message="tns:IVisitorContract_AddUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVisitorContract/AddUserResponse" message="tns:IVisitorContract_AddUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVisitorContract/RemoveUser" message="tns:IVisitorContract_RemoveUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVisitorContract/RemoveUserResponse" message="tns:IVisitorContract_RemoveUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllUsers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVisitorContract/GetAllUsers" message="tns:IVisitorContract_GetAllUsers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVisitorContract/GetAllUsersResponse" message="tns:IVisitorContract_GetAllUsers_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IVisitorContract" type="tns:IVisitorContract">
@@ -111,6 +202,87 @@
     </wsdl:operation>
     <wsdl:operation name="RemoveVisitorById">
       <soap12:operation soapAction="http://tempuri.org/IVisitorContract/RemoveVisitorById" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddStatus">
+      <soap12:operation soapAction="http://tempuri.org/IVisitorContract/AddStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveStatus">
+      <soap12:operation soapAction="http://tempuri.org/IVisitorContract/RemoveStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllStatuses">
+      <soap12:operation soapAction="http://tempuri.org/IVisitorContract/GetAllStatuses" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddUserInRole">
+      <soap12:operation soapAction="http://tempuri.org/IVisitorContract/AddUserInRole" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveUserInRole">
+      <soap12:operation soapAction="http://tempuri.org/IVisitorContract/RemoveUserInRole" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllUserInRole">
+      <soap12:operation soapAction="http://tempuri.org/IVisitorContract/GetAllUserInRole" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddUser">
+      <soap12:operation soapAction="http://tempuri.org/IVisitorContract/AddUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveUser">
+      <soap12:operation soapAction="http://tempuri.org/IVisitorContract/RemoveUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllUsers">
+      <soap12:operation soapAction="http://tempuri.org/IVisitorContract/GetAllUsers" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

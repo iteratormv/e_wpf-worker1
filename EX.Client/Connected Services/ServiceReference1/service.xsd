@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import namespace="http://iterator.org" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/EX.Model.DTO" />
   <xs:element name="GetAllVisitors">
     <xs:complexType>
       <xs:sequence />
@@ -36,13 +37,15 @@
   </xs:element>
   <xs:element name="AddOrUpdateVisitorResponse">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element xmlns:q4="http://iterator.org" minOccurs="0" name="AddOrUpdateVisitorResult" nillable="true" type="q4:VisitorDTO" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RemoveVisitor">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://iterator.org" minOccurs="0" name="visitor" nillable="true" type="q4:VisitorDTO" />
+        <xs:element xmlns:q5="http://iterator.org" minOccurs="0" name="visitor" nillable="true" type="q5:VisitorDTO" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -61,6 +64,114 @@
   <xs:element name="RemoveVisitorByIdResponse">
     <xs:complexType>
       <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddStatus">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://iterator.org" minOccurs="0" name="status" nillable="true" type="q6:StatusDTO" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddStatusResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveStatus">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://iterator.org" minOccurs="0" name="status" nillable="true" type="q7:StatusDTO" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveStatusResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllStatuses">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllStatusesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://iterator.org" minOccurs="0" name="GetAllStatusesResult" nillable="true" type="q8:ArrayOfStatusDTO" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddUserInRole">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/EX.Model.DTO" minOccurs="0" name="userInRoleDTO" nillable="true" type="q9:UserInRoleDTO" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddUserInRoleResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveUserInRole">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/EX.Model.DTO" minOccurs="0" name="userInRoleDTO" nillable="true" type="q10:UserInRoleDTO" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveUserInRoleResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllUserInRole">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllUserInRoleResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/EX.Model.DTO" minOccurs="0" name="GetAllUserInRoleResult" nillable="true" type="q11:ArrayOfUserInRoleDTO" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddUser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/EX.Model.DTO" minOccurs="0" name="userDTO" nillable="true" type="q12:UserDTO" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddUserResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveUser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/EX.Model.DTO" minOccurs="0" name="userDTO" nillable="true" type="q13:UserDTO" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveUserResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllUsers">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllUsersResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/EX.Model.DTO" minOccurs="0" name="GetAllUsersResult" nillable="true" type="q14:ArrayOfUserDTO" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
 </xs:schema>
