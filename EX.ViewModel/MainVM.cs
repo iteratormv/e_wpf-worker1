@@ -20,6 +20,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Media;
 
 namespace EX.ViewModel
 {
@@ -536,6 +539,9 @@ namespace EX.ViewModel
         IMapper mapper;
         #endregion
 
+
+        PrintDialog printDialog;
+
         ObservableCollection<VisitorDTO> desctopVisitors;
         public ObservableCollection<VisitorDTO> DesctopVisitors
         {
@@ -670,6 +676,26 @@ namespace EX.ViewModel
 
             }
         }
+        string statusForm;
+        public string StatusForm
+        {
+            get { return statusForm; }
+            set
+            {
+                statusForm = value;
+                OnPropertyChanged(nameof(StatusForm));
+            }
+        }
+        string statusFormColor;
+        public string StatusFormColor
+        {
+            get { return statusFormColor; }
+            set
+            {
+                statusFormColor = value;
+                OnPropertyChanged(nameof(StatusFormColor));
+            }
+        }
 
         string currentTime;
         public string CurrentTime
@@ -712,6 +738,143 @@ namespace EX.ViewModel
                 OnPropertyChanged(nameof(CanExecuteSaveEditVisitor));
             }
         }
+        bool isShowChanger;
+        public bool IsShowChanger
+        {
+            get { return isShowChanger; }
+            set
+            {
+                isShowChanger = value;
+                OnPropertyChanged(nameof(IsShowChanger));
+            }
+        }
+
+        string bagePresenter;
+        public string BagePresenter
+        {
+            get { return bagePresenter; }
+            set
+            {
+                bagePresenter = value;
+                OnPropertyChanged(nameof(BagePresenter));
+            }
+        }
+        string bagePresenterBackGround;
+        public string BagePresenterBackGround
+        {
+            get { return bagePresenterBackGround; }
+            set
+            {
+                bagePresenterBackGround = value;
+                OnPropertyChanged(nameof(BagePresenterBackGround));
+            }
+        }
+        string searchVisitor;
+        public string SearchVisitor
+        {
+            get { return searchVisitor; }
+            set
+            {
+                searchVisitor = value;
+                checkSearchVisitor(searchVisitor);
+                OnPropertyChanged(nameof(SearchVisitor));
+            }
+        }
+        VisitorDTO selectedSearchVisitor;
+        public VisitorDTO SelectedSearchVisitor
+        {
+            get { return selectedSearchVisitor; }
+            set
+            {
+                selectedSearchVisitor = value;
+                OnPropertyChanged(nameof(SelectedSearchVisitor));
+            }
+        }
+
+        bool find = false;
+        bool Find
+        {
+            get { return find; }
+            set
+            {
+                find = value;
+                OnPropertyChanged(nameof(Find));
+            }
+        }
+
+        string searchVisitorForegraund;
+        public string SearchVisitorForegraund
+        {
+            get { return searchVisitorForegraund; }
+            set
+            {
+                searchVisitorForegraund = value;
+                OnPropertyChanged(nameof(SearchVisitorForegraund));
+            }
+        }
+        string searchVisitorBackGround;
+        public string SearchVisitorBackGround
+        {
+            get { return searchVisitorBackGround; }
+            set
+            {
+                searchVisitorBackGround = value;
+                OnPropertyChanged(nameof(SearchVisitorBackGround));
+            }
+        }
+        int searchVisitorFontsize;
+        public int SearchVisitorFontsize
+        {
+            get { return searchVisitorFontsize; }
+            set
+            {
+                searchVisitorFontsize = value;
+                OnPropertyChanged(nameof(SearchVisitorFontsize));
+            }
+        }
+        ObservableCollection<VisitorDTO> searchVisitorCollection;
+        public ObservableCollection<VisitorDTO> SearchVisitorCollection
+        {
+            get { return searchVisitorCollection; }
+            set
+            {
+                searchVisitorCollection = value;
+                OnPropertyChanged(nameof(SearchVisitorCollection));
+            }
+        }
+        string paymentStatusPresenter;
+        public string PaymentStatusPresenter
+        {
+            get { return paymentStatusPresenter; }
+            set
+            {
+                paymentStatusPresenter = value;
+                OnPropertyChanged(nameof(PaymentStatusPresenter));
+            }
+        }
+        int paymentStatusFontsize;
+        public int PaymentStatusFontsize
+        {
+            get { return paymentStatusFontsize; }
+            set
+            {
+                paymentStatusFontsize = value;
+                OnPropertyChanged(nameof(PaymentStatusFontsize));
+            }
+        }
+        string paymentStatusForegraund;
+        public string PaymentStatusForegraund
+        {
+            get { return paymentStatusForegraund; }
+            set
+            {
+                paymentStatusForegraund = value;
+                OnPropertyChanged(nameof(PaymentStatusForegraund));
+            }
+        }
+
+
+
 
         RelayCommand createVisitor;
         public RelayCommand CreateVisitor
@@ -728,6 +891,11 @@ namespace EX.ViewModel
         {
             get { return saveEditVisitor; }
         }
+        RelayCommand printVisitor;
+        public RelayCommand PrintVisitor
+        {
+            get { return printVisitor; }
+        }
 
 
 
@@ -735,13 +903,15 @@ namespace EX.ViewModel
         {
             DataMode = "Локальная база данных";
             visitorRepositoryDTO = new VisitorRepositoryDTO();
-
-  //          Task.Factory.StartNew(updateDataAsinc);
+            printDialog = new PrintDialog();
 
             Visitors = new ObservableCollection<VisitorDTO>
                      (visitorRepositoryDTO.GetAllVisitors());
             UpdateAllVisitorFields(visitors);
             StartShowTime();
+
+            statusFormColor = "Red";
+            statusForm = "";
 
             #region Init value for Administration
             userRepository = new UserRepositoryDTO();
@@ -1300,6 +1470,18 @@ namespace EX.ViewModel
             {
                 "Замена"
             });
+            IsShowChanger = false;
+
+            bagePresenter = "Цвет бейджа";
+            bagePresenterBackGround = "#FFE5E5E5";
+            paymentStatusPresenter = "Статус Оплаты";
+            paymentStatusFontsize = 12;
+            paymentStatusForegraund = "Gray";
+            searchVisitor = "Введите информацию для поиска";
+            searchVisitorFontsize = 15;
+            searchVisitorBackGround = "White";
+            searchVisitorForegraund = "Gray";
+            searchVisitorCollection = new ObservableCollection<VisitorDTO>();
 
 
 
@@ -2045,49 +2227,75 @@ namespace EX.ViewModel
 
             createVisitor = new RelayCommand(c =>
             {
-                createDesctopVisitor = editDesctopVisitor;
-                createDesctopVisitor.CurrentStatus = "create";
-                createDesctopVisitor.Column12 = DateTime.Now.ToString(); // time collumn
-                if (dataMode != "Клиент службы баз данных")
+                if (editDesctopVisitor.Column4 != null &&
+                    editDesctopVisitor.Column8 != null &&
+                    editDesctopVisitor.Column9 != null &&
+                    editDesctopVisitor.Column11 != null)
                 {
-                    var _createVisitor = visitorRepositoryDTO
-                    .AddOrUpdateVisitor(createDesctopVisitor);
-                    statusRepository.Add(new StatusDTO
+                    createDesctopVisitor = editDesctopVisitor;
+                    createDesctopVisitor.CurrentStatus = "create";
+                    IsShowChanger = false;
+                    createDesctopVisitor.Column12 = DateTime.Now.ToString(); // time collumn
+                    if (dataMode != "Клиент службы баз данных")
                     {
-                        Name = "create",
-                        UserId = AuthorizedUser.Id,
-                        VisitorId = _createVisitor.Id,
-                        ActionTime = DateTime.Now.ToString()
-                    });
-                    Visitors = new ObservableCollection<VisitorDTO>
-                    (visitorRepositoryDTO.GetAllVisitors());
-                    UpdateAllVisitorFields(visitors);
-                }
-                else
-                {
-                    var _createVisitor = clientExecutor.GetClient()
-                    .AddOrUpdateVisitor(mapper.Map<EX.Client
-                    .ServiceReference1.VisitorDTO>(createDesctopVisitor));
-
-                    var _visitors = clientExecutor.GetClient().GetAllVisitors();
-                    clientExecutor.GetClient().AddStatus(mapper.Map
-                        <EX.Client.ServiceReference1.StatusDTO>(new StatusDTO
+                        var _createVisitor = visitorRepositoryDTO
+                        .AddOrUpdateVisitor(createDesctopVisitor);
+                        statusRepository.Add(new StatusDTO
                         {
                             Name = "create",
                             UserId = AuthorizedUser.Id,
                             VisitorId = _createVisitor.Id,
                             ActionTime = DateTime.Now.ToString()
-                        }));
-//                    Visitors.Add(mapper.Map<VisitorDTO>(_createVisitor));
-                    Visitors = new ObservableCollection<VisitorDTO>();
-                    foreach (var v in _visitors) { Visitors.Add(mapper.Map<VisitorDTO>(v)); }
-                    UpdateAllVisitorFields(visitors);
+                        });
+                        Visitors = new ObservableCollection<VisitorDTO>
+                        (visitorRepositoryDTO.GetAllVisitors());
+                        UpdateAllVisitorFields(visitors);
+                    }
+                    else
+                    {
+                        var _createVisitor = clientExecutor.GetClient()
+                        .AddOrUpdateVisitor(mapper.Map<EX.Client
+                        .ServiceReference1.VisitorDTO>(createDesctopVisitor));
+
+                        var _visitors = clientExecutor.GetClient().GetAllVisitors();
+                        clientExecutor.GetClient().AddStatus(mapper.Map
+                            <EX.Client.ServiceReference1.StatusDTO>(new StatusDTO
+                            {
+                                Name = "create",
+                                UserId = AuthorizedUser.Id,
+                                VisitorId = _createVisitor.Id,
+                                ActionTime = DateTime.Now.ToString()
+                            }));
+                        //                    Visitors.Add(mapper.Map<VisitorDTO>(_createVisitor));
+                        Visitors = new ObservableCollection<VisitorDTO>();
+                        foreach (var v in _visitors) { Visitors.Add(mapper.Map<VisitorDTO>(v)); }
+                        UpdateAllVisitorFields(visitors);
+                    }
+                    CreateDesctopVisitor = new VisitorDTO();
+                    EditDesctopVisitor = new VisitorDTO();
+                } else
+                {
+                    Task.Factory.StartNew(delegate
+                    {
+                        for(var i = 0; i<10; i++)
+                        {
+                            if (i % 2 == 0)
+                            {
+                                StatusForm = "Обязательные поля";
+                            }
+                            else
+                            {
+                                StatusForm = "";
+                            }
+                            Thread.Sleep(500);
+                        }
+                        StatusForm = "";
+                    });
                 }
-                CreateDesctopVisitor = new VisitorDTO();
-                EditDesctopVisitor = new VisitorDTO();
             },c=> canExecuteCreateVisitor);
             editVisitor = new RelayCommand(c =>
             {
+                IsShowChanger = true;
                 if (selectDesctopVisitor != null)
                 {
                     EditDesctopVisitor = selectDesctopVisitor;
@@ -2098,15 +2306,24 @@ namespace EX.ViewModel
             },c=> canExecuteEditVisitor);
             saveEditVisitor = new RelayCommand(c =>
             {
+                IsShowChanger = false;
 //                editDesctopVisitor.CurrentStatus = "edited";
-                var _editVisitor = visitorRepositoryDTO
-                .AddOrUpdateVisitor(editDesctopVisitor);
-
 
                 if (dataMode != "Клиент службы баз данных")
                 {
-                    var _createVisitor = visitorRepositoryDTO
-                    .AddOrUpdateVisitor(createDesctopVisitor);
+                    if (editDesctopVisitor.Column6 == "Замена")
+                    {
+                        var oldEditVisitor = visitorRepositoryDTO
+                        .GetAllVisitors()
+                        .Where(s => s.Id == editDesctopVisitor.Id)
+                        .FirstOrDefault();
+                        editDesctopVisitor.Column7 =
+                        oldEditVisitor.Column8 + " " +
+                        oldEditVisitor.Column9;
+                    }
+
+                    var _editVisitor = visitorRepositoryDTO
+                    .AddOrUpdateVisitor(editDesctopVisitor);
                     statusRepository.Add(new StatusDTO
                     {
                         Name = "edited",
@@ -2120,9 +2337,20 @@ namespace EX.ViewModel
                 }
                 else
                 {
-                    var _createVisitor = clientExecutor.GetClient()
+                    if (editDesctopVisitor.Column6 == "Замена")
+                    {
+                        var oldEditVisitor = clientExecutor.GetClient()
+                        .GetAllVisitors()
+                        .Where(s => s.Id == editDesctopVisitor.Id)
+                        .FirstOrDefault();
+                        editDesctopVisitor.Column7 =
+                        oldEditVisitor.Column8 + " " +
+                        oldEditVisitor.Column9;
+                    }
+
+                    var _editVisitor = clientExecutor.GetClient()
                     .AddOrUpdateVisitor(mapper.Map<EX.Client
-                    .ServiceReference1.VisitorDTO>(createDesctopVisitor));
+                    .ServiceReference1.VisitorDTO>(editDesctopVisitor));
 
                     var _visitors = clientExecutor.GetClient().GetAllVisitors();
                     clientExecutor.GetClient().AddStatus(mapper.Map
@@ -2133,7 +2361,7 @@ namespace EX.ViewModel
                             VisitorId = _editVisitor.Id,
                             ActionTime = DateTime.Now.ToString()
                         }));
-                    //                    Visitors.Add(mapper.Map<VisitorDTO>(_createVisitor));
+                //    Visitors.Add(mapper.Map<VisitorDTO>(_createVisitor));
                     Visitors = new ObservableCollection<VisitorDTO>();
                     foreach (var v in _visitors) { Visitors.Add(mapper.Map<VisitorDTO>(v)); }
                     UpdateAllVisitorFields(visitors);
@@ -2160,7 +2388,40 @@ namespace EX.ViewModel
                 CanExecuteSaveEditVisitor = false;
                 EditDesctopVisitor = new VisitorDTO();
             }, c => canExecuteSaveEditVisitor);
+            printVisitor = new RelayCommand(c =>
+            {
+                
 
+                printDialog.ShowDialog();
+                Run runName = new Run(selectedSearchVisitor.Column8 + "\n" + selectedSearchVisitor.Column9);
+                Run runCompany = new Run(selectedSearchVisitor.Column11);
+                Paragraph paragraphName = new Paragraph(runName);
+                Paragraph paragraphCompany = new Paragraph(runCompany);
+
+                paragraphName.LineStackingStrategy = LineStackingStrategy.MaxHeight;
+                paragraphName.FontFamily = new FontFamily("Verdana");
+                paragraphName.TextAlignment = TextAlignment.Center;
+                paragraphName.FontSize = 25;
+                paragraphName.FontWeight = FontWeight.FromOpenTypeWeight(400);
+
+                paragraphCompany.LineStackingStrategy = LineStackingStrategy.BlockLineHeight;
+                paragraphCompany.FontFamily = new FontFamily("Verdana");
+                paragraphCompany.TextAlignment = TextAlignment.Center;
+                paragraphCompany.FontSize = 25;
+                paragraphCompany.FontWeight = FontWeight.FromOpenTypeWeight(900);
+
+
+                FlowDocument flowDocument = new FlowDocument();
+                flowDocument.Blocks.Add(paragraphName);
+                flowDocument.Blocks.Add(paragraphCompany);
+                flowDocument.PagePadding = new Thickness(30);
+                flowDocument.PageWidth = printDialog.PrintableAreaWidth;
+                flowDocument.Name = "FlowDoc";
+                IDocumentPaginatorSource source = flowDocument;
+                printDialog.PrintDocument(source.DocumentPaginator, "print Visitor - " 
+                    + selectedSearchVisitor.Column8 + "\n" + selectedSearchVisitor.Column9);
+
+            });
 
         }
 
@@ -2435,7 +2696,86 @@ namespace EX.ViewModel
                 Thread.Sleep(10000);
             }
         }
+        private void checkSearchVisitor(string searchVisitor)
+        {
+            string search;
+            if (dataMode != "Клиент службы баз данных")
+            {
+                if (searchVisitor == "") { Find = false; }
+                if (searchVisitor.Length <= 3)
+                {
+                    SearchVisitorBackGround = "White";
+                }
+                else
+                {
+                    if (find == false)
+                    {
+                        IEnumerable<VisitorDTO> _searchVisitors;
+                        search = searchVisitor.ToUpper();
+                        _searchVisitors = visitorRepositoryDTO
+                            .GetAllVisitors()
+                            .Where(v => v.Column9.ToUpper().Contains(search) ||
+                                        v.Column8.ToUpper().Contains(search) ||
+                                        v.Column11.ToUpper().Contains(search));
+                        SearchVisitorCollection = new ObservableCollection<VisitorDTO>(_searchVisitors);
 
+                        if (searchVisitorCollection != null)
+                        {
+                            SearchVisitorBackGround = "Blue";
+                            SearchVisitorFontsize = 15;
+                            SearchVisitorBackGround = "Blue";
+                            SearchVisitorForegraund = "Black";
+                            find = true;
+                            var _searchVisitor = SearchVisitorCollection
+                            .FirstOrDefault();
+                            SearchVisitor = _searchVisitor.Column8 + " " +
+                                            _searchVisitor.Column9 + " (" +
+                                            _searchVisitor.Column11 + ")";
+                            SelectedSearchVisitor = searchVisitorCollection.FirstOrDefault();
+                        }
+                    }
+                }
+            }
+            else
+            {
+                IEnumerable<EX.Client.ServiceReference1.VisitorDTO> _searchVisitors;
+                if (searchVisitor == "") { Find = false; }
+                if (searchVisitor.Length <= 3)
+                {
+                    SearchVisitorBackGround = "White";
+                }
+                else
+                {
+                    if (find == false)
+                    {
+                        search = searchVisitor.ToUpper();
+                        _searchVisitors = clientExecutor.GetClient()
+                            .GetAllVisitors()
+                            .Where(v => v.Column9.ToUpper().Contains(search) ||
+                                        v.Column8.ToUpper().Contains(search) ||
+                                        v.Column11.ToUpper().Contains(search));
+                        SearchVisitorCollection = new ObservableCollection<VisitorDTO>();
+                        foreach (var v in _searchVisitors)
+                            SearchVisitorCollection.Add(mapper.Map<VisitorDTO>(v));
+
+                        if (searchVisitorCollection != null)
+                        {
+                            SearchVisitorBackGround = "Blue";
+                            SearchVisitorFontsize = 15;
+                            SearchVisitorBackGround = "Blue";
+                            SearchVisitorForegraund = "Black";
+                            find = true;
+                            var _searchVisitor = SearchVisitorCollection
+                            .FirstOrDefault();
+                            SearchVisitor = _searchVisitor.Column8 + " " +
+                                            _searchVisitor.Column9 + " (" +
+                                            _searchVisitor.Column11 + ")";
+                            SelectedSearchVisitor = searchVisitorCollection.FirstOrDefault();
+                        }
+                    }
+                }
+            }
+        }
         #endregion
 
         #region Events

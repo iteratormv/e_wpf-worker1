@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="To9fqE5KJmRkoJDXaZe54tVNUoM=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="t4CmekUasnzgsf19o0Z0RvZpNpM=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="netTcpBinding" name="NetTcpBinding_IVisitorContract">
       <properties>
@@ -121,10 +121,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="NetTcpBinding_IVisitorContract" contract="ServiceReference1.IVisitorContract" bindingType="netTcpBinding" address="net.tcp://192.168.0.31/Visitor" bindingConfiguration="NetTcpBinding_IVisitorContract">
+    <endpoint name="NetTcpBinding_IVisitorContract" contract="ServiceReference1.IVisitorContract" bindingType="netTcpBinding" address="net.tcp://192.168.0.26/Visitor" bindingConfiguration="NetTcpBinding_IVisitorContract">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>net.tcp://192.168.0.31/Visitor</serializedValue>
+          <serializedValue>net.tcp://192.168.0.26/Visitor</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

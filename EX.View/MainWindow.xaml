@@ -17,11 +17,8 @@
     </Window.DataContext>
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="270*"/>
-            <ColumnDefinition Width="343*"/>
-        </Grid.ColumnDefinitions>
-        <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch" Grid.ColumnSpan="2">
+
+        <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch" Grid.ColumnSpan="3">
             <TabItem Header="Главная">
                 <Grid Background="#FFE5E5E5" >
                     <Grid.Resources>
@@ -32,41 +29,67 @@
                         <RowDefinition Height="60*"/>
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Orientation="Horizontal">
-                        <Label
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center" 
-                            Margin="20,20,0,20"
-                            Content="код:"/>
-                        <ComboBox
-                            IsEditable="True"
+                        <StackPanel Margin="10,5,5,0"  Orientation="Vertical">
+                            <TextBox 
+
+                                Text="{Binding SearchVisitor, 
+                            Mode=TwoWay, 
+                            UpdateSourceTrigger=PropertyChanged}"/>
+                            <ListBox
                             Name="tb_code"
                             Visibility="Visible" 
-                            Text="Введите код или фамилию"
-                            Foreground="Gray"
+                            ItemsSource="{Binding SearchVisitorCollection}"
+                            SelectedItem="{Binding SelectedSearchVisitor}"
+                            Foreground="Black"   
+                            FontSize="10"
                             Width="300" 
-                            Height="50" 
+                            Height="90" 
                             HorizontalAlignment="Center" 
-                            VerticalAlignment="Center" 
-                            Margin="20" 
-                            Padding="10" 
-                            FontSize="20"/>
+                            VerticalAlignment="Center">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger  EventName="MouseDoubleClick">
+                                        <i:InvokeCommandAction 
+                                              Command="{Binding PrintVisitor}"
+                                              />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Column8}"/>
+                                            <TextBlock Text=" "/>
+                                            <TextBlock Text="{Binding Column9}"/>
+                                            <TextBlock Text=" ("/>
+                                            <TextBlock Text="{Binding Column11}"/>
+                                            <TextBlock Text=")"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                        
                         <TextBox 
                             Width="100"
                             TextAlignment="Center"
                             Margin="5" 
-                            Background="#FFE5E5E5" 
                             Foreground="Gray" 
                             TextWrapping="Wrap"
                             VerticalContentAlignment="Center"
-                            Text="Цвет бейджа"/>
+                            Text="{Binding BagePresenter}"
+                            Background="{
+                            Binding BagePresenterBackGround}"/>
                         <TextBox 
                             Width="150" 
                             TextAlignment="Center" 
                             Margin="5" 
                             Background="#FFE5E5E5" 
                             VerticalContentAlignment="Center"
-                            Foreground="Gray"
-                            Text="Статус оплаты"/>
+                            FontSize="{
+                            Binding PaymentStatusFontsize}"
+                            Foreground="{
+                            Binding PaymentStatusForegraund}"
+                            Text="{
+                            Binding PaymentStatusPresenter}"/>
                         <StackPanel 
                             Orientation="Vertical" 
                             Width="105" 
@@ -645,7 +668,7 @@
                                 Margin="0"
                                 Text="{Binding CurrentTime}"
                                 Height="{Binding HeightForm[0]}"/>
-                            
+
                             <Label 
                                 Margin="0"
                                 Content="{Binding AliasForm[1]}"
@@ -686,7 +709,7 @@
                                 Binding RowChedForm[2],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                            
+
                             <Label 
                                 Content="{Binding AliasForm[3]}"
                                 Height="{Binding HeightForm[3]}"
@@ -704,13 +727,19 @@
                                 Binding RowChedForm[3],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                            <Label 
+
+                            <StackPanel Orientation="Horizontal">
+                                <Label 
                                 Content="{Binding AliasForm[4]}"
                                 Height="{Binding HeightForm[4]}"
                                 Visibility="{
                                 Binding RowChedForm[4],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
+                                <Label
+                                    Content="{Binding StatusForm}"
+                                    Foreground="{Binding StatusFormColor}"/>
+                            </StackPanel>
                             <ComboBox 
                                 ItemsSource="{Binding Combo2Collection}"
                                 IsEditable="True"
@@ -723,7 +752,7 @@
                                 Binding RowChedForm[4],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                            
+
                             <Label 
                                 Content="{Binding AliasForm[5]}"
                                 Height="{Binding HeightForm[5]}"
@@ -741,6 +770,7 @@
                                 Binding RowChedForm[5],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
+
                             <Label 
                                 Content="{Binding AliasForm[6]}"
                                 Height="{Binding HeightForm[6]}"
@@ -748,9 +778,11 @@
                                 Binding RowChedForm[6],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
+
                             <ComboBox 
                                 ItemsSource="{Binding Combo3Collection}"
-                                IsEditable="True"
+                                IsEditable="{ Binding IsShowChanger}"
+                                IsEnabled="{Binding IsShowChanger}"
                                 Text="{
                                 Binding EditDesctopVisitor.Column6,
                                 Mode=TwoWay,
@@ -760,7 +792,6 @@
                                 Binding RowChedForm[6],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-
                             <Label 
                                 Content="{Binding AliasForm[7]}"
                                 Height="{Binding HeightForm[7]}"
@@ -778,13 +809,18 @@
                                 Binding RowChedForm[7],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                            <Label 
+                            <StackPanel Orientation="Horizontal">
+                                <Label 
                                 Content="{Binding AliasForm[8]}"
                                 Height="{Binding HeightForm[8]}"
                                 Visibility="{
                                 Binding RowChedForm[8],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
+                                <Label
+                                    Content="{Binding StatusForm}"
+                                    Foreground="{Binding StatusFormColor}"/>
+                            </StackPanel>
                             <TextBox 
                                 Text="{
                                 Binding EditDesctopVisitor.Column8,
@@ -795,13 +831,18 @@
                                 Binding RowChedForm[8],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                            <Label 
+                            <StackPanel Orientation="Horizontal">
+                                <Label 
                                 Content="{Binding AliasForm[9]}"
                                 Height="{Binding HeightForm[9]}"
                                 Visibility="{
                                 Binding RowChedForm[9],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
+                                <Label
+                                    Content="{Binding StatusForm}"
+                                    Foreground="{Binding StatusFormColor}"/>
+                            </StackPanel>
                             <TextBox 
                                 Text="{
                                 Binding EditDesctopVisitor.Column9,
@@ -829,13 +870,18 @@
                                 Binding RowChedForm[10],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                            <Label 
+                            <StackPanel Orientation="Horizontal">
+                                <Label 
                                 Content="{Binding AliasForm[11]}"
                                 Height="{Binding HeightForm[11]}"
                                 Visibility="{
                                 Binding RowChedForm[11],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
+                                <Label
+                                    Content="{Binding StatusForm}"
+                                    Foreground="{Binding StatusFormColor}"/>
+                            </StackPanel>
                             <TextBox 
                                 Text="{
                                 Binding EditDesctopVisitor.Column11,
@@ -880,6 +926,7 @@
                                 Binding RowChedForm[13],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
+
                             <Label 
                                 Content="{Binding AliasForm[14]}"
                                 Height="{Binding HeightForm[14]}"
@@ -897,6 +944,7 @@
                                 Binding RowChedForm[14],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
+
                             <Label 
                                 Content="{Binding AliasForm[15]}"
                                 Height="{Binding HeightForm[15]}"
@@ -914,6 +962,7 @@
                                 Binding RowChedForm[15],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
+
                             <Button 
                                 Content="Создать пользователя"
                                 Margin="5,10,5,5"
@@ -930,7 +979,7 @@
                     </Grid>
 
                 </Grid>
-                    
+
             </TabItem>
             <TabItem Header="Файл">
                 <Grid Background="#FFE5E5E5"  >

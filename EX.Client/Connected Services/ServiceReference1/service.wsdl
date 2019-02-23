@@ -293,9 +293,9 @@
   </wsdl:binding>
   <wsdl:service name="VisitorContract">
     <wsdl:port name="NetTcpBinding_IVisitorContract" binding="tns:NetTcpBinding_IVisitorContract">
-      <soap12:address location="net.tcp://192.168.0.31/Visitor" />
+      <soap12:address location="net.tcp://192.168.0.26/Visitor" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://192.168.0.31/Visitor</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.0.26/Visitor</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
   </wsdl:service>
