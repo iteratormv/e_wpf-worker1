@@ -25,151 +25,177 @@
                         <vmi:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
                         <vmi:StringColorConverter x:Key="stringToColorConverter"/>
                     </Grid.Resources>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="12*"/>
-                        <RowDefinition Height="60*"/>
-                    </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0" Orientation="Horizontal">
-                        <StackPanel Margin="10,5,5,0"  Orientation="Vertical">
-                            <TextBox 
-
-                                Text="{Binding SearchVisitor, 
-                            Mode=TwoWay, 
-                            UpdateSourceTrigger=PropertyChanged}"/>
-                            <ListBox
-                            Name="tb_code"
-                            Visibility="Visible" 
-                            ItemsSource="{Binding SearchVisitorCollection}"
-                            SelectedItem="{Binding SelectedSearchVisitor, UpdateSourceTrigger=PropertyChanged}"
-                            Foreground="Black"   
-                            FontSize="10"
-                            Width="300" 
-                            Height="90" 
-                            HorizontalAlignment="Center" 
-                            VerticalAlignment="Center">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger  EventName="MouseDoubleClick">
-                                        <i:InvokeCommandAction 
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="12*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0" Margin="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="100*"/>
+                            <RowDefinition Height="150*"/>
+                            <RowDefinition Height="400*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel 
+                                Grid.Column="0"
+                                Orientation="Vertical" 
+                                Width="105" 
+                                Margin="5">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    Text="Зарегистрировано"/>
+                                <TextBlock
+                                    FontSize="50"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding CountRegistredVisitors}"/>
+                            </StackPanel>
+                            <StackPanel 
+                                Grid.Column="1"
+                                Orientation="Vertical" 
+                                Width="150" 
+                                Margin="5">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    Text="Актуализировано"/>
+                                <TextBlock
+                                    FontSize="65"
+                                    FontStyle="Normal"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding CountActualVisitors}"/>
+                            </StackPanel>
+                            <StackPanel 
+                                Grid.Column="2"
+                                Orientation="Vertical" 
+                                Width="90" 
+                                Margin="5">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    Text="Создано"/>
+                                <TextBlock
+                                    FontSize="50"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding CountCreateVisitors}"/>
+                            </StackPanel>
+                            <StackPanel
+                                Grid.Column="3"
+                                Orientation="Vertical" 
+                                Width="90" 
+                                Margin="5">
+                                <TextBlock
+                                    HorizontalAlignment="Center"                                    
+                                    Text="Не пришло"/>
+                                <TextBlock
+                                    FontSize="50"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding CountNotcameVisitors}"/>
+                            </StackPanel>
+                            <StackPanel 
+                                Grid.Column="4"
+                                Orientation="Vertical" 
+                                Width="110" 
+                                Margin="5">
+                                <TextBlock
+                                    HorizontalAlignment="Center"                                   
+                                    Text="Общее количество"/>
+                                <TextBlock
+                                    FontSize="50"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding CountAllVisitors}"/>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0" Margin="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="10*"/>
+                                    <RowDefinition Height="35*"/>
+                                </Grid.RowDefinitions>
+                                <TextBox 
+                                    Padding="3"
+                                    Foreground="Gray"
+                                    FontSize="20"
+                                    Grid.Row="0"
+                                    Text="{Binding SearchVisitor, 
+                                    Mode=TwoWay, 
+                                    UpdateSourceTrigger=PropertyChanged}"/>
+                                <Grid Grid.Row="1">
+                                    <ListBox
+                                        Visibility="Visible" 
+                                        ItemsSource="{
+                                        Binding SearchVisitorCollection}"
+                                        SelectedItem="{
+                                        Binding SelectedSearchVisitor, 
+                                        UpdateSourceTrigger=PropertyChanged}"
+                                        Foreground="Black"   
+                                        FontSize="15">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger  EventName="MouseDoubleClick">
+                                                <i:InvokeCommandAction 
                                               Command="{Binding AddVisitorToFact}"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Column8}"/>
-                                            <TextBlock Text=" "/>
-                                            <TextBlock Text="{Binding Column9}"/>
-                                            <TextBlock Text=" ("/>
-                                            <TextBlock Text="{Binding Column11}"/>
-                                            <TextBlock Text=")"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                        </StackPanel>
-                        
-                        <TextBox 
-                            Width="100"
-                            TextAlignment="Center"
-                            Margin="5" 
-                            Foreground="Gray" 
-                            TextWrapping="Wrap"
-                            VerticalContentAlignment="Center"
-                            Text="{Binding BagePresenter}"
-                            Background="{
-                            Binding BagePresenterBackGround}"/>
-                        <TextBox 
-                            Width="150" 
-                            TextAlignment="Center" 
-                            Margin="5" 
-                            Background="#FFE5E5E5" 
-                            VerticalContentAlignment="Center"
-                            FontSize="{
-                            Binding PaymentStatusFontsize}"
-                            Foreground="{
-                            Binding PaymentStatusForegraund}"
-                            Text="{
-                            Binding PaymentStatusPresenter}"/>
-                        <StackPanel 
-                            Orientation="Vertical" 
-                            Width="105" 
-                            Margin="5">
-                            <TextBlock
-                                HorizontalAlignment="Center"
-                                Text="Зарегистрировано"/>
-                            <TextBlock
-                                FontSize="50"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Text="{Binding CountRegistredVisitors}"/>
-                        </StackPanel>
-                        <StackPanel 
-                            Orientation="Vertical" 
-                            Width="150" 
-                            Margin="5">
-                            <TextBlock
-                                HorizontalAlignment="Center"
-                                Text="Актуализировано"/>
-                            <TextBlock
-                                FontSize="65"
-                                FontStyle="Normal"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Text="{Binding CountActualVisitors}"/>
-                        </StackPanel>
-                        <StackPanel 
-                            Orientation="Vertical" 
-                            Width="90" 
-                            Margin="5">
-                            <TextBlock
-                                HorizontalAlignment="Center"
-                                Text="Создано"/>
-                            <TextBlock
-                                FontSize="50"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Text="{Binding CountCreateVisitors}"/>
-                        </StackPanel>
-                        <StackPanel 
-                            Orientation="Vertical" 
-                            Width="90" 
-                            Margin="5">
-                            <TextBlock
-                                HorizontalAlignment="Center"
-                                Text="Не пришло"/>
-                            <TextBlock
-                                FontSize="50"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Text="{Binding CountNotcameVisitors}"/>
-                        </StackPanel>
-                        <StackPanel 
-                            Orientation="Vertical" 
-                            Width="110" 
-                            Margin="5">
-                            <TextBlock
-                                HorizontalAlignment="Center"
-                                Text="Общее количество"/>
-                            <TextBlock
-                                FontSize="50"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Text="{Binding CountAllVisitors}"/>
-                        </StackPanel>
-                    </StackPanel>
-                    <Grid Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="50*"/>
-                            <ColumnDefinition Width="12*"/>
-                        </Grid.ColumnDefinitions>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Column8}"/>
+                                                    <TextBlock Text=" "/>
+                                                    <TextBlock Text="{Binding Column9}"/>
+                                                    <TextBlock Text=" ("/>
+                                                    <TextBlock Text="{Binding Column11}"/>
+                                                    <TextBlock Text=")"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </Grid>
+                            </Grid>
+                            <TextBox 
+                                Grid.Column="1"
+                                TextAlignment="Center"
+                                Margin="5" 
+                                Foreground="Gray" 
+                                TextWrapping="Wrap"
+                                VerticalContentAlignment="Center"
+                                Text="{Binding BagePresenter}"
+                                Background="{
+                                Binding BagePresenterBackGround}"/>
+                            <TextBox 
+                                Grid.Column="2"
+                                TextAlignment="Center" 
+                                Margin="5" 
+                                Background="#FFE5E5E5" 
+                                VerticalContentAlignment="Center"
+                                FontSize="{
+                                Binding PaymentStatusFontsize}"
+                                Foreground="{
+                                Binding PaymentStatusForegraund}"
+                                Text="{
+                                Binding PaymentStatusPresenter}"/>
+                        </Grid>
                         <DataGrid 
+                                Grid.Row="2"
                             SelectedItem="{
                             Binding SelectDesctopVisitor,
                             Mode=TwoWay,
                             UpdateSourceTrigger=PropertyChanged}"
                             x:Name="workgrid"
-                            Grid.Column="0" 
-                            Margin="10" 
+                            Margin="5" 
                             AutoGenerateColumns="False"
                             ItemsSource="{Binding DesctopVisitors}" 
                             SelectionChanged="Workgrid_SelectionChanged">
@@ -667,16 +693,20 @@
 
                             </DataGrid.Columns>
                         </DataGrid>
-                        <StackPanel Grid.Column="1">
-                            <Label 
+                    </Grid>
+                    <StackPanel Grid.Column="1">
+                        <Label 
+                            FontSize="15"
                                 Content="Дата Актуализации"
                                 Height="{Binding HeightForm[0]}"/>
-                            <TextBox 
+                        <TextBox 
+                            FontSize="15"
                                 Margin="0"
                                 Text="{Binding CurrentTime}"
                                 Height="{Binding HeightForm[0]}"/>
 
-                            <Label 
+                        <Label 
+                            FontSize="15"
                                 Margin="0"
                                 Content="{Binding AliasForm[1]}"
                                 Height="{Binding HeightForm[1]}"
@@ -684,7 +714,8 @@
                                 Binding RowChedForm[1],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                            <TextBox 
+                        <TextBox 
+                            FontSize="15"
                                 Margin="0"
                                 Text="{
                                 Binding EditDesctopVisitor.Column1,
@@ -695,7 +726,8 @@
                                 Binding RowChedForm[1],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                            <Label 
+                        <Label 
+                            FontSize="15"
                                 Margin="0"
                                 Content="{Binding AliasForm[2]}"
                                 Height="{Binding HeightForm[2]}"
@@ -703,7 +735,8 @@
                                 Binding RowChedForm[2],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                            <ComboBox 
+                        <ComboBox 
+                            FontSize="15"
                                 ItemsSource="{Binding Combo1Collection}"
                                 Margin="0"
                                 IsEditable="True"
@@ -717,14 +750,16 @@
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
 
-                            <Label 
+                        <Label 
+                            FontSize="15"
                                 Content="{Binding AliasForm[3]}"
                                 Height="{Binding HeightForm[3]}"
                                 Visibility="{
                                 Binding RowChedForm[3],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                            <TextBox 
+                        <TextBox 
+                            FontSize="15"
                                 Text="{
                                 Binding EditDesctopVisitor.Column3,
                                 Mode=TwoWay,
@@ -735,19 +770,22 @@
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
 
-                            <StackPanel Orientation="Horizontal">
-                                <Label 
+                        <StackPanel Orientation="Horizontal">
+                            <Label 
+                                FontSize="15"
                                 Content="{Binding AliasForm[4]}"
                                 Height="{Binding HeightForm[4]}"
                                 Visibility="{
                                 Binding RowChedForm[4],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                                <Label
+                            <Label
+                                FontSize="15"
                                     Content="{Binding StatusForm}"
                                     Foreground="{Binding StatusFormColor}"/>
-                            </StackPanel>
-                            <ComboBox 
+                        </StackPanel>
+                        <ComboBox 
+                            FontSize="15"
                                 ItemsSource="{Binding Combo2Collection}"
                                 IsEditable="True"
                                 Text="{
@@ -760,14 +798,16 @@
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
 
-                            <Label 
+                        <Label 
+                                FontSize="15"
                                 Content="{Binding AliasForm[5]}"
                                 Height="{Binding HeightForm[5]}"
                                 Visibility="{
                                 Binding RowChedForm[5],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                            <TextBox 
+                        <TextBox 
+                            FontSize="15"
                                 Text="{
                                 Binding EditDesctopVisitor.Column5,
                                 Mode=TwoWay,
@@ -778,7 +818,8 @@
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
 
-                            <Label 
+                        <Label 
+                            FontSize="15"
                                 Content="{Binding AliasForm[6]}"
                                 Height="{Binding HeightForm[6]}"
                                 Visibility="{
@@ -786,7 +827,8 @@
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
 
-                            <ComboBox 
+                        <ComboBox 
+                            FontSize="15"
                                 ItemsSource="{Binding Combo3Collection}"
                                 IsEditable="{ Binding IsShowChanger}"
                                 IsEnabled="{Binding IsShowChanger}"
@@ -799,14 +841,16 @@
                                 Binding RowChedForm[6],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                            <Label 
+                        <Label 
+                            FontSize="15"
                                 Content="{Binding AliasForm[7]}"
                                 Height="{Binding HeightForm[7]}"
                                 Visibility="{
                                 Binding RowChedForm[7],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                            <TextBox 
+                        <TextBox 
+                            FontSize="15"
                                 Text="{
                                 Binding EditDesctopVisitor.Column7,
                                 Mode=TwoWay,
@@ -816,19 +860,22 @@
                                 Binding RowChedForm[7],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                            <StackPanel Orientation="Horizontal">
-                                <Label 
+                        <StackPanel Orientation="Horizontal">
+                            <Label 
+                                FontSize="15"
                                 Content="{Binding AliasForm[8]}"
                                 Height="{Binding HeightForm[8]}"
                                 Visibility="{
                                 Binding RowChedForm[8],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                                <Label
+                            <Label
+                                FontSize="15"
                                     Content="{Binding StatusForm}"
                                     Foreground="{Binding StatusFormColor}"/>
-                            </StackPanel>
-                            <TextBox 
+                        </StackPanel>
+                        <TextBox 
+                            FontSize="15"
                                 Text="{
                                 Binding EditDesctopVisitor.Column8,
                                 Mode=TwoWay,
@@ -838,19 +885,22 @@
                                 Binding RowChedForm[8],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                            <StackPanel Orientation="Horizontal">
-                                <Label 
+                        <StackPanel Orientation="Horizontal">
+                            <Label 
+                                FontSize="15"
                                 Content="{Binding AliasForm[9]}"
                                 Height="{Binding HeightForm[9]}"
                                 Visibility="{
                                 Binding RowChedForm[9],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                                <Label
+                            <Label
+                                FontSize="15"
                                     Content="{Binding StatusForm}"
                                     Foreground="{Binding StatusFormColor}"/>
-                            </StackPanel>
-                            <TextBox 
+                        </StackPanel>
+                        <TextBox 
+                            FontSize="15"
                                 Text="{
                                 Binding EditDesctopVisitor.Column9,
                                 Mode=TwoWay,
@@ -860,14 +910,16 @@
                                 Binding RowChedForm[9],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                            <Label 
+                        <Label 
+                            FontSize="15"
                                 Content="{Binding AliasForm[10]}"
                                 Height="{Binding HeightForm[10]}"
                                 Visibility="{
                                 Binding RowChedForm[10],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                            <TextBox 
+                        <TextBox 
+                            FontSize="15"
                                 Text="{
                                 Binding EditDesctopVisitor.Column10,
                                 Mode=TwoWay,
@@ -877,19 +929,22 @@
                                 Binding RowChedForm[10],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                            <StackPanel Orientation="Horizontal">
-                                <Label 
+                        <StackPanel Orientation="Horizontal">
+                            <Label 
+                                FontSize="15"
                                 Content="{Binding AliasForm[11]}"
                                 Height="{Binding HeightForm[11]}"
                                 Visibility="{
                                 Binding RowChedForm[11],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                                <Label
+                            <Label
+                                FontSize="15"
                                     Content="{Binding StatusForm}"
                                     Foreground="{Binding StatusFormColor}"/>
-                            </StackPanel>
-                            <TextBox 
+                        </StackPanel>
+                        <TextBox 
+                            FontSize="15"
                                 Text="{
                                 Binding EditDesctopVisitor.Column11,
                                 Mode=TwoWay,
@@ -899,14 +954,16 @@
                                 Binding RowChedForm[11],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                            <Label 
+                        <Label 
+                            FontSize="15"
                                 Content="{Binding AliasForm[12]}"
                                 Height="{Binding HeightForm[12]}"
                                 Visibility="{
                                 Binding RowChedForm[12],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                            <TextBox 
+                        <TextBox 
+                            FontSize="15"
                                 Text="{
                                 Binding EditDesctopVisitor.Column12,
                                 Mode=TwoWay,
@@ -916,14 +973,16 @@
                                 Binding RowChedForm[12],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                            <Label 
+                        <Label 
+                            FontSize="15"
                                 Content="{Binding AliasForm[13]}"
                                 Height="{Binding HeightForm[13]}"
                                 Visibility="{
                                 Binding RowChedForm[13],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                            <TextBox 
+                        <TextBox 
+                            FontSize="15"
                                 Text="{
                                 Binding EditDesctopVisitor.Column13,
                                 Mode=TwoWay,
@@ -934,14 +993,16 @@
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
 
-                            <Label 
+                        <Label 
+                            FontSize="15"
                                 Content="{Binding AliasForm[14]}"
                                 Height="{Binding HeightForm[14]}"
                                 Visibility="{
                                 Binding RowChedForm[14],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                            <TextBox 
+                        <TextBox 
+                            FontSize="15"
                                 Text="{
                                 Binding EditDesctopVisitor.Column14,
                                 Mode=TwoWay,
@@ -952,14 +1013,16 @@
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
 
-                            <Label 
+                        <Label 
+                            FontSize="15"
                                 Content="{Binding AliasForm[15]}"
                                 Height="{Binding HeightForm[15]}"
                                 Visibility="{
                                 Binding RowChedForm[15],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                            <TextBox 
+                        <TextBox 
+                            FontSize="15"
                                 Text="{
                                 Binding EditDesctopVisitor.Column15,
                                 Mode=TwoWay,
@@ -970,21 +1033,22 @@
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
 
-                            <Button 
+                        <Button 
+                            FontSize="15"
                                 Content="Создать пользователя"
                                 Margin="5,10,5,5"
                                 Command="{Binding CreateVisitor}"/>
-                            <Button 
+                        <Button 
+                            FontSize="15"
                                 Content="Редактировать пользователя"
                                 Margin="5"
                                 Command="{Binding EditVisitor}"/>
-                            <Button 
+                        <Button 
+                            FontSize="15"
                                 Content="Сохранить изменения"
                                 Margin="5"
                                 Command="{Binding SaveEditVisitor}"/>
-                        </StackPanel>
-                    </Grid>
-
+                    </StackPanel>
                 </Grid>
 
             </TabItem>

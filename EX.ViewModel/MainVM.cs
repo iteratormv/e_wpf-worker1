@@ -872,9 +872,6 @@ namespace EX.ViewModel
             }
         }
 
-
-
-
         RelayCommand createVisitor;
         public RelayCommand CreateVisitor
         {
@@ -896,19 +893,15 @@ namespace EX.ViewModel
             get { return addVisitorToFact; }
         }
 
-
-
         public MainVM()
         {
             DataMode = "Локальная база данных";
             visitorRepositoryDTO = new VisitorRepositoryDTO();
             printDialog = new PrintDialog();
 
-            Visitors = new ObservableCollection<VisitorDTO>
-                     (visitorRepositoryDTO.GetAllVisitors());
+            Visitors = new ObservableCollection<VisitorDTO>(visitorRepositoryDTO.GetAllVisitors());
             UpdateAllVisitorFields(visitors);
             StartShowTime();
-
             statusFormColor = "Red";
             statusForm = "";
 
@@ -1448,9 +1441,7 @@ namespace EX.ViewModel
             });
             mapper = config.CreateMapper();
             #endregion
-
             statusRepository = new StatusRepositoryDTO();
-
             selectDesctopVisitor = new VisitorDTO();
             editDesctopVisitor = new VisitorDTO();
             canExecuteCreateVisitor = true;
@@ -1482,8 +1473,6 @@ namespace EX.ViewModel
             searchVisitorBackGround = "White";
             searchVisitorForegraund = "Gray";
             searchVisitorCollection = new ObservableCollection<VisitorDTO>();
-
-
 
             #region Implementation cammands for Administration
             addUser = new RelayCommand(c =>
@@ -2379,7 +2368,6 @@ namespace EX.ViewModel
                 PaymentStatusFontsize = 12;
                 PaymentStatusForegraund = "Gray";
             }, c => canExecuteSaveEditVisitor);
-
             addVisitorToFact = new RelayCommand(c =>
             {
                 IsShowChanger = true;
@@ -2396,9 +2384,7 @@ namespace EX.ViewModel
                 SearchVisitorForegraund = "Gray";
                 SearchVisitorCollection = new ObservableCollection<VisitorDTO>();
             });
-
         }
-
         #region Implemetation methods
         private void addNewCollumn(string _intendant, int dsid, int osid)
         {
