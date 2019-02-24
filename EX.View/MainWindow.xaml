@@ -23,6 +23,7 @@
                 <Grid Background="#FFE5E5E5" >
                     <Grid.Resources>
                         <vmi:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
+                        <vmi:StringColorConverter x:Key="stringToColorConverter"/>
                     </Grid.Resources>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="12*"/>
@@ -164,12 +165,19 @@
                         <DataGrid 
                             SelectedItem="{
                             Binding SelectDesctopVisitor,
+                            Mode=TwoWay,
                             UpdateSourceTrigger=PropertyChanged}"
                             x:Name="workgrid"
                             Grid.Column="0" 
                             Margin="10" 
                             AutoGenerateColumns="False"
-                            ItemsSource="{Binding DesctopVisitors}" SelectionChanged="Workgrid_SelectionChanged">
+                            ItemsSource="{Binding DesctopVisitors}" 
+                            SelectionChanged="Workgrid_SelectionChanged">
+                            <DataGrid.RowStyle>
+                                <Style TargetType="DataGridRow">
+                                    <Setter Property="Background" Value="{Binding Column2, Converter={StaticResource stringToColorConverter}}"/>
+                                </Style>
+                            </DataGrid.RowStyle>
                             <DataGrid.Resources>
                                 <vmi:BindingProxy 
                                 x:Key="ColumnChecked1Desctop"

@@ -68,6 +68,7 @@
     <Compile Include="Infrastructure\BindingProxy.cs" />
     <Compile Include="Infrastructure\BoolToVisibilityConverter.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
+    <Compile Include="Infrastructure\StringToColorConverter.cs" />
     <Compile Include="MainVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
