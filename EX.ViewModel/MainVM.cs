@@ -2140,7 +2140,7 @@ namespace EX.ViewModel
             }, c => dSCollumnSettingsForm.Count() > 1);
             #endregion
             #endregion
-            #region Implementation command for File
+                        #region Implementation command for File
             addDataFromFileToDatabase = new RelayCommand(c =>
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -2158,6 +2158,7 @@ namespace EX.ViewModel
                         (visitorRepositoryDTO.GetAllVisitors());
                         _ProgressBar.Status = "All data added to database";
                         _ProgressBar.Progress = 0;
+
                         statusRepository = new StatusRepositoryDTO();
                         foreach(var v in visitors)
                         {
@@ -2685,10 +2686,10 @@ namespace EX.ViewModel
                 if (searchVisitor == "") { Find = false; }
                 if (searchVisitor.Length <= 3)
                 {
-                    SearchVisitorBackGround = "White";
-                    SearchVisitorForegraund = "Gray";
+ //                   SearchVisitorBackGround = "White";
+//                   SearchVisitorForegraund = "Gray";
                     SearchVisitor = "";
-                    SearchVisitorFontsize = 25;
+//                    SearchVisitorFontsize = 25;
                 }
                 else
                 {
