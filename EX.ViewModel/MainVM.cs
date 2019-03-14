@@ -31,8 +31,6 @@ namespace EX.ViewModel
         #region Context for Administration
         #region Visibte Tab Settigs
         int visibleManageUserRole;
-
-
         public int VisibleManageUserRole
         {
             get { return visibleManageUserRole; }
@@ -154,7 +152,10 @@ namespace EX.ViewModel
         public ObservableCollection<DSCollumnSettingDTO> DSCollumnSettingsRaport
         {
             get { return dSCollumnSettingsRaport; }
-            set { dSCollumnSettingsRaport = value;
+            set
+            {
+                dSCollumnSettingsRaport = value;
+                initHeaderRaport(dSCollumnSettingsRaport);
                 OnPropertyChanged(nameof(DSCollumnSettingsRaport));
             }
         }
@@ -246,8 +247,6 @@ namespace EX.ViewModel
                 OnPropertyChanged(nameof(SelectedCollumnSettingDesctop));
             }
         }
-
-
         #endregion
         #region Form
         DisplaySettingDTO selectedDisplaySettingForm;
@@ -300,6 +299,39 @@ namespace EX.ViewModel
                 OnPropertyChanged(nameof(WidthDesctop)); }
         }
         #endregion
+        #region Raport
+        const int count_raport_headers = 16;
+        bool[] columnCheckedRaport;
+        public bool[] ColumnCheckedRaport
+        {
+            get { return columnCheckedRaport; }
+            set
+            {
+                columnCheckedRaport = value;
+                OnPropertyChanged(nameof(ColumnCheckedRaport));
+            }
+        }
+        string[] aliasRaport;
+        public string[] AliasRaport
+        {
+            get { return aliasRaport; }
+            set
+            {
+                aliasRaport = value;
+                OnPropertyChanged(nameof(AliasRaport));
+            }
+        }
+        int[] widthRaport;
+        public int[] WidthRaport
+        {
+            get { return widthRaport; }
+            set
+            {
+                widthRaport = value;
+                OnPropertyChanged(nameof(WidthRaport));
+            }
+        }
+        #endregion
         #region Form
         const int count_form_fields = 16;
         bool[] rowCheckedForm;
@@ -334,9 +366,7 @@ namespace EX.ViewModel
         }
 
         #endregion
-
         #endregion
-
         #region Commands for Setings
         #region Raport
         RelayCommand addCollumnRaport;
@@ -454,6 +484,7 @@ namespace EX.ViewModel
         #region Context for File
         #region Repository for File
         VisitorRepositoryDTO visitorRepositoryDTO;
+   //     StatusRepositoryDTO statusRepositoryDTO;
         #endregion
         #region Collection for File
         ObservableCollection<VisitorDTO> visitors;
@@ -484,6 +515,16 @@ namespace EX.ViewModel
         public RelayCommand AddDataFromFileToDatabase
         {
             get { return addDataFromFileToDatabase; }
+        }
+        RelayCommand importDataFromFileToDatabase;
+        public RelayCommand ImportDataFromFileToDataBase
+        {
+            get { return importDataFromFileToDatabase; }
+        }
+        RelayCommand importVisitorFromFileWithId;
+        public RelayCommand ImportVisitorFromFileWithId
+        {
+            get { return importVisitorFromFileWithId; }
         }
         #endregion
         #endregion
@@ -538,9 +579,8 @@ namespace EX.ViewModel
         ClientExecutor clientExecutor;
         IMapper mapper;
         #endregion
-
-        PrintDialog printDialog;
-
+        #region Context Desctop Operation
+        #region Collection for Desctop Operation
         ObservableCollection<VisitorDTO> desctopVisitors;
         public ObservableCollection<VisitorDTO> DesctopVisitors
         {
@@ -551,6 +591,48 @@ namespace EX.ViewModel
                 OnPropertyChanged(nameof(DesctopVisitors));
             }
         }
+        ObservableCollection<string> combo1Collection;
+        public ObservableCollection<string> Combo1Collection
+        {
+            get { return combo1Collection; }
+            set
+            {
+                combo1Collection = value;
+                OnPropertyChanged(nameof(Combo1Collection));
+            }
+        }
+        ObservableCollection<string> combo2Collection;
+        public ObservableCollection<string> Combo2Collection
+        {
+            get { return combo2Collection; }
+            set
+            {
+                combo2Collection = value;
+                OnPropertyChanged(nameof(Combo2Collection));
+            }
+        }
+        ObservableCollection<string> combo3Collection;
+        public ObservableCollection<string> Combo3Collection
+        {
+            get { return combo3Collection; }
+            set
+            {
+                combo3Collection = value;
+                OnPropertyChanged(nameof(Combo3Collection));
+            }
+        }
+        ObservableCollection<VisitorDTO> searchVisitorCollection;
+        public ObservableCollection<VisitorDTO> SearchVisitorCollection
+        {
+            get { return searchVisitorCollection; }
+            set
+            {
+                searchVisitorCollection = value;
+                OnPropertyChanged(nameof(SearchVisitorCollection));
+            }
+        }
+        #endregion
+        #region Fields for Desctop Operation
         int countRegistredVisitors;
         public int CountRegistredVisitors
         {
@@ -601,39 +683,6 @@ namespace EX.ViewModel
                 OnPropertyChanged(nameof(CountAllVisitors));
             }
         }
-
-        ObservableCollection<string> combo1Collection;
-        public ObservableCollection<string> Combo1Collection
-        {
-            get { return combo1Collection; }
-            set
-            {
-                combo1Collection = value;
-                OnPropertyChanged(nameof(Combo1Collection));
-            }
-        }
-        ObservableCollection<string> combo2Collection;
-        public ObservableCollection<string> Combo2Collection
-        {
-            get { return combo2Collection; }
-            set
-            {
-                combo2Collection = value;
-                OnPropertyChanged(nameof(Combo2Collection));
-            }
-        }
-        ObservableCollection<string> combo3Collection;
-        public ObservableCollection<string> Combo3Collection
-        {
-            get { return combo3Collection; }
-            set
-            {
-                combo3Collection = value;
-                OnPropertyChanged(nameof(Combo3Collection));
-            }
-        }
-
- 
         string authDate;
         public string AuthDate
         {
@@ -695,7 +744,6 @@ namespace EX.ViewModel
                 OnPropertyChanged(nameof(StatusFormColor));
             }
         }
-
         string currentTime;
         public string CurrentTime
         {
@@ -706,7 +754,59 @@ namespace EX.ViewModel
                 OnPropertyChanged(nameof(CurrentTime));
             }
         }
-
+        string searchVisitor;
+        public string SearchVisitor
+        {
+            get { return searchVisitor; }
+            set
+            {
+                searchVisitor = value;
+                CheckSearchVisitor(searchVisitor);
+                OnPropertyChanged(nameof(SearchVisitor));
+            }
+        }
+        VisitorDTO selectedSearchVisitor;
+        public VisitorDTO SelectedSearchVisitor
+        {
+            get { return selectedSearchVisitor; }
+            set
+            {
+                selectedSearchVisitor = value;
+                OnPropertyChanged(nameof(SelectedSearchVisitor));
+            }
+        }
+        string paymentStatusPresenter;
+        public string PaymentStatusPresenter
+        {
+            get { return paymentStatusPresenter; }
+            set
+            {
+                paymentStatusPresenter = value;
+                OnPropertyChanged(nameof(PaymentStatusPresenter));
+            }
+        }
+        int paymentStatusFontsize;
+        public int PaymentStatusFontsize
+        {
+            get { return paymentStatusFontsize; }
+            set
+            {
+                paymentStatusFontsize = value;
+                OnPropertyChanged(nameof(PaymentStatusFontsize));
+            }
+        }
+        string paymentStatusForegraund;
+        public string PaymentStatusForegraund
+        {
+            get { return paymentStatusForegraund; }
+            set
+            {
+                paymentStatusForegraund = value;
+                OnPropertyChanged(nameof(PaymentStatusForegraund));
+            }
+        }
+        #endregion
+        #region Service Fields for Desctop Operation
         bool canExecuteCreateVisitor;
         public bool CanExecuteCreateVisitor
         {
@@ -747,7 +847,17 @@ namespace EX.ViewModel
                 OnPropertyChanged(nameof(IsShowChanger));
             }
         }
-
+        bool find = false;
+        bool Find
+        {
+            get { return find; }
+            set
+            {
+                find = value;
+                OnPropertyChanged(nameof(Find));
+            }
+        }
+        PrintDialog printDialog;
         string bagePresenter;
         public string BagePresenter
         {
@@ -768,36 +878,15 @@ namespace EX.ViewModel
                 OnPropertyChanged(nameof(BagePresenterBackGround));
             }
         }
-        string searchVisitor;
-        public string SearchVisitor
-        {
-            get { return searchVisitor; }
-            set
-            {
-                searchVisitor = value;
-                CheckSearchVisitor(searchVisitor);
-                OnPropertyChanged(nameof(SearchVisitor));
-            }
-        }
-        VisitorDTO selectedSearchVisitor;
-        public VisitorDTO SelectedSearchVisitor
-        {
-            get { return selectedSearchVisitor; }
-            set
-            {
-                selectedSearchVisitor = value;
-                OnPropertyChanged(nameof(SelectedSearchVisitor));
-            }
-        }
 
-        bool find = false;
-        bool Find
+        bool isListFocuce;
+        public bool IsListFocuce
         {
-            get { return find; }
+            get { return isListFocuce; }
             set
             {
-                find = value;
-                OnPropertyChanged(nameof(Find));
+                isListFocuce = value;
+                OnPropertyChanged(nameof(IsListFocuce));
             }
         }
 
@@ -831,47 +920,8 @@ namespace EX.ViewModel
                 OnPropertyChanged(nameof(SearchVisitorFontsize));
             }
         }
-        ObservableCollection<VisitorDTO> searchVisitorCollection;
-        public ObservableCollection<VisitorDTO> SearchVisitorCollection
-        {
-            get { return searchVisitorCollection; }
-            set
-            {
-                searchVisitorCollection = value;
-                OnPropertyChanged(nameof(SearchVisitorCollection));
-            }
-        }
-        string paymentStatusPresenter;
-        public string PaymentStatusPresenter
-        {
-            get { return paymentStatusPresenter; }
-            set
-            {
-                paymentStatusPresenter = value;
-                OnPropertyChanged(nameof(PaymentStatusPresenter));
-            }
-        }
-        int paymentStatusFontsize;
-        public int PaymentStatusFontsize
-        {
-            get { return paymentStatusFontsize; }
-            set
-            {
-                paymentStatusFontsize = value;
-                OnPropertyChanged(nameof(PaymentStatusFontsize));
-            }
-        }
-        string paymentStatusForegraund;
-        public string PaymentStatusForegraund
-        {
-            get { return paymentStatusForegraund; }
-            set
-            {
-                paymentStatusForegraund = value;
-                OnPropertyChanged(nameof(PaymentStatusForegraund));
-            }
-        }
-
+        #endregion
+        #region Commands for Desctop Operation
         RelayCommand createVisitor;
         public RelayCommand CreateVisitor
         {
@@ -892,19 +942,421 @@ namespace EX.ViewModel
         {
             get { return addVisitorToFact; }
         }
+        RelayCommand saveVisitorsToFile;
+        public RelayCommand SaveVisitorsToFile
+        {
+            get { return saveVisitorsToFile; }
+        }
+        RelayCommand saveStatusesToFile;
+        public RelayCommand SaveStatusesToFile
+        {
+            get { return saveStatusesToFile; }
+        }
+        #endregion
+        #endregion
+
+        ObservableCollection<VisitorDTO> raportRegisteredVisitors;
+        public ObservableCollection<VisitorDTO> RaportRegisteredVisitors
+        {
+            get { return raportRegisteredVisitors; }
+            set
+            {
+                raportRegisteredVisitors = value;
+                OnPropertyChanged(nameof(RaportRegisteredVisitors));
+            }
+        }
+        ObservableCollection<VisitorDTO> raportActualVisitors;
+        public ObservableCollection<VisitorDTO> RaportActualVisitors
+        {
+            get { return raportActualVisitors; }
+            set
+            {
+                raportActualVisitors = value;
+                OnPropertyChanged(nameof(RaportActualVisitors));
+            }
+        }
+        ObservableCollection<VisitorDTO> raportUnActualVisitors;
+        public ObservableCollection<VisitorDTO> RaportUnActualVisitors
+        {
+            get { return raportUnActualVisitors; }
+            set
+            {
+                raportUnActualVisitors = value;
+                OnPropertyChanged(nameof(RaportUnActualVisitors));
+            }
+        }
+        ObservableCollection<VisitorDTO> raportCreateVisitors;
+        public ObservableCollection<VisitorDTO> RaportCreateVisitors
+        {
+            get { return raportCreateVisitors; }
+            set
+            {
+                raportCreateVisitors = value;
+                OnPropertyChanged(nameof(RaportCreateVisitors));
+            }
+        }
+        ObservableCollection<VisitorDTO> raportAllVisitors;
+        public ObservableCollection<VisitorDTO> RaportAllVisitors
+        {
+            get { return raportAllVisitors; }
+            set
+            {
+                raportAllVisitors = value;
+                OnPropertyChanged(nameof(RaportAllVisitors));
+            }
+        }
+
+        string selectedRaportRegistredCategory;
+        public string SelectedRaportRegistredCategory
+        {
+            get { return selectedRaportRegistredCategory; }
+            set
+            {
+                selectedRaportRegistredCategory = value;
+                OnPropertyChanged(nameof(SelectedRaportRegistredCategory));
+            }
+        }
+        string selectedRaportActualCategory;
+        public string SelectedRaportActualCategory
+        {
+            get { return selectedRaportActualCategory; }
+            set
+            {
+                selectedRaportActualCategory = value;
+                OnPropertyChanged(nameof(SelectedRaportActualCategory));
+            }
+        }
+        string selectedRaportUnActualCategory;
+        public string SelectedRaportUnActualCategory
+        {
+            get { return selectedRaportUnActualCategory; }
+            set
+            {
+                selectedRaportUnActualCategory = value;
+                OnPropertyChanged(nameof(SelectedRaportUnActualCategory));
+
+            }
+        }
+        string selectedRaportCreateCategory;
+        public string SelectedRaportCreateCategory
+        {
+            get { return selectedRaportCreateCategory; }
+            set
+            {
+                selectedRaportCreateCategory = value;
+                OnPropertyChanged(nameof(SelectedRaportCreateCategory));
+
+            }
+        }
+        string selectedRaportAllCategory;
+        public string SelectedRaportAllCategory
+        {
+            get { return selectedRaportAllCategory; }
+            set
+            {
+                selectedRaportAllCategory = value;
+                OnPropertyChanged(nameof(SelectedRaportAllCategory));
+            }
+        }
+
+        string selectedRaportRegistredPaymentStatus;
+        public string SelectedRaportRegistredPaymentStatus
+        {
+            get { return selectedRaportRegistredPaymentStatus; }
+            set
+            {
+                selectedRaportRegistredPaymentStatus = value;
+                OnPropertyChanged(nameof(SelectedRaportRegistredPaymentStatus));
+            }
+        }
+        string selectedRaportActualPaymentStatus;
+        public string SelectedRaportActualPaymentStatus
+        {
+            get { return selectedRaportActualPaymentStatus; }
+            set
+            {
+                selectedRaportActualPaymentStatus = value;
+                OnPropertyChanged(nameof(SelectedRaportActualPaymentStatus));
+            }
+        }
+        string selectedRaportUnActualPaymentStatus;
+        public string SelectedRaportUnActualPaymentStatus
+        {
+            get { return selectedRaportUnActualPaymentStatus; }
+            set
+            {
+                selectedRaportUnActualPaymentStatus = value;
+                OnPropertyChanged(nameof(SelectedRaportUnActualPaymentStatus));
+
+            }
+        }
+        string selectedRaportCreatePaymentStatus;
+        public string SelectedRaportCreatePaymentStatus
+        {
+            get { return selectedRaportCreatePaymentStatus; }
+            set
+            {
+                selectedRaportCreatePaymentStatus = value;
+                OnPropertyChanged(nameof(SelectedRaportCreatePaymentStatus));
+            }
+        }
+        string selectedRaportAllPaymentStatus;
+        public string SelectedRaportAllPaymentStatus
+        {
+            get { return selectedRaportAllPaymentStatus; }
+            set
+            {
+                selectedRaportAllPaymentStatus = value;
+                OnPropertyChanged(nameof(SelectedRaportAllPaymentStatus));
+            }
+        }
+
+        string selectedRaportRegistredChanged;
+        public string SelectedRaportRegistredChanged
+        {
+            get { return selectedRaportRegistredChanged; }
+            set
+            {
+                selectedRaportRegistredChanged = value;
+                OnPropertyChanged(nameof(SelectedRaportRegistredChanged));
+            }
+        }
+        string selectedRaportActualChanged;
+        public string SelectedRaportActualChanged
+        {
+            get { return selectedRaportActualChanged; }
+            set
+            {
+                selectedRaportActualChanged = value;
+                OnPropertyChanged(nameof(SelectedRaportActualChanged));
+            }
+        }
+        string selectedRaportUnActualChanged;
+        public string SelectedRaportUnActualChanged
+        {
+            get { return selectedRaportUnActualChanged; }
+            set
+            {
+                selectedRaportUnActualChanged = value;
+                OnPropertyChanged(nameof(SelectedRaportUnActualChanged));
+            }
+        }
+        string selectedRaportCreateChanged;
+        public string SelectedRaportCreateChanged
+        {
+            get { return selectedRaportCreateChanged; }
+            set
+            {
+                selectedRaportCreateChanged = value;
+                OnPropertyChanged(nameof(SelectedRaportCreateChanged));
+            }
+        }
+        string selectedRaportAllChanged;
+        public string SelectedRaportAllChanged
+        {
+            get { return selectedRaportAllChanged; }
+            set
+            {
+                selectedRaportAllChanged = value;
+                OnPropertyChanged(nameof(SelectedRaportAllChanged));
+            }
+        }
+
+        int countRaportRegistredVisitors;
+        public int CountRaportRegistredVisitors
+        {
+            get { return countRaportRegistredVisitors; }
+            set
+            {
+                countRaportRegistredVisitors = value;
+                OnPropertyChanged(nameof(CountRaportRegistredVisitors));
+            }
+        }
+        int countRaportActualVisitors;
+        public int CountRaportActualVisitors
+        {
+            get { return countRaportActualVisitors; }
+            set
+            {
+                countRaportActualVisitors = value;
+                OnPropertyChanged(nameof(CountRaportActualVisitors));
+            }
+        }
+        int countRaportUnActualVisitors;
+        public int CountRaportUnActualVisitors
+        {
+            get { return countRaportUnActualVisitors; }
+            set
+            {
+                countRaportUnActualVisitors = value;
+                OnPropertyChanged(nameof(CountRaportUnActualVisitors));
+            }
+        }
+        int countRaportCreateVisitors;
+        public int CountRaportCreateVisitors
+        {
+            get { return countRaportCreateVisitors; }
+            set
+            {
+                countRaportCreateVisitors = value;
+                OnPropertyChanged(nameof(CountRaportCreateVisitors));
+            }
+        }
+        int countRaportAllVisitors;
+        public int CountRaportAllVisitors
+        {
+            get { return countRaportAllVisitors; }
+            set
+            {
+                countRaportAllVisitors = value;
+                OnPropertyChanged(nameof(CountRaportAllVisitors));
+            }
+        }
+
+
+        RelayCommand printRegistredVisitors;
+        public RelayCommand PrintRegistredVisitors
+        {
+            get { return printRegistredVisitors;}
+        }
+        RelayCommand exportToFileRegistredVisitors;
+        public RelayCommand ExportToFileRegistredVisitors
+        {
+            get { return exportToFileRegistredVisitors; }
+        }
+        RelayCommand changeCategoryRegistredVisitors;
+        public RelayCommand ChangeCategoryRegistredVisitors
+        {
+            get { return changeCategoryRegistredVisitors; }
+        }
+        RelayCommand changePaymentStatusRegistredVisitors;
+        public RelayCommand ChangePaymentStatusRegistredVisitors
+        {
+            get { return changePaymentStatusRegistredVisitors; }
+        }
+        RelayCommand changeChangedRegistredVisitors;
+        public RelayCommand ChangeChangedRegistredVisitors
+        {
+            get { return changeChangedRegistredVisitors; }
+        }
+
+        RelayCommand printActualVisitors;
+        public RelayCommand PrintActualVisitors
+        {
+            get { return printActualVisitors; }
+        }
+        RelayCommand exportToFileActualVisitors;
+        public RelayCommand ExportToFileActualVisitors
+        {
+            get { return exportToFileActualVisitors; }
+        }
+        RelayCommand changeCategoryActualVisitors;
+        public RelayCommand ChangeCategoryActualVisitors
+        {
+            get { return changeCategoryActualVisitors; }
+        }
+        RelayCommand changePaymentStatusActualVisitors;
+        public RelayCommand ChangePaymentStatusActualVisitors
+        {
+            get { return changePaymentStatusActualVisitors; }
+        }
+        RelayCommand changeChangedActualVisitors;
+        public RelayCommand ChangeChangedActualVisitors
+        {
+            get { return changeChangedActualVisitors; }
+        }
+
+        RelayCommand printUnActualVisitors;
+        public RelayCommand PrintUnActualVisitors
+        {
+            get { return printUnActualVisitors; }
+        }
+        RelayCommand exportToFileUnActualVisitors;
+        public RelayCommand ExportToFileUnActualVisitors
+        {
+            get { return exportToFileUnActualVisitors; }
+        }
+        RelayCommand changeCategoryUnActualVisitors;
+        public RelayCommand ChangeCategoryUnActualVisitors
+        {
+            get { return changeCategoryUnActualVisitors; }
+        }
+        RelayCommand changePaymentStatusUnActualVisitors;
+        public RelayCommand ChangePaymentStatusUnActualVisitors
+        {
+            get { return changePaymentStatusUnActualVisitors; }
+        }
+        RelayCommand changeChangedUnActualVisitors;
+        public RelayCommand ChangeChangedUnActualVisitors
+        {
+            get { return changeChangedUnActualVisitors; }
+        }
+
+        RelayCommand printCreateVisitors;
+        public RelayCommand PrintCreateVisitors
+        {
+            get { return printCreateVisitors; }
+        }
+        RelayCommand exportToFileCreateVisitors;
+        public RelayCommand ExportToFileCreateVisitors
+        {
+            get { return exportToFileCreateVisitors; }
+        }
+        RelayCommand changeCategoryCreateVisitors;
+        public RelayCommand ChangeCategoryCreateVisitors
+        {
+            get { return changeCategoryCreateVisitors; }
+        }
+        RelayCommand changePaymentStatusCreateVisitors;
+        public RelayCommand ChangePaymentStatusCreateVisitors
+        {
+            get { return changePaymentStatusCreateVisitors; }
+        }
+        RelayCommand changeChangedCreateVisitors;
+        public RelayCommand ChangeChangedCreateVisitors
+        {
+            get { return changeChangedCreateVisitors; }
+        }
+
+        RelayCommand printAllVisitors;
+        public RelayCommand PrintAllVisitors
+        {
+            get { return printAllVisitors; }
+        }
+        RelayCommand exportToFileAllVisitors;
+        public RelayCommand ExportToFileAllVisitors
+        {
+            get { return exportToFileAllVisitors; }
+        }
+        RelayCommand changeCategoryAllVisitors;
+        public RelayCommand ChangeCategoryAllVisitors
+        {
+            get { return changeCategoryAllVisitors; }
+        }
+        RelayCommand changePaymentStatusAllVisitors;
+        public RelayCommand ChangePaymentStatusAllVisitors
+        {
+            get { return changePaymentStatusAllVisitors; }
+        }
+        RelayCommand changeChangedAllVisitors;
+        public RelayCommand ChangeChangedAllVisitors
+        {
+            get { return changeChangedAllVisitors; }
+        }
 
         public MainVM()
         {
+            #region Init value for Desctop Operation (first part)
+            isListFocuce = false;
             DataMode = "Локальная база данных";
             visitorRepositoryDTO = new VisitorRepositoryDTO();
             printDialog = new PrintDialog();
-
             Visitors = new ObservableCollection<VisitorDTO>(visitorRepositoryDTO.GetAllVisitors());
             UpdateAllVisitorFields(visitors);
             StartShowTime();
             statusFormColor = "Red";
             statusForm = "";
-
+            #endregion
             #region Init value for Administration
             userRepository = new UserRepositoryDTO();
             roleRepository = new RoleRepositoryDTO();
@@ -972,6 +1424,11 @@ namespace EX.ViewModel
             displaySettingDTORepository = new DisplaySettingDTORepository();
             dSCollumnSettingDTORepository = new DSCollumnSettingDTORepository();
             #region Raport
+            columnCheckedRaport = new bool[count_raport_headers];
+            aliasRaport = new string[count_raport_headers];
+            widthRaport = new int[count_raport_headers];
+
+
             displaySettingsRaport = new ObservableCollection<DisplaySettingDTO>
                 (displaySettingDTORepository.GetAllDisplaySettingDTOs().
                 Where(s=>s.Intendant == "raport"));
@@ -1271,7 +1728,7 @@ namespace EX.ViewModel
                 {
                     Name = "Id",
                     Alias = "№",
-                    Width = 25,
+                    Width = 30,
                     Visible = false,
                     IsSelected = true,
                     Intendant = "form",
@@ -1281,7 +1738,7 @@ namespace EX.ViewModel
                 {
                     Name = "Magik ID",
                     Alias = "Magik ID",
-                    Width = 25,
+                    Width = 30,
                     Visible = true,
                     IsSelected = false,
                     Intendant = "form",
@@ -1291,7 +1748,7 @@ namespace EX.ViewModel
                 {
                     Name = "Payment Status",
                     Alias = "Статус оплаты",
-                    Width = 25,
+                    Width = 30,
                     Visible = true,
                     IsSelected = false,
                     Intendant = "form",
@@ -1311,7 +1768,7 @@ namespace EX.ViewModel
                 {
                     Name = "Категория",
                     Alias = "Категория",
-                    Width = 25,
+                    Width = 30,
                     Visible = true,
                     IsSelected = false,
                     Intendant = "form",
@@ -1331,7 +1788,7 @@ namespace EX.ViewModel
                 {
                     Name = "Замена",
                     Alias = "Замена",
-                    Width = 25,
+                    Width = 30,
                     Visible = true,
                     IsSelected = false,
                     Intendant = "form",
@@ -1351,7 +1808,7 @@ namespace EX.ViewModel
                 {
                     Name = "Name",
                     Alias = "Имя",
-                    Width = 25,
+                    Width = 30,
                     Visible = true,
                     IsSelected = false,
                     Intendant = "form",
@@ -1361,7 +1818,7 @@ namespace EX.ViewModel
                 {
                     Name = "SurName",
                     Alias = "Фамилия",
-                    Width = 25,
+                    Width = 30,
                     Visible = true,
                     IsSelected = false,
                     Intendant = "form",
@@ -1371,7 +1828,7 @@ namespace EX.ViewModel
                 {
                     Name = "Position",
                     Alias = "Должность",
-                    Width = 25,
+                    Width = 30,
                     Visible = true,
                     IsSelected = false,
                     Intendant = "form",
@@ -1381,7 +1838,7 @@ namespace EX.ViewModel
                 {
                     Name = "Company",
                     Alias = "Компания",
-                    Width = 25,
+                    Width = 30,
                     Visible = true,
                     IsSelected = false,
                     Intendant = "form",
@@ -1424,6 +1881,7 @@ namespace EX.ViewModel
             #region Init value for File
             visitorRepositoryDTO = new VisitorRepositoryDTO();
             visitorRepositoryDTO.progressChanged += ProgressChanged;
+            statusRepository = new StatusRepositoryDTO();
             #endregion
             #region Init value for Service
             IsEnabledDataModeChecker = true;
@@ -1441,7 +1899,7 @@ namespace EX.ViewModel
             });
             mapper = config.CreateMapper();
             #endregion
-            statusRepository = new StatusRepositoryDTO();
+            #region Init value for Desctop Operation (second part)
             selectDesctopVisitor = new VisitorDTO();
             editDesctopVisitor = new VisitorDTO();
             canExecuteCreateVisitor = true;
@@ -1473,7 +1931,32 @@ namespace EX.ViewModel
             searchVisitorBackGround = "White";
             searchVisitorForegraund = "Gray";
             searchVisitorCollection = new ObservableCollection<VisitorDTO>();
+            #endregion
+            #region Init value for Raports
+            raportRegisteredVisitors = new ObservableCollection<VisitorDTO>
+                (visitorRepositoryDTO.GetAllVisitors()
+                   .Where(s => s.CurrentStatus == "registered"||
+                   s.CurrentStatus == "actual")); 
+            raportActualVisitors = new ObservableCollection<VisitorDTO>
+                (visitorRepositoryDTO.GetAllVisitors()
+                   .Where(s => s.CurrentStatus == "actual"));
+            raportUnActualVisitors = new ObservableCollection<VisitorDTO>
+                (visitorRepositoryDTO.GetAllVisitors()
+                   .Where(s => s.CurrentStatus == "registered"));
+            raportCreateVisitors = new ObservableCollection<VisitorDTO>
+                (visitorRepositoryDTO.GetAllVisitors()
+                   .Where(s => s.CurrentStatus == "create"));
+            raportAllVisitors = new ObservableCollection<VisitorDTO>
+                (visitorRepositoryDTO.GetAllVisitors()
+                   .Where(s => s.CurrentStatus == "registered" ||
+                   s.CurrentStatus == "actual" || s.CurrentStatus == "create"));
 
+            countRaportRegistredVisitors = raportRegisteredVisitors.Count();
+            countRaportActualVisitors = raportActualVisitors.Count();
+            countRaportUnActualVisitors = raportUnActualVisitors.Count();
+            countRaportCreateVisitors = raportCreateVisitors.Count();
+            countRaportAllVisitors = raportAllVisitors.Count();
+            #endregion
             #region Implementation cammands for Administration
             addUser = new RelayCommand(c =>
             {
@@ -1813,6 +2296,8 @@ namespace EX.ViewModel
                 {
                     dSCollumnSettingDTORepository.AddOrUpdate(dc);
                 }
+                System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+                Application.Current.Shutdown();
             });
             delCollumnRaport = new RelayCommand(c =>
             {
@@ -2140,13 +2625,13 @@ namespace EX.ViewModel
             }, c => dSCollumnSettingsForm.Count() > 1);
             #endregion
             #endregion
-                        #region Implementation command for File
+            #region Implementation command for File
             addDataFromFileToDatabase = new RelayCommand(c =>
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 _ProgressBar = new Progress_Bar
                 {
-                    Visible = true, Progress = 10, Status = "Start"
+                    Visible = true, Progress = 1, Status = "Start"
                 };
                 if (openFileDialog.ShowDialog() == true)
                 {
@@ -2154,12 +2639,15 @@ namespace EX.ViewModel
                     {
                         visitorRepositoryDTO.InitRepositoryFromFole
                         (openFileDialog.FileName);
-                        Visitors = new ObservableCollection<VisitorDTO>
+                        visitors = new ObservableCollection<VisitorDTO>
                         (visitorRepositoryDTO.GetAllVisitors());
                         _ProgressBar.Status = "All data added to database";
                         _ProgressBar.Progress = 0;
-
+                        Thread.Sleep(1000);
+                        _ProgressBar.Status = "Update visitor statuses";
                         statusRepository = new StatusRepositoryDTO();
+                        int f = 0, f_m = visitors.Count();
+
                         foreach(var v in visitors)
                         {
                             var newStatus = new StatusDTO
@@ -2170,17 +2658,65 @@ namespace EX.ViewModel
                                 ActionTime = DateTime.Now.ToString()
                                 
                             };
+                            
+                            _ProgressBar.Progress = f * 100 / f_m;
+                            f++;
                             v.CurrentStatus = newStatus.Name;
                             visitorRepositoryDTO.AddOrUpdateVisitor(v);
                             statusRepository.Add(newStatus);
                         }
                         Statuses = new ObservableCollection<StatusDTO>
                             (statusRepository.GetAllStatuses());
-                        Thread.Sleep(1000);
                         _ProgressBar.Visible = false;
                         Visitors = new ObservableCollection<VisitorDTO>
                         (visitorRepositoryDTO.GetAllVisitors());
                         UpdateAllVisitorFields(visitors);
+                        _ProgressBar.Status = "All operation complite";
+                        _ProgressBar.Progress = 0;
+                    });
+                }
+            });
+            importDataFromFileToDatabase = new RelayCommand(c =>
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                _ProgressBar = new Progress_Bar
+                {
+                    Visible = true,
+                    Progress = 1,
+                    Status = "Start"
+                };
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    Task.Factory.StartNew(() =>
+                    {
+                        visitorRepositoryDTO.ImportRepositoryFromFole
+                        (openFileDialog.FileName);
+                        visitors = new ObservableCollection<VisitorDTO>
+                        (visitorRepositoryDTO.GetAllVisitors());
+                        _ProgressBar.Status = "All operation complite";
+                        _ProgressBar.Progress = 0;
+                    });
+                }
+            });
+            importVisitorFromFileWithId = new RelayCommand(c =>
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                _ProgressBar = new Progress_Bar
+                {
+                    Visible = true,
+                    Progress = 1,
+                    Status = "Start"
+                };
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    Task.Factory.StartNew(() =>
+                    {
+                        visitorRepositoryDTO.ImportVisitorsRepositoryFromFileWithId
+                        (openFileDialog.FileName);
+                        visitors = new ObservableCollection<VisitorDTO>
+                        (visitorRepositoryDTO.GetAllVisitors());
+                        _ProgressBar.Status = "All operation complite";
+                        _ProgressBar.Progress = 0;
                     });
                 }
             });
@@ -2214,6 +2750,7 @@ namespace EX.ViewModel
                 Thread.Sleep(200);
             }, c => ServerStatus == "listerning....");
             #endregion
+            #region Implementation command for Desctop Operation
             createVisitor = new RelayCommand(c =>
             {
                 if (editDesctopVisitor.Column4 != null &&
@@ -2385,6 +2922,31 @@ namespace EX.ViewModel
                 SearchVisitorForegraund = "Gray";
                 SearchVisitorCollection = new ObservableCollection<VisitorDTO>();
             });
+            saveVisitorsToFile = new RelayCommand(c =>
+            {
+                visitorRepositoryDTO.SaveVisitorsToFile();
+            });
+            saveStatusesToFile = new RelayCommand(c =>
+            {
+                statusRepository.SaveStatusestoFile();
+            });
+            #endregion
+
+            changeCategoryRegistredVisitors = new RelayCommand(c =>
+            {
+                InitRaportInformation("registred");
+            });
+
+            changePaymentStatusRegistredVisitors = new RelayCommand(c =>
+            {
+                InitRaportInformation("registred");
+            });
+
+            changeChangedRegistredVisitors = new RelayCommand(c =>
+            {
+                InitRaportInformation("registred");
+            });
+
         }
         #region Implemetation methods
         private void addNewCollumn(string _intendant, int dsid, int osid)
@@ -2511,7 +3073,6 @@ namespace EX.ViewModel
             _ProgressBar.Progress = progress.Progress;
             _ProgressBar.Status = progress.Status;
             _ProgressBar.Visible = progress.Visible;
- //           Thread.Sleep(25);
         }
         private void StatusChanged(string obj)
         {
@@ -2559,6 +3120,51 @@ namespace EX.ViewModel
             {
                 try { widthDesctop[i] = _width[i]; }
                 catch { widthDesctop[i] = 100; }
+            }
+        }
+        private void initHeaderRaport(ObservableCollection<DSCollumnSettingDTO> _dSColumnSettings)
+        {
+            var sc = _dSColumnSettings.ToArray();
+            //коллекция visible
+            var _columnChecked = new bool[sc.Count()];
+            for (int i = 0; i < sc.Count(); i++)
+            {
+                _columnChecked[i] = _dSColumnSettings  //????????????
+                    .Where(s => s.Id == sc[i].Id)
+                    .Select(s => s.Visible)
+                    .FirstOrDefault();
+            }
+            for (int i = 0; i < count_headers; i++)
+            {
+                try { columnCheckedRaport[i] = _columnChecked[i]; }
+                catch { columnCheckedRaport[i] = false; }
+            }
+            //коллекция алиасов
+            var _alias = new string[sc.Count()];
+            for (int i = 0; i < sc.Count(); i++)
+            {
+                _alias[i] = _dSColumnSettings  //??????????????
+                    .Where(s => s.Id == sc[i].Id)
+                    .Select(s => s.Alias).FirstOrDefault();
+            }
+            for (int i = 0; i < count_headers; i++)
+            {
+                try { aliasRaport[i] = _alias[i]; }
+                catch { aliasRaport[i] = "none"; }
+            }
+            //коллекция width
+            var _width = new int[sc.Count()];
+            for (int i = 0; i < sc.Count(); i++)
+            {
+                _width[i] = _dSColumnSettings//?????????????????
+                    .Where(s => s.Id == sc[i].Id)
+                    .Select(s => s.Width)
+                    .FirstOrDefault();
+            }
+            for (int i = 0; i < count_headers; i++)
+            {
+                try { widthRaport[i] = _width[i]; }
+                catch { widthRaport[i] = 100; }
             }
         }
         private void initLabelsForm(ObservableCollection<DSCollumnSettingDTO> _dSCollumnSettingsForm)
@@ -2683,13 +3289,14 @@ namespace EX.ViewModel
             string search;
             if (dataMode != "Клиент службы баз данных")
             {
-                if (searchVisitor == "") { Find = false; }
+                if (searchVisitor == "") { find = false; }
                 if (searchVisitor.Length <= 3)
                 {
- //                   SearchVisitorBackGround = "White";
-//                   SearchVisitorForegraund = "Gray";
-                    SearchVisitor = "";
-//                    SearchVisitorFontsize = 25;
+                    SearchVisitorBackGround = "White";
+                   SearchVisitorForegraund = "Gray";
+   //                 SearchVisitor = "";
+                    SearchVisitorFontsize = 25;
+                    find = false;
                 }
                 else
                 {
@@ -2718,6 +3325,8 @@ namespace EX.ViewModel
                             SelectedSearchVisitor = searchVisitorCollection.FirstOrDefault();
                         }
                     }
+                    IsListFocuce = true;
+                    find = true;
                 }
             }
             else
@@ -2772,13 +3381,13 @@ namespace EX.ViewModel
                 paragraphName.LineStackingStrategy = LineStackingStrategy.MaxHeight;
                 paragraphName.FontFamily = new FontFamily("Verdana");
                 paragraphName.TextAlignment = TextAlignment.Center;
-                paragraphName.FontSize = 25;
+                paragraphName.FontSize = 22;
                 paragraphName.FontWeight = FontWeight.FromOpenTypeWeight(400);
 
                 paragraphCompany.LineStackingStrategy = LineStackingStrategy.BlockLineHeight;
                 paragraphCompany.FontFamily = new FontFamily("Verdana");
                 paragraphCompany.TextAlignment = TextAlignment.Center;
-                paragraphCompany.FontSize = 25;
+                paragraphCompany.FontSize = 22;
                 paragraphCompany.FontWeight = FontWeight.FromOpenTypeWeight(900);
 
 
@@ -2920,8 +3529,67 @@ namespace EX.ViewModel
                 BagePresenterBackGround = "Green";
             }
         }
-        #endregion
+        private void InitRaportInformation(string choce)
+        {
+            // написать для клиента
+            //.......
+            switch (choce)
+            {
+                case "registred":
+                    if (selectedRaportRegistredCategory == null)
+                    {
+                        RaportRegisteredVisitors = new ObservableCollection<VisitorDTO>
+                             (visitorRepositoryDTO.GetAllVisitors()
+                             .Where(s => s.CurrentStatus == "registered" ||
+                                    s.CurrentStatus == "actual"));
+                    }
+                    else
+                    {
+                        RaportRegisteredVisitors = new ObservableCollection<VisitorDTO>
+                             (visitorRepositoryDTO.GetAllVisitors()
+                              .Where(s => s.Column4 == selectedRaportRegistredCategory)
+                              .Where(s => s.CurrentStatus == "registered" ||
+                                     s.CurrentStatus == "actual"));
+                    }
+                    break;
+                case "actual":
+                    break;
+                case "unactual":
+                    break;
+                case "create":
+                    break;
+                case "all":
+                    break;
 
+            }
+
+            if (selectedRaportRegistredPaymentStatus == null)
+            {
+                RaportRegisteredVisitors = raportRegisteredVisitors;
+            }
+            else
+            {
+                RaportRegisteredVisitors = new ObservableCollection<VisitorDTO>
+                    (raportRegisteredVisitors
+                    .Where(s => s.Column2 == selectedRaportRegistredPaymentStatus)
+                    .Where(s => s.CurrentStatus == "registered" ||
+                             s.CurrentStatus == "actual"));
+            }
+            if (selectedRaportRegistredChanged == null)
+            {
+                RaportRegisteredVisitors = raportRegisteredVisitors;
+            }
+            else
+            {
+                RaportRegisteredVisitors = new ObservableCollection<VisitorDTO>
+                    (raportRegisteredVisitors
+                    .Where(s => s.Column6 == selectedRaportRegistredChanged)
+                    .Where(s => s.CurrentStatus == "registered" ||
+                           s.CurrentStatus == "actual"));
+            }
+            CountRaportRegistredVisitors = raportRegisteredVisitors.Count();
+        }
+        #endregion
         #region Events
         public event PropertyChangedEventHandler PropertyChanged;
         #endregion
