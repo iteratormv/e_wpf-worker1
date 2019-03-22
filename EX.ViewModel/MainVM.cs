@@ -1418,7 +1418,7 @@ namespace EX.ViewModel
 
             StatusAuthorisation = "Вы авторизированы как - " +
                 defaultUser.Login + "(" + defaultUser.FirstName + " " + defaultUser.LastName + ")";
-//            AuthorizedUser = new UserDTO();
+            //            AuthorizedUser = new UserDTO();
             #endregion
             #region Init value for Settings
             displaySettingDTORepository = new DisplaySettingDTORepository();
@@ -1431,7 +1431,7 @@ namespace EX.ViewModel
 
             displaySettingsRaport = new ObservableCollection<DisplaySettingDTO>
                 (displaySettingDTORepository.GetAllDisplaySettingDTOs().
-                Where(s=>s.Intendant == "raport"));
+                Where(s => s.Intendant == "raport"));
             DisplaySettingDTO defaultDisplayRaportSetting;
             if (displaySettingsRaport.Count() == 0)
             {
@@ -1451,7 +1451,7 @@ namespace EX.ViewModel
 
             dSCollumnSettingsRaport = new ObservableCollection<DSCollumnSettingDTO>
                 (dSCollumnSettingDTORepository.GetAllDSCollumnSettingDTOs().
-                Where(s=>s.Intendant == "raport"));
+                Where(s => s.Intendant == "raport"));
 
             if (dSCollumnSettingsRaport.Count() == 0)
             {
@@ -1720,7 +1720,7 @@ namespace EX.ViewModel
                 AddOrUpdate(defaultDisplayFormSetting).Id;
             dSCollumnSettingsForm = new ObservableCollection<DSCollumnSettingDTO>
                 (dSCollumnSettingDTORepository.GetAllDSCollumnSettingDTOs()
-                .Where(s=>s.DisplaySettingId == defaultDisplayFormSettingId)
+                .Where(s => s.DisplaySettingId == defaultDisplayFormSettingId)
                 /*.Where(s => s.Intendant == "form")*/);
             if (dSCollumnSettingsForm.Count() == 0)
             {
@@ -1933,24 +1933,50 @@ namespace EX.ViewModel
             searchVisitorCollection = new ObservableCollection<VisitorDTO>();
             #endregion
             #region Init value for Raports
-            raportRegisteredVisitors = new ObservableCollection<VisitorDTO>
-                (visitorRepositoryDTO.GetAllVisitors()
-                   .Where(s => s.CurrentStatus == "registered"||
-                   s.CurrentStatus == "actual")); 
-            raportActualVisitors = new ObservableCollection<VisitorDTO>
-                (visitorRepositoryDTO.GetAllVisitors()
-                   .Where(s => s.CurrentStatus == "actual"));
-            raportUnActualVisitors = new ObservableCollection<VisitorDTO>
-                (visitorRepositoryDTO.GetAllVisitors()
-                   .Where(s => s.CurrentStatus == "registered"));
-            raportCreateVisitors = new ObservableCollection<VisitorDTO>
-                (visitorRepositoryDTO.GetAllVisitors()
-                   .Where(s => s.CurrentStatus == "create"));
-            raportAllVisitors = new ObservableCollection<VisitorDTO>
+            if (dataMode != "Клиент службы баз данных")
+            {
+                raportRegisteredVisitors = new ObservableCollection<VisitorDTO>
                 (visitorRepositoryDTO.GetAllVisitors()
                    .Where(s => s.CurrentStatus == "registered" ||
-                   s.CurrentStatus == "actual" || s.CurrentStatus == "create"));
+                   s.CurrentStatus == "actual"));
+                raportActualVisitors = new ObservableCollection<VisitorDTO>
+                    (visitorRepositoryDTO.GetAllVisitors()
+                       .Where(s => s.CurrentStatus == "actual"));
+                raportUnActualVisitors = new ObservableCollection<VisitorDTO>
+                    (visitorRepositoryDTO.GetAllVisitors()
+                       .Where(s => s.CurrentStatus == "registered"));
+                raportCreateVisitors = new ObservableCollection<VisitorDTO>
+                    (visitorRepositoryDTO.GetAllVisitors()
+                       .Where(s => s.CurrentStatus == "create"));
+                raportAllVisitors = new ObservableCollection<VisitorDTO>
+                    (visitorRepositoryDTO.GetAllVisitors()
+                       .Where(s => s.CurrentStatus == "registered" ||
+                       s.CurrentStatus == "actual" || s.CurrentStatus == "create"));
+            }
+            else
+            {
+                var client = clientExecutor.GetClient();
+                var _client_visitors = clientExecutor.GetClient().GetAllVisitors();
+                var _visitors = _client_visitors.Select(s => mapper.Map<VisitorDTO>(s));
 
+                raportRegisteredVisitors = new ObservableCollection<VisitorDTO>
+                      (_visitors
+                      .Where(s => s.CurrentStatus == "registered" ||
+                         s.CurrentStatus == "actual"));
+                raportActualVisitors = new ObservableCollection<VisitorDTO>
+                     (_visitors
+                       .Where(s => s.CurrentStatus == "actual"));
+                raportUnActualVisitors = new ObservableCollection<VisitorDTO>
+                    (_visitors
+                       .Where(s => s.CurrentStatus == "registered"));
+                raportCreateVisitors = new ObservableCollection<VisitorDTO>
+                    (_visitors
+                       .Where(s => s.CurrentStatus == "create"));
+                raportAllVisitors = new ObservableCollection<VisitorDTO>
+                    (_visitors
+                       .Where(s => s.CurrentStatus == "registered" ||
+                       s.CurrentStatus == "actual" || s.CurrentStatus == "create"));
+            }
             countRaportRegistredVisitors = raportRegisteredVisitors.Count();
             countRaportActualVisitors = raportActualVisitors.Count();
             countRaportUnActualVisitors = raportUnActualVisitors.Count();
@@ -2245,7 +2271,7 @@ namespace EX.ViewModel
                 }
                 displaySettingDTORepository.RemoveDisplaySettingDTO(selectedDisplaySettingRaport);
                 updateAllSettingsRaport(_intendant);
-            }, c=> displaySettingsRaport.Count() > 1);
+            }, c => displaySettingsRaport.Count() > 1);
             changeDisplaySettingDefaultRaport = new RelayCommand(c =>
             {
                 var _intendant = c as string;
@@ -2325,7 +2351,7 @@ namespace EX.ViewModel
                 }
 
                 updateAllSettingsRaport(_intendant);
-            }, c => dSCollumnSettingsRaport.Count() >1);
+            }, c => dSCollumnSettingsRaport.Count() > 1);
             #endregion
             #region Desctop
             addSettingDesctop = new RelayCommand(c =>
@@ -2399,7 +2425,7 @@ namespace EX.ViewModel
                     Where(s => s.IsSelected == true).
                     FirstOrDefault();
                 var oldSelectedCollumnSetting = dSCollumnSettingDTORepository.GetAllDSCollumnSettingDTOs().
-                    Where(s=>s.Intendant == _intendant).
+                    Where(s => s.Intendant == _intendant).
                     Where(s => s.DisplaySettingId == oldSelectedDisplaySetting.Id).
                     Where(s => s.IsSelected == true).
                     FirstOrDefault();
@@ -2407,7 +2433,7 @@ namespace EX.ViewModel
                 oldSelectedCollumnSetting.IsSelected = false;
                 var newSelectedDisplaySetting = displaySettingDTORepository.GetAllDisplaySettingDTOs().
                     Where(s => s.Intendant == _intendant).
-                    Where(s => s.Id == selectedDisplaySettingDesctop.Id ).
+                    Where(s => s.Id == selectedDisplaySettingDesctop.Id).
                     FirstOrDefault();
                 var newSelectedCollumnSetting = dSCollumnSettingDTORepository.GetAllDSCollumnSettingDTOs().
                 Where(s => s.DisplaySettingId == newSelectedDisplaySetting.Id).FirstOrDefault();
@@ -2474,7 +2500,7 @@ namespace EX.ViewModel
             {
                 var _intendant = c as string;
                 var cur_set = displaySettingDTORepository.GetAllDisplaySettingDTOs().
-                Where(s=>s.Intendant == _intendant).
+                Where(s => s.Intendant == _intendant).
                 Where(s => s.IsSelected == true).
                 FirstOrDefault();
                 var osid = cur_set.Id;
@@ -2508,7 +2534,7 @@ namespace EX.ViewModel
             {
                 var _intendant = c as string;
                 DisplaySettingDTO s_ds = displaySettingDTORepository.GetAllDisplaySettingDTOs().
-                Where(s=>s.Intendant == _intendant).
+                Where(s => s.Intendant == _intendant).
                 Where(s => s.IsSelected == true).
                 FirstOrDefault();
                 var del_cs = dSCollumnSettingDTORepository.GetAllDSCollumnSettingDTOs().
@@ -2574,7 +2600,7 @@ namespace EX.ViewModel
             {
                 var _intendant = c as string;
                 var dsid = displaySettingDTORepository.GetAllDisplaySettingDTOs().
-                    Where(s=>s.Intendant == _intendant).
+                    Where(s => s.Intendant == _intendant).
                     Where(s => s.IsSelected == true).
                     Select(s => s.Id).FirstOrDefault();
                 addNewCollumn(_intendant, dsid, dsid);
@@ -2648,7 +2674,7 @@ namespace EX.ViewModel
                         statusRepository = new StatusRepositoryDTO();
                         int f = 0, f_m = visitors.Count();
 
-                        foreach(var v in visitors)
+                        foreach (var v in visitors)
                         {
                             var newStatus = new StatusDTO
                             {
@@ -2656,9 +2682,9 @@ namespace EX.ViewModel
                                 UserId = authorizedUser.Id,
                                 VisitorId = v.Id,
                                 ActionTime = DateTime.Now.ToString()
-                                
+
                             };
-                            
+
                             _ProgressBar.Progress = f * 100 / f_m;
                             f++;
                             v.CurrentStatus = newStatus.Name;
@@ -2728,7 +2754,7 @@ namespace EX.ViewModel
                 if (DataMode == "Клиент службы баз данных")
                 {
                     var _visitors = clientExecutor.GetClient().GetAllVisitors();
-                  VisitorDTO visitorDTO = new VisitorDTO();
+                    VisitorDTO visitorDTO = new VisitorDTO();
                     Visitors = new ObservableCollection<VisitorDTO>();
                     foreach (var v in _visitors) { Visitors.Add(mapper.Map<VisitorDTO>(v)); }
                 }
@@ -2741,8 +2767,8 @@ namespace EX.ViewModel
                 IsEnabledDataModeChecker = false;
                 Task.Factory.StartNew(serviceExecutor.Start);
                 Thread.Sleep(200);
-            }, c => 
-                 DataMode == "Сервер службы баз данных"&&ServerStatus!= "listerning....");
+            }, c =>
+                 DataMode == "Сервер службы баз данных" && ServerStatus != "listerning....");
             stopServer = new RelayCommand(c =>
             {
                 IsEnabledDataModeChecker = true;
@@ -2804,7 +2830,7 @@ namespace EX.ViewModel
                 {
                     Task.Factory.StartNew(delegate
                     {
-                        for(var i = 0; i<10; i++)
+                        for (var i = 0; i < 10; i++)
                         {
                             if (i % 2 == 0)
                             {
@@ -2819,7 +2845,7 @@ namespace EX.ViewModel
                         StatusForm = "";
                     });
                 }
-            },c=> canExecuteCreateVisitor);
+            }, c => canExecuteCreateVisitor);
             editVisitor = new RelayCommand(c =>
             {
                 IsShowChanger = true;
@@ -2831,7 +2857,7 @@ namespace EX.ViewModel
                     CanExecuteSaveEditVisitor = true;
                     InitColorInformation(editDesctopVisitor);
                 }
-            },c=> canExecuteEditVisitor);
+            }, c => canExecuteEditVisitor);
             saveEditVisitor = new RelayCommand(c =>
             {
                 IsShowChanger = false;
@@ -2936,15 +2962,61 @@ namespace EX.ViewModel
             {
                 InitRaportInformation("registred");
             });
-
             changePaymentStatusRegistredVisitors = new RelayCommand(c =>
             {
                 InitRaportInformation("registred");
             });
-
             changeChangedRegistredVisitors = new RelayCommand(c =>
             {
                 InitRaportInformation("registred");
+            });
+            changeCategoryActualVisitors = new RelayCommand(c =>
+            {
+                InitRaportInformation("actual");
+            });
+            changePaymentStatusActualVisitors = new RelayCommand(c =>
+            {
+                InitRaportInformation("actual");
+            });
+            changeChangedActualVisitors = new RelayCommand(c =>
+            {
+                InitRaportInformation("actual");
+            });
+            changeCategoryUnActualVisitors = new RelayCommand(c =>
+            {
+                InitRaportInformation("unactual");
+            });
+            changePaymentStatusUnActualVisitors = new RelayCommand(c =>
+            {
+                InitRaportInformation("unactual");
+            });
+            changeChangedUnActualVisitors = new RelayCommand(c =>
+            {
+                InitRaportInformation("unactual");
+            });
+            changeCategoryCreateVisitors = new RelayCommand(c =>
+            {
+                InitRaportInformation("create");
+            });
+            changePaymentStatusCreateVisitors = new RelayCommand(c =>
+            {
+                InitRaportInformation("create");
+            });
+            changeChangedCreateVisitors = new RelayCommand(c =>
+            {
+                InitRaportInformation("create");
+            });
+            changeCategoryAllVisitors = new RelayCommand(c =>
+            {
+                InitRaportInformation("all");
+            });
+            changePaymentStatusAllVisitors = new RelayCommand(c =>
+            {
+                InitRaportInformation("all");
+            });
+            changeChangedAllVisitors = new RelayCommand(c =>
+            {
+                InitRaportInformation("all");
             });
 
         }
@@ -3496,7 +3568,7 @@ namespace EX.ViewModel
             else if (editDesctopVisitor.Column4.Equals("PRESS PASS"))
             {
                 BagePresenter = "";
-                BagePresenterBackGround = "Yello";
+                BagePresenterBackGround = "Yellow";
             }
             else if (editDesctopVisitor.Column4.Equals("MEDIA"))
             {
@@ -3531,63 +3603,397 @@ namespace EX.ViewModel
         }
         private void InitRaportInformation(string choce)
         {
-            // написать для клиента
-            //.......
-            switch (choce)
+            if (dataMode != "Клиент службы баз данных")
             {
-                case "registred":
-                    if (selectedRaportRegistredCategory == null)
-                    {
-                        RaportRegisteredVisitors = new ObservableCollection<VisitorDTO>
-                             (visitorRepositoryDTO.GetAllVisitors()
-                             .Where(s => s.CurrentStatus == "registered" ||
-                                    s.CurrentStatus == "actual"));
-                    }
-                    else
-                    {
-                        RaportRegisteredVisitors = new ObservableCollection<VisitorDTO>
-                             (visitorRepositoryDTO.GetAllVisitors()
-                              .Where(s => s.Column4 == selectedRaportRegistredCategory)
-                              .Where(s => s.CurrentStatus == "registered" ||
-                                     s.CurrentStatus == "actual"));
-                    }
-                    break;
-                case "actual":
-                    break;
-                case "unactual":
-                    break;
-                case "create":
-                    break;
-                case "all":
-                    break;
+                switch (choce)
+                {
+                    case "registred":
+                        if (selectedRaportRegistredCategory == null)
+                        {
+                            RaportRegisteredVisitors = new ObservableCollection<VisitorDTO>
+                                 (visitorRepositoryDTO.GetAllVisitors()
+                                 .Where(s => s.CurrentStatus == "registered" ||
+                                        s.CurrentStatus == "actual"));
+                        }
+                        else
+                        {
+                            RaportRegisteredVisitors = new ObservableCollection<VisitorDTO>
+                                 (visitorRepositoryDTO.GetAllVisitors()
+                                  .Where(s => s.Column4 == selectedRaportRegistredCategory)
+                                  .Where(s => s.CurrentStatus == "registered" ||
+                                         s.CurrentStatus == "actual"));
+                        }
+                        if (selectedRaportRegistredPaymentStatus == null)
+                        {
+                            RaportRegisteredVisitors = raportRegisteredVisitors;
+                        }
+                        else
+                        {
+                            RaportRegisteredVisitors = new ObservableCollection<VisitorDTO>
+                                (raportRegisteredVisitors
+                                .Where(s => s.Column2 == selectedRaportRegistredPaymentStatus)
+                                .Where(s => s.CurrentStatus == "registered" ||
+                                         s.CurrentStatus == "actual"));
+                        }
+                        if (selectedRaportRegistredChanged == null)
+                        {
+                            RaportRegisteredVisitors = raportRegisteredVisitors;
+                        }
+                        else
+                        {
+                            RaportRegisteredVisitors = new ObservableCollection<VisitorDTO>
+                                (raportRegisteredVisitors
+                                .Where(s => s.Column6 == selectedRaportRegistredChanged)
+                                .Where(s => s.CurrentStatus == "registered" ||
+                                       s.CurrentStatus == "actual"));
+                        }
+                        CountRaportRegistredVisitors = raportRegisteredVisitors.Count();
+                        break;
+                    case "actual":
+                        if (selectedRaportActualCategory == null)
+                        {
+                            RaportActualVisitors = new ObservableCollection<VisitorDTO>
+                                 (visitorRepositoryDTO.GetAllVisitors()
+                                 .Where(s => s.CurrentStatus == "actual"));
+                        }
+                        else
+                        {
+                            RaportActualVisitors = new ObservableCollection<VisitorDTO>
+                                 (visitorRepositoryDTO.GetAllVisitors()
+                                  .Where(s => s.Column4 == selectedRaportActualCategory)
+                                  .Where(s => s.CurrentStatus == "actual"));
+                        }
+                        if (selectedRaportActualPaymentStatus == null)
+                        {
+                            RaportActualVisitors = raportActualVisitors;
+                        }
+                        else
+                        {
+                            RaportActualVisitors = new ObservableCollection<VisitorDTO>
+                                (raportActualVisitors
+                                .Where(s => s.Column2 == selectedRaportActualPaymentStatus)
+                                .Where(s => s.CurrentStatus == "actual"));
+                        }
+                        if (selectedRaportActualChanged == null)
+                        {
+                            RaportActualVisitors = raportActualVisitors;
+                        }
+                        else
+                        {
+                            RaportActualVisitors = new ObservableCollection<VisitorDTO>
+                                (raportActualVisitors
+                                .Where(s => s.Column6 == selectedRaportActualChanged)
+                                .Where(s => s.CurrentStatus == "actual"));
+                        }
+                        CountRaportActualVisitors = raportActualVisitors.Count();
+                        break;
+                    case "unactual":
+                        if (selectedRaportUnActualCategory == null)
+                        {
+                            RaportUnActualVisitors = new ObservableCollection<VisitorDTO>
+                                 (visitorRepositoryDTO.GetAllVisitors()
+                                 .Where(s => s.CurrentStatus == "registered"));
+                        }
+                        else
+                        {
+                            RaportUnActualVisitors = new ObservableCollection<VisitorDTO>
+                                 (visitorRepositoryDTO.GetAllVisitors()
+                                  .Where(s => s.Column4 == selectedRaportUnActualCategory)
+                                  .Where(s => s.CurrentStatus == "registered"));
+                        }
+                        if (selectedRaportUnActualPaymentStatus == null)
+                        {
+                            RaportUnActualVisitors = raportUnActualVisitors;
+                        }
+                        else
+                        {
+                            RaportUnActualVisitors = new ObservableCollection<VisitorDTO>
+                                (raportUnActualVisitors
+                                .Where(s => s.Column2 == selectedRaportUnActualPaymentStatus)
+                                .Where(s => s.CurrentStatus == "registered"));
+                        }
+                        if (selectedRaportUnActualChanged == null)
+                        {
+                            RaportUnActualVisitors = raportUnActualVisitors;
+                        }
+                        else
+                        {
+                            RaportUnActualVisitors = new ObservableCollection<VisitorDTO>
+                                (raportUnActualVisitors
+                                .Where(s => s.Column6 == selectedRaportUnActualChanged)
+                                .Where(s => s.CurrentStatus == "registered"));
+                        }
+                        CountRaportUnActualVisitors = raportUnActualVisitors.Count();
+                        break;
+                    case "create":
+                        if (selectedRaportCreateCategory == null)
+                        {
+                            RaportCreateVisitors = new ObservableCollection<VisitorDTO>
+                                 (visitorRepositoryDTO.GetAllVisitors()
+                                 .Where(s => s.CurrentStatus == "create"));
+                        }
+                        else
+                        {
+                            RaportCreateVisitors = new ObservableCollection<VisitorDTO>
+                                 (visitorRepositoryDTO.GetAllVisitors()
+                                  .Where(s => s.Column4 == selectedRaportCreateCategory)
+                                  .Where(s => s.CurrentStatus == "create"));
+                        }
+                        if (selectedRaportCreatePaymentStatus == null)
+                        {
+                            RaportCreateVisitors = raportCreateVisitors;
+                        }
+                        else
+                        {
+                            RaportCreateVisitors = new ObservableCollection<VisitorDTO>
+                                (raportCreateVisitors
+                                .Where(s => s.Column2 == selectedRaportCreatePaymentStatus)
+                                .Where(s => s.CurrentStatus == "create"));
+                        }
+                        if (selectedRaportCreateChanged == null)
+                        {
+                            RaportCreateVisitors = raportCreateVisitors;
+                        }
+                        else
+                        {
+                            RaportCreateVisitors = new ObservableCollection<VisitorDTO>
+                                (raportCreateVisitors
+                                .Where(s => s.Column6 == selectedRaportCreateChanged)
+                                .Where(s => s.CurrentStatus == "create"));
+                        }
+                        CountRaportCreateVisitors = raportCreateVisitors.Count();
+                        break;
+                    case "all":
+                        if (selectedRaportAllCategory == null)
+                        {
+                            RaportAllVisitors = new ObservableCollection<VisitorDTO>
+                                 (visitorRepositoryDTO.GetAllVisitors());
+                        }
+                        else
+                        {
+                            RaportAllVisitors = new ObservableCollection<VisitorDTO>
+                                 (visitorRepositoryDTO.GetAllVisitors()
+                                  .Where(s => s.Column4 == selectedRaportAllCategory));
+                        }
+                        if (selectedRaportAllPaymentStatus == null)
+                        {
+                            RaportAllVisitors = raportAllVisitors;
+                        }
+                        else
+                        {
+                            RaportAllVisitors = new ObservableCollection<VisitorDTO>
+                                (raportAllVisitors
+                                .Where(s => s.Column2 == selectedRaportAllPaymentStatus));
+                        }
+                        if (selectedRaportAllChanged == null)
+                        {
+                            RaportAllVisitors = raportAllVisitors;
+                        }
+                        else
+                        {
+                            RaportAllVisitors = new ObservableCollection<VisitorDTO>
+                                (raportAllVisitors
+                                .Where(s => s.Column6 == selectedRaportCreateChanged));
+                        }
+                        CountRaportAllVisitors = raportAllVisitors.Count();
+                        break;
 
-            }
-
-            if (selectedRaportRegistredPaymentStatus == null)
-            {
-                RaportRegisteredVisitors = raportRegisteredVisitors;
+                }
             }
             else
             {
-                RaportRegisteredVisitors = new ObservableCollection<VisitorDTO>
-                    (raportRegisteredVisitors
-                    .Where(s => s.Column2 == selectedRaportRegistredPaymentStatus)
-                    .Where(s => s.CurrentStatus == "registered" ||
-                             s.CurrentStatus == "actual"));
+                var client = clientExecutor.GetClient();
+                var _client_visitors = clientExecutor.GetClient().GetAllVisitors();
+                var _visitors = _client_visitors.Select(s => mapper.Map<VisitorDTO>(s));
+                switch (choce)
+                {
+                    case "registred":
+                        if (selectedRaportRegistredCategory == null)
+                        {
+                            _visitors = _visitors
+                                    .Where(s => s.CurrentStatus == "registered" ||
+                                      s.CurrentStatus == "actual");
+                        }
+                        else
+                        {
+                            _visitors = _visitors
+                                  .Where(s => s.Column4 == selectedRaportRegistredCategory)
+                                  .Where(s => s.CurrentStatus == "registered" ||
+                                         s.CurrentStatus == "actual");
+                        }
+                        RaportRegisteredVisitors = new ObservableCollection<VisitorDTO>(_visitors);
+                        if (selectedRaportRegistredPaymentStatus == null)
+                        {
+                            RaportRegisteredVisitors = raportRegisteredVisitors;
+                        }
+                        else
+                        {
+                            RaportRegisteredVisitors = new ObservableCollection<VisitorDTO>
+                                (raportRegisteredVisitors
+                                .Where(s => s.Column2 == selectedRaportRegistredPaymentStatus)
+                                .Where(s => s.CurrentStatus == "registered" ||
+                                         s.CurrentStatus == "actual"));
+                        }
+                        if (selectedRaportRegistredChanged == null)
+                        {
+                            RaportRegisteredVisitors = raportRegisteredVisitors;
+                        }
+                        else
+                        {
+                            RaportRegisteredVisitors = new ObservableCollection<VisitorDTO>
+                                (raportRegisteredVisitors
+                                .Where(s => s.Column6 == selectedRaportRegistredChanged)
+                                .Where(s => s.CurrentStatus == "registered" ||
+                                       s.CurrentStatus == "actual"));
+                        }
+                        CountRaportRegistredVisitors = raportRegisteredVisitors.Count();
+                        break;
+                    case "actual":
+                        if (selectedRaportActualCategory == null)
+                        {
+                            _visitors = _visitors
+                                    .Where(s => s.CurrentStatus == "actual");
+                        }
+                        else
+                        {
+                            _visitors = _visitors
+                                  .Where(s => s.Column4 == selectedRaportActualCategory)
+                                  .Where(s => s.CurrentStatus == "actual");
+                        }
+                        RaportActualVisitors = new ObservableCollection<VisitorDTO>(_visitors);
+                        if (selectedRaportActualPaymentStatus == null)
+                        {
+                            RaportActualVisitors = raportActualVisitors;
+                        }
+                        else
+                        {
+                            RaportActualVisitors = new ObservableCollection<VisitorDTO>
+                                (raportActualVisitors
+                                .Where(s => s.Column2 == selectedRaportActualPaymentStatus)
+                                .Where(s => s.CurrentStatus == "actual"));
+                        }
+                        if (selectedRaportActualChanged == null)
+                        {
+                            RaportActualVisitors = raportActualVisitors;
+                        }
+                        else
+                        {
+                            RaportActualVisitors = new ObservableCollection<VisitorDTO>
+                                (raportActualVisitors
+                                .Where(s => s.Column6 == selectedRaportActualChanged)
+                                .Where(s => s.CurrentStatus == "actual"));
+                        }
+                        CountRaportActualVisitors = raportActualVisitors.Count();
+                        break;
+                    case "unactual":
+                        if (selectedRaportUnActualCategory == null)
+                        {
+                            _visitors = _visitors
+                                    .Where(s => s.CurrentStatus == "registered");
+                        }
+                        else
+                        {
+                            _visitors = _visitors
+                                  .Where(s => s.Column4 == selectedRaportUnActualCategory)
+                                  .Where(s => s.CurrentStatus == "registered");
+                        }
+                        RaportUnActualVisitors = new ObservableCollection<VisitorDTO>(_visitors);
+                        if (selectedRaportUnActualPaymentStatus == null)
+                        {
+                            RaportUnActualVisitors = raportUnActualVisitors;
+                        }
+                        else
+                        {
+                            RaportUnActualVisitors = new ObservableCollection<VisitorDTO>
+                                (raportUnActualVisitors
+                                .Where(s => s.Column2 == selectedRaportUnActualPaymentStatus)
+                                .Where(s => s.CurrentStatus == "registered"));
+                        }
+                        if (selectedRaportUnActualChanged == null)
+                        {
+                            RaportUnActualVisitors = raportUnActualVisitors;
+                        }
+                        else
+                        {
+                            RaportUnActualVisitors = new ObservableCollection<VisitorDTO>
+                                (raportUnActualVisitors
+                                .Where(s => s.Column6 == selectedRaportUnActualChanged)
+                                .Where(s => s.CurrentStatus == "registered"));
+                        }
+                        CountRaportUnActualVisitors = raportUnActualVisitors.Count();
+                        break;
+                    case "create":
+                        if (selectedRaportCreateCategory == null)
+                        {
+                            _visitors = _visitors
+                                    .Where(s => s.CurrentStatus == "create");
+                        }
+                        else
+                        {
+                            _visitors = _visitors
+                                  .Where(s => s.Column4 == selectedRaportCreateCategory)
+                                  .Where(s => s.CurrentStatus == "create");
+                        }
+                        RaportCreateVisitors = new ObservableCollection<VisitorDTO>(_visitors);
+                        if (selectedRaportCreatePaymentStatus == null)
+                        {
+                            RaportCreateVisitors = raportCreateVisitors;
+                        }
+                        else
+                        {
+                            RaportCreateVisitors = new ObservableCollection<VisitorDTO>
+                                (raportCreateVisitors
+                                .Where(s => s.Column2 == selectedRaportCreatePaymentStatus)
+                                .Where(s => s.CurrentStatus == "create"));
+                        }
+                        if (selectedRaportCreateChanged == null)
+                        {
+                            RaportCreateVisitors = raportCreateVisitors;
+                        }
+                        else
+                        {
+                            RaportCreateVisitors = new ObservableCollection<VisitorDTO>
+                                (raportCreateVisitors
+                                .Where(s => s.Column6 == selectedRaportCreateChanged)
+                                .Where(s => s.CurrentStatus == "create"));
+                        }
+                        CountRaportCreateVisitors = raportCreateVisitors.Count();
+                        break;
+                    case "all":
+                        if (selectedRaportAllCategory == null)
+                        {
+                         //   _visitors = _visitors;
+                        }
+                        else
+                        {
+                            _visitors = _visitors
+                                  .Where(s => s.Column4 == selectedRaportAllCategory);
+                        }
+                        RaportAllVisitors = new ObservableCollection<VisitorDTO>(_visitors);
+                        if (selectedRaportAllPaymentStatus == null)
+                        {
+                            RaportAllVisitors = raportAllVisitors;
+                        }
+                        else
+                        {
+                            RaportAllVisitors = new ObservableCollection<VisitorDTO>
+                                (raportAllVisitors
+                                .Where(s => s.Column2 == selectedRaportAllPaymentStatus));
+                        }
+                        if (selectedRaportAllChanged == null)
+                        {
+                            RaportAllVisitors = raportAllVisitors;
+                        }
+                        else
+                        {
+                            RaportAllVisitors = new ObservableCollection<VisitorDTO>
+                                (raportAllVisitors
+                                .Where(s => s.Column6 == selectedRaportAllChanged));
+                        }
+                        CountRaportAllVisitors = raportAllVisitors.Count();
+                        break;
+                }
             }
-            if (selectedRaportRegistredChanged == null)
-            {
-                RaportRegisteredVisitors = raportRegisteredVisitors;
-            }
-            else
-            {
-                RaportRegisteredVisitors = new ObservableCollection<VisitorDTO>
-                    (raportRegisteredVisitors
-                    .Where(s => s.Column6 == selectedRaportRegistredChanged)
-                    .Where(s => s.CurrentStatus == "registered" ||
-                           s.CurrentStatus == "actual"));
-            }
-            CountRaportRegistredVisitors = raportRegisteredVisitors.Count();
         }
         #endregion
         #region Events
