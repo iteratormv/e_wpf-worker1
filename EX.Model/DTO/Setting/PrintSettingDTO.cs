@@ -1,38 +1,46 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace EX.Model.DTO.Setting
 {
-    public class DisplaySettingDTO : INotifyPropertyChanged
+    class PrintSettingDTO : INotifyPropertyChanged
     {
         int id;
         string name;
-        string intendant;
         bool isSelected;
 
         public int Id
         {
             get { return id; }
-            set { id = value; OnPropertyChanged(nameof(Id)); }
+            set
+            {
+                id = value;
+                OnPropertyChanged(nameof(Id));
+            }
         }
         public string Name
         {
             get { return name; }
-            set { name = value; OnPropertyChanged(nameof(Name)); }
-        }
-        public string Intendant
-        {
-            get { return intendant; }
-            set { intendant = value; OnPropertyChanged(nameof(Intendant)); }
+            set
+            {
+                name = value;
+                OnPropertyChanged(nameof(Name));
+            }
         }
         public bool IsSelected
         {
             get { return isSelected; }
-            set { isSelected = value; OnPropertyChanged(nameof(IsSelected)); }
+            set
+            {
+                isSelected = value;
+                OnPropertyChanged(nameof(IsSelected));
+            }
         }
-
-
 
         private void OnPropertyChanged(string propertyName)
         {

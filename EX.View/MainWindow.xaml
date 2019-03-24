@@ -1114,67 +1114,176 @@
                             </Style>
                         </TabControl.Resources>
                         <TabItem Header="Поля этикетки">
-                            <Grid>
+                            <Grid  VerticalAlignment="Stretch">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="300*"/>
-                                    <ColumnDefinition Width="150*"/>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0">
-                                    <StackPanel Orientation="Horizontal">
-                                        <CheckBox Margin="20" VerticalAlignment="Center"/>
-                                        <ComboBox Margin="10,20" Width="150"/>
-                                        <ComboBox Margin="10,20" Width="100"/>
-                                        <xctk:ShortUpDown Margin="20" Width="50"/>
-                                        <StackPanel/>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="212*"></RowDefinition>
+                                    <RowDefinition Height="153*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="40"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <ListBox 
+                                        Grid.Row="0" 
+                                        Margin="20,20,20,5" 
+                                        VerticalContentAlignment="Stretch" 
+                                        VerticalAlignment="Stretch"
+                                        ItemsSource="{Binding DSCollumnSettingsForm}"
+                                        SelectedItem="{
+                                        Binding SelectedCollumnSettingForm,
+                                        Mode=TwoWay,
+                                        UpdateSourceTrigger=PropertyChanged}">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Center">
+                                                    <TextBlock
+                                                        Text="{Binding Name}"
+                                                        Width="200" 
+                                                        Margin="5"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                    <WrapPanel  Grid.Row="1" Orientation="Horizontal" Margin="20,0" HorizontalAlignment="Center" Width="auto">
+                                        <Button
+                                            Margin="5"
+                                            Padding="5"
+                                            Command="{Binding AddCollumnForm}"
+                                            CommandParameter="form"
+                                            >Добавить колонку
+                                        </Button>
+                                        <Button 
+                                            Margin="5" 
+                                            Padding="5" 
+                                            Command="{Binding DelCollumnForm}" 
+                                            CommandParameter="form"
+                                            >Удалить колонку
+                                        </Button>
+                                    </WrapPanel>
+                                </Grid>
+                                <Grid  Grid.Column="1" Grid.Row="0" VerticalAlignment="Stretch">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" ></RowDefinition>
+                                        <RowDefinition Height="40"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <ListBox
+                                        Margin="20,20,20,5"
+                                        Grid.Row="0" 
+                                        ItemsSource="{Binding DisplaySettingsForm}"
+                                        SelectedItem="{
+                                        Binding SelectedDisplaySettingForm, 
+                                        Mode=TwoWay,
+                                        UpdateSourceTrigger=PropertyChanged}">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Center"  >
+                                                    <TextBlock 
+                                                        Text="{Binding Name}"
+                                                        Margin="5" />
+                                                    <CheckBox  
+                                                        IsChecked="{
+                                                        Binding IsSelected,
+                                                        Mode=OneWay}" 
+                                                        Margin="5" 
+                                                        RenderTransformOrigin="0.5,0.5">
+                                                        <CheckBox.RenderTransform>
+                                                            <TransformGroup>
+                                                                <ScaleTransform/>
+                                                                <SkewTransform/>
+                                                                <RotateTransform Angle="0.315"/>
+                                                                <TranslateTransform/>
+                                                            </TransformGroup>
+                                                        </CheckBox.RenderTransform>
+                                                    </CheckBox>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                    <WrapPanel Orientation="Horizontal" Margin="20,0" HorizontalAlignment="Center" Grid.Row="1" Width="auto">
+                                        <Button 
+                                            Margin="5" 
+                                            Padding="5" 
+                                            Command="{Binding AddSettingForm}"
+                                            CommandParameter="form"
+                                            >Добавить настройку
+                                        </Button>
+                                        <Button 
+                                            Margin="5"
+                                            Padding="5"
+                                            Command="{Binding DelSettingForm}" 
+                                            CommandParameter="form"
+                                            >Удалить настройку
+                                        </Button>
+                                        <Button 
+                                            Margin="5" 
+                                            Padding="5" 
+                                            Command="{Binding ChangeDisplaySettingDefaultForm}" 
+                                            CommandParameter="form"
+                                            >Сделать выделенную настройку текущей
+                                        </Button>
+                                    </WrapPanel>
+                                </Grid>
+                                <StackPanel Grid.Column="1" Grid.Row="1" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <StackPanel Orientation="Horizontal" Margin="5">
+                                        <Label Margin="10,5">Настройка</Label>
+                                        <TextBox
+                                            Width="200"
+                                            Margin="5"
+                                            Text="{
+                                            Binding SelectedDisplaySettingForm.Name,
+                                            Mode=TwoWay, 
+                                            UpdateSourceTrigger=PropertyChanged}"/>
                                     </StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <CheckBox Margin="20" VerticalAlignment="Center"/>
-                                        <ComboBox Margin="10,20" Width="150"/>
-                                        <ComboBox Margin="10,20" Width="100"/>
-                                        <xctk:ShortUpDown Margin="20" Width="50"/>
-                                        <StackPanel/>
+                                    <StackPanel Orientation="Horizontal" Margin="5">
+                                        <Label Margin="10,5">Имя</Label>
+                                        <TextBox 
+                                            Width="200" 
+                                            Margin="5"
+                                            Text="{
+                                            Binding SelectedCollumnSettingForm.Name,
+                                            Mode=TwoWay, 
+                                            UpdateSourceTrigger=PropertyChanged}"/>
                                     </StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <CheckBox Margin="20" VerticalAlignment="Center"/>
-                                        <ComboBox Margin="10,20" Width="150"/>
-                                        <ComboBox Margin="10,20" Width="100"/>
-                                        <xctk:ShortUpDown Margin="20" Width="50"/>
-                                        <StackPanel/>
+                                    <StackPanel Orientation="Horizontal" Margin="5">
+                                        <Label Margin="5">Алиас</Label>
+                                        <TextBox 
+                                            Width="200" 
+                                            Margin="5"
+                                            Text="{
+                                            Binding SelectedCollumnSettingForm.Alias,
+                                            Mode=TwoWay, 
+                                            UpdateSourceTrigger=PropertyChanged}"/>
                                     </StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <CheckBox Margin="20" VerticalAlignment="Center"/>
-                                        <ComboBox Margin="10,20" Width="150"/>
-                                        <ComboBox Margin="10,20" Width="100"/>
-                                        <xctk:ShortUpDown Margin="20" Width="50"/>
-                                        <StackPanel/>
+                                    <StackPanel Orientation="Horizontal" Margin="5">
+                                        <Label Margin="5">Видимость</Label>
+                                        <CheckBox 
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center" 
+                                            IsChecked="{
+                                            Binding SelectedCollumnSettingForm.Visible,
+                                            Mode=TwoWay, 
+                                            UpdateSourceTrigger=PropertyChanged}"/>
+                                        <Label Margin="20,5,5,5">Ширина</Label>
+                                        <xctk:ShortUpDown
+                                            Margin="8" 
+                                            Width="75"
+                                            Text="{
+                                            Binding SelectedCollumnSettingForm.Width,
+                                            Mode=TwoWay, 
+                                            UpdateSourceTrigger=PropertyChanged}"/>
                                     </StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <CheckBox Margin="20" VerticalAlignment="Center"/>
-                                        <ComboBox Margin="10,20" Width="150"/>
-                                        <ComboBox Margin="10,20" Width="100"/>
-                                        <xctk:ShortUpDown Margin="20" Width="50"/>
-                                        <StackPanel/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <CheckBox Margin="20" VerticalAlignment="Center"/>
-                                        <ComboBox Margin="10,20" Width="150"/>
-                                        <ComboBox Margin="10,20" Width="100"/>
-                                        <xctk:ShortUpDown Margin="20" Width="50"/>
-                                        <StackPanel/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <CheckBox Margin="20" VerticalAlignment="Center"/>
-                                        <ComboBox Margin="10,20" Width="150"/>
-                                        <ComboBox Margin="10,20" Width="100"/>
-                                        <xctk:ShortUpDown Margin="20" Width="50"/>
-                                        <StackPanel/>
-                                    </StackPanel>
-                                </StackPanel>
-                                <StackPanel Grid.Column="2">
-                                    <ListBox Margin="20" x:Name="listBox" Height="100" Width="200"/>
-                                    <Button Margin="20">Создать конфигурацию</Button>
-                                    <Button Margin="20">Удалить конфигурацию</Button>
-                                    <Button Margin="20">Применить конфигурацию</Button>
+                                    <Button 
+                                        Margin="5"
+                                        Padding="5" 
+                                        Command="{Binding SaveSettingChangesForm}"
+                                        CommandParameter="form"
+                                        >Сохранить изменения
+                                    </Button>
                                 </StackPanel>
                             </Grid>
                         </TabItem>
@@ -4734,6 +4843,11 @@
                                         CommandParameter="{
                                         Binding ElementName=ClientDB, 
                                         Path=Content}"/>
+                                    <Label 
+                                        Margin="20"
+                                        Content="{Binding ErrorConnectServer}"
+                                        Foreground="Red"
+                                        Visibility="Visible"/>
                                 </StackPanel>
                                 <Grid Grid.Column="1">
                                     <StackPanel>

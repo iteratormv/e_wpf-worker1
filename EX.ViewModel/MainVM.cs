@@ -578,6 +578,16 @@ namespace EX.ViewModel
         #region Context for Client
         ClientExecutor clientExecutor;
         IMapper mapper;
+        string errorConnectServer;
+        public string ErrorConnectServer
+        {
+            get { return errorConnectServer; }
+            set
+            {
+                errorConnectServer = value;
+                OnPropertyChanged(nameof(ErrorConnectServer));
+            }
+        }
         #endregion
         #region Context Desctop Operation
         #region Collection for Desctop Operation
@@ -1212,7 +1222,6 @@ namespace EX.ViewModel
                 OnPropertyChanged(nameof(CountRaportAllVisitors));
             }
         }
-
 
         RelayCommand printRegistredVisitors;
         public RelayCommand PrintRegistredVisitors
@@ -1898,6 +1907,7 @@ namespace EX.ViewModel
                 cfg.CreateMap<EX.Client.ServiceReference1.StatusDTO, StatusDTO>();
             });
             mapper = config.CreateMapper();
+            errorConnectServer = "";
             #endregion
             #region Init value for Desctop Operation (second part)
             selectDesctopVisitor = new VisitorDTO();
@@ -2750,13 +2760,25 @@ namespace EX.ViewModel
             #region Implementation command for Service
             changeDataMode = new RelayCommand(c =>
             {
+                ErrorConnectServer = "";
                 DataMode = (string)c;
                 if (DataMode == "Клиент службы баз данных")
                 {
-                    var _visitors = clientExecutor.GetClient().GetAllVisitors();
-                    VisitorDTO visitorDTO = new VisitorDTO();
-                    Visitors = new ObservableCollection<VisitorDTO>();
-                    foreach (var v in _visitors) { Visitors.Add(mapper.Map<VisitorDTO>(v)); }
+                    //  clientExecutor.GetClient().InnerChannel.i
+                    try
+                    {
+                        var _visitors = clientExecutor.GetClient().GetAllVisitors();
+                        VisitorDTO visitorDTO = new VisitorDTO();
+                        Visitors = new ObservableCollection<VisitorDTO>();
+                        foreach (var v in _visitors) { Visitors.Add(mapper.Map<VisitorDTO>(v)); }
+                        ErrorConnectServer = "";
+                    }
+                    catch
+                    {
+                        DataMode = "Локальная база данных";
+                        ErrorConnectServer = "Сервер недоступен";
+                    }
+
                 }
                 else Visitors = new ObservableCollection<VisitorDTO>
                     (visitorRepositoryDTO.GetAllVisitors());
@@ -2849,7 +2871,11 @@ namespace EX.ViewModel
             editVisitor = new RelayCommand(c =>
             {
                 IsShowChanger = true;
-                if (selectDesctopVisitor != null)
+                if (selectDesctopVisitor == null || selectDesctopVisitor.Column4 == null)
+                {
+
+                }
+                else
                 {
                     EditDesctopVisitor = selectDesctopVisitor;
                     CanExecuteCreateVisitor = false;

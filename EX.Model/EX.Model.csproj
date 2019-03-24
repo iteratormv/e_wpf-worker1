@@ -78,6 +78,8 @@
     <Compile Include="DTO\RoleDTO.cs" />
     <Compile Include="DTO\Setting\DisplaySettingDTO.cs" />
     <Compile Include="DTO\Setting\DSCollumnSettingDTO.cs" />
+    <Compile Include="DTO\Setting\PrintSettingDTO.cs" />
+    <Compile Include="DTO\Setting\PrintStringSettingDTO.cs" />
     <Compile Include="DTO\StatusDTO.cs" />
     <Compile Include="DTO\SubTabDTO.cs" />
     <Compile Include="DTO\TabDTO.cs" />
@@ -105,6 +107,8 @@
     <Compile Include="Repositories\Setting\DSCollumnSettingRepository.cs" />
     <Compile Include="Repositories\ForVisitor\VisitorRepository.cs" />
     <Compile Include="Repositories\ForVisitor\VisitorRepositoryDTO.cs" />
+    <Compile Include="Repositories\Setting\PrintsSettingRepository.cs" />
+    <Compile Include="Repositories\Setting\PrintStringSettingRpository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

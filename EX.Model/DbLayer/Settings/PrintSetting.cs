@@ -8,6 +8,7 @@ namespace EX.Model.DbLayer.Settings
         public string Name { get; set; }
         public bool IsSelected { get; set; }
 
+
         public virtual List<PrintStringSetting> PrintStringSettings { get; set; }
     }
 }
