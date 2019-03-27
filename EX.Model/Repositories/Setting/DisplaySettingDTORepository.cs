@@ -21,7 +21,6 @@ namespace EX.Model.Repositories.Setting
             });
             mapper = config.CreateMapper();
         }
-
         public DisplaySettingDTO AddOrUpdate(DisplaySettingDTO displaySettingDTO)
         {
             DisplaySetting displaySetting = mapper.Map<DisplaySetting>(displaySettingDTO);
@@ -32,14 +31,12 @@ namespace EX.Model.Repositories.Setting
             }
             return displaySettingDTO;
         }
-
         public IEnumerable<DisplaySettingDTO> GetAllDisplaySettingDTOs()
         {
             var result = displaySettingRepository.GetAllDisplaySettings().
                 Select(d => mapper.Map<DisplaySettingDTO>(d)).ToList();
             return result;
         }
-
         public bool RemoveDisplaySettingDTO(DisplaySettingDTO displaySettingDTO)
         {
             bool result;

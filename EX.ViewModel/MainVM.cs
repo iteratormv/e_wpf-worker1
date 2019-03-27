@@ -137,6 +137,28 @@ namespace EX.ViewModel
                 OnPropertyChanged(nameof(DSCollumnSettingDTORepository));
             }
         }
+
+        PrintSettingRepositoryDTO printSettingRepositoryDTO;
+        public PrintSettingRepositoryDTO PrintSettingRepositoryDTO
+        {
+            get { return printSettingRepositoryDTO; }
+            set
+            {
+                printSettingRepositoryDTO = value;
+                OnPropertyChanged(nameof(PrintSettingRepositoryDTO));
+
+            }
+        }
+        PrintStringSettingRepositoryDTO printStringSettingRepositoryDTO;
+        public PrintStringSettingRepositoryDTO PrintStringSettingRepositoryDTO
+        {
+            get { return printStringSettingRepositoryDTO; }
+            set
+            {
+                printStringSettingRepositoryDTO = value;
+                OnPropertyChanged(nameof(PrintStringSettingRepositoryDTO));
+            }
+        }
         #endregion
         #region Collection for Settings
         #region Raport
@@ -206,7 +228,28 @@ namespace EX.ViewModel
                 OnPropertyChanged(nameof(DSCollumnSettingsForm));
             }
         }
-
+        #endregion
+        #region PrintBage
+        ObservableCollection<PrintSettingDTO> printSettingDTOs;
+        public ObservableCollection<PrintSettingDTO> PrintSettingDTOs
+        {
+            get { return printSettingDTOs; }
+            set
+            {
+                printSettingDTOs = value;
+                OnPropertyChanged(nameof(PrintSettingDTOs));
+            }
+        }
+        ObservableCollection<PrintStringSettingDTO> printStringSettingDTOs;
+        public ObservableCollection<PrintStringSettingDTO> PrintStringSettingDTOs
+        {
+            get { return printStringSettingDTOs; }
+            set
+            {
+                printStringSettingDTOs = value;
+                OnPropertyChanged(nameof(PrintStringSettingDTOs));
+            }
+        }
         #endregion
         #endregion
         #region Fields for Settings
@@ -267,6 +310,38 @@ namespace EX.ViewModel
             {
                 selectedCollumnSettingForm = value;
                 OnPropertyChanged(nameof(SelectedCollumnSettingForm));
+            }
+        }
+        #endregion
+        #region PrintBage
+        PrintSettingDTO selectedPrintSetting;
+        public PrintSettingDTO SelectedPrintSetting
+        {
+            get { return selectedPrintSetting; }
+            set
+            {
+                selectedPrintSetting = value;
+                OnPropertyChanged(nameof(SelectedPrintSetting));
+            }
+        }
+        PrintStringSettingDTO selectedPrintStringSetting;
+        public PrintStringSettingDTO SelectedPrintStringSetting
+        {
+            get { return selectedPrintStringSetting; }
+            set
+            {
+                selectedPrintStringSetting = value;
+                OnPropertyChanged(nameof(SelectedPrintStringSetting));
+            }
+        }
+        string selectedFont;
+        public string SelectedFont
+        {
+            get { return selectedFont; }
+            set
+            {
+                selectedFont = value;
+                OnPropertyChanged(nameof(SelectedFont));
             }
         }
         #endregion
@@ -411,31 +486,26 @@ namespace EX.ViewModel
         {
             get { return addCollumnDesctop; }
         }
-
         RelayCommand delCollumnDesctop;
         public RelayCommand DelCollumnDesctop
         {
             get { return delCollumnDesctop; }
         }
-
         RelayCommand addSettingDesctop;
         public RelayCommand AddSettingDesctop
         {
             get { return addSettingDesctop; }
         }
-
         RelayCommand delSettingDesctop;
         public RelayCommand DelSettingDesctop
         {
             get { return delSettingDesctop; }
         }
-
         RelayCommand saveSettingChangesDesctop;
         public RelayCommand SaveSettingChangesDesctop
         {
             get { return saveSettingChangesDesctop; }
         }
-
         RelayCommand changeDisplaySettingDefaultDesctop;
         public RelayCommand ChangeDisplaySettingDefaultDesctop
         {
@@ -448,35 +518,62 @@ namespace EX.ViewModel
         {
             get { return addCollumnForm; }
         }
-
         RelayCommand delCollumnForm;
         public RelayCommand DelCollumnForm
         {
             get { return delCollumnForm; }
         }
-
         RelayCommand addSettingForm;
         public RelayCommand AddSettingForm
         {
             get { return addSettingForm; }
         }
-
         RelayCommand delSettingForm;
         public RelayCommand DelSettingForm
         {
             get { return delSettingForm; }
         }
-
         RelayCommand saveSettingChangesForm;
         public RelayCommand SaveSettingChangesForm
         {
             get { return saveSettingChangesForm; }
         }
-
         RelayCommand changeDisplaySettingDefaultForm;
         public RelayCommand ChangeDisplaySettingDefaultForm
         {
             get { return changeDisplaySettingDefaultForm; }
+        }
+        #endregion
+        #region PrintBage
+        RelayCommand addPrintStringSetting;
+        public RelayCommand AddPrintStringSetting
+        {
+            get { return addPrintStringSetting; }
+        }
+        RelayCommand delPrintStringSetting;
+        public RelayCommand DelPrintStringSetting
+        {
+            get { return delPrintStringSetting; }
+        }
+        RelayCommand addPrintSetting;
+        public RelayCommand AddPrintSetting
+        {
+            get { return addPrintSetting; }
+        }
+        RelayCommand delPrintSetting;
+        public RelayCommand DelPrintSetting
+        {
+            get { return delPrintSetting; }
+        }
+        RelayCommand changePrintSettingDefault;
+        public RelayCommand ChangePrintSettingDefault
+        {
+            get { return changePrintSettingDefault; }
+        }
+        RelayCommand savePrintSettingChanges;
+        public RelayCommand SavePrintSettingChanges
+        {
+            get { return savePrintSettingChanges; }
         }
         #endregion
         #endregion
@@ -964,7 +1061,8 @@ namespace EX.ViewModel
         }
         #endregion
         #endregion
-
+        #region Context Raport
+        #region RaportCollections
         ObservableCollection<VisitorDTO> raportRegisteredVisitors;
         public ObservableCollection<VisitorDTO> RaportRegisteredVisitors
         {
@@ -1015,7 +1113,8 @@ namespace EX.ViewModel
                 OnPropertyChanged(nameof(RaportAllVisitors));
             }
         }
-
+        #endregion
+        #region RaportFields
         string selectedRaportRegistredCategory;
         public string SelectedRaportRegistredCategory
         {
@@ -1222,7 +1321,8 @@ namespace EX.ViewModel
                 OnPropertyChanged(nameof(CountRaportAllVisitors));
             }
         }
-
+        #endregion
+        #region RaportCommand
         RelayCommand printRegistredVisitors;
         public RelayCommand PrintRegistredVisitors
         {
@@ -1352,6 +1452,9 @@ namespace EX.ViewModel
         {
             get { return changeChangedAllVisitors; }
         }
+        #endregion
+        #endregion
+
 
         public MainVM()
         {
@@ -1430,8 +1533,12 @@ namespace EX.ViewModel
             //            AuthorizedUser = new UserDTO();
             #endregion
             #region Init value for Settings
+            #region AllSettingCollection
             displaySettingDTORepository = new DisplaySettingDTORepository();
             dSCollumnSettingDTORepository = new DSCollumnSettingDTORepository();
+            printSettingRepositoryDTO = new PrintSettingRepositoryDTO();
+            printStringSettingRepositoryDTO = new PrintStringSettingRepositoryDTO();
+            #endregion
             #region Raport
             columnCheckedRaport = new bool[count_raport_headers];
             aliasRaport = new string[count_raport_headers];
@@ -1703,7 +1810,7 @@ namespace EX.ViewModel
             }
             updateAllSettingsDesctop("desctop");
             #endregion
-            #region Form
+            #region Form           
             rowCheckedForm = new bool[count_form_fields];
             aliasForm = new string[count_form_fields];
             heightForm = new int[count_form_fields];
@@ -1885,6 +1992,64 @@ namespace EX.ViewModel
                 });
             }
             updateAllSettingsForm("form");
+            #endregion
+            #region PrintBage
+            printSettingDTOs = new ObservableCollection<PrintSettingDTO>
+                (printSettingRepositoryDTO.GetAllPrintSettingDTOs());
+            PrintSettingDTO defaultPrintSetting;
+            if (printSettingDTOs.Count() == 0)
+            {
+                defaultPrintSetting = new PrintSettingDTO
+                {
+                    Name = "default",
+                    IsSelected = true
+                };
+            }
+            else defaultPrintSetting = printSettingRepositoryDTO.
+                GetAllPrintSettingDTOs().
+                FirstOrDefault();
+            var defaultPrintSettingId = printSettingRepositoryDTO.
+                AddOrUpdate(defaultPrintSetting).Id;
+            printStringSettingDTOs = new ObservableCollection<PrintStringSettingDTO>
+                (printStringSettingRepositoryDTO.GetAllPrintStringSettingDTOs()
+                .Where(s => s.PrintSettingId == defaultPrintSettingId));
+            if(printStringSettingDTOs.Count() == 0)
+            {
+                printStringSettingRepositoryDTO.AddOrUpdate(new PrintStringSettingDTO
+                {
+                    Name = "Column8",
+                    FontName = "Verdana",
+                    FontSize = 18,
+                    FontWeight = 400,
+                    ToUpper = true,
+                    Visible = true,
+                    IsSelected = true,
+                    PrintSettingId = defaultPrintSettingId
+                });
+                printStringSettingRepositoryDTO.AddOrUpdate(new PrintStringSettingDTO
+                {
+                    Name = "Column9",
+                    FontName = "Verdana",
+                    FontSize = 18,
+                    FontWeight = 400,
+                    ToUpper = true,
+                    Visible = true,
+                    IsSelected = false,
+                    PrintSettingId = defaultPrintSettingId
+                });
+                printStringSettingRepositoryDTO.AddOrUpdate(new PrintStringSettingDTO
+                {
+                    Name = "Column11",
+                    FontName = "Verdana",
+                    FontSize = 18,
+                    FontWeight = 900,
+                    ToUpper = true,
+                    Visible = true,
+                    IsSelected = false,
+                    PrintSettingId = defaultPrintSettingId
+                });
+            }
+            updateAllPrintSettings();
             #endregion
             #endregion
             #region Init value for File
@@ -2660,6 +2825,142 @@ namespace EX.ViewModel
                 updateAllSettingsForm(_intendant);
             }, c => dSCollumnSettingsForm.Count() > 1);
             #endregion
+            #region PrintBage
+            addPrintSetting = new RelayCommand(c =>
+            {
+                var cur_set = printSettingRepositoryDTO.GetAllPrintSettingDTOs().
+                Where(s => s.IsSelected == true).
+                FirstOrDefault();
+                var osid = cur_set.Id;
+                string new_set_name = "NewSetting1";
+                while (printSettingRepositoryDTO.GetAllPrintSettingDTOs().
+                Where(s => s.Name == new_set_name).Count() > 0)
+                {
+                    string d_name = new_set_name.Trim(
+                        new char[] { 'N', 'e', 'w', 'S', 't', 'i', 'n', 'g' });
+                    int d = int.Parse(d_name) + 1;
+                    new_set_name = "NewSetting" + d.ToString();
+                }
+                var _n_set = new PrintSettingDTO()
+                {
+                    Name = new_set_name,
+                    IsSelected = false
+                };
+                var n_set = printSettingRepositoryDTO.AddOrUpdate(_n_set);
+                addNewCollumn(n_set.Id, osid);
+                if (cur_set != null)
+                {
+                    cur_set.IsSelected = false;
+                    printSettingRepositoryDTO.AddOrUpdate(cur_set);
+                }
+                n_set.IsSelected = true;
+                printSettingRepositoryDTO.AddOrUpdate(n_set);
+                updateAllPrintSettings();
+            });
+            delPrintSetting = new RelayCommand(c =>
+            {
+                PrintSettingDTO s_ds = printSettingRepositoryDTO.GetAllPrintSettingDTOs().
+                Where(s => s.IsSelected == true).
+                FirstOrDefault();
+                var del_cs = printStringSettingRepositoryDTO.GetAllPrintStringSettingDTOs().
+                Where(s => s.PrintSettingId == selectedPrintSetting.Id);//замена
+                foreach (var dc in del_cs)
+                {
+                    printStringSettingRepositoryDTO.RemovePrintStringSettingDTO(dc);
+                }
+                if (selectedPrintSetting.IsSelected == true)
+                {
+                    s_ds = printSettingRepositoryDTO.GetAllPrintSettingDTOs().
+                    FirstOrDefault();
+                    s_ds.IsSelected = true;
+                    printSettingRepositoryDTO.AddOrUpdate(s_ds);
+                    var new_sel_dsc = printStringSettingRepositoryDTO.
+                    GetAllPrintStringSettingDTOs().
+                    Where(s => s.PrintSettingId == s_ds.Id).
+                    FirstOrDefault();
+                    new_sel_dsc.IsSelected = true;
+                    printStringSettingRepositoryDTO.AddOrUpdate(new_sel_dsc);
+                }
+                printSettingRepositoryDTO.RemovePrintSettingDTO
+                (selectedPrintSetting);
+                updateAllPrintSettings();
+            }, c => printSettingDTOs.Count() > 1);
+            changePrintSettingDefault = new RelayCommand(c =>
+            {
+                var oldSelectedPrintSetting = printSettingRepositoryDTO.
+                GetAllPrintSettingDTOs().
+                    Where(s => s.IsSelected == true).
+                    FirstOrDefault();
+                var oldSelectedPrintStringSetting = PrintStringSettingRepositoryDTO.
+                GetAllPrintStringSettingDTOs().
+                    Where(s => s.PrintSettingId == oldSelectedPrintSetting.Id).
+                    Where(s => s.IsSelected == true).
+                    FirstOrDefault();
+                oldSelectedPrintSetting.IsSelected = false;
+                oldSelectedPrintStringSetting.IsSelected = false;
+                var newSelectedPrintSetting = printSettingRepositoryDTO.
+                GetAllPrintSettingDTOs().
+                    Where(s => s.Id == selectedPrintSetting.Id).
+                    FirstOrDefault();
+                var newSelectedPrintStringSetting = PrintStringSettingRepositoryDTO.
+                GetAllPrintStringSettingDTOs().
+                Where(s => s.PrintSettingId == newSelectedPrintSetting.Id).
+                FirstOrDefault();
+                newSelectedPrintSetting.IsSelected = true;
+                newSelectedPrintStringSetting.IsSelected = true;
+                printSettingRepositoryDTO.AddOrUpdate(oldSelectedPrintSetting);
+                printSettingRepositoryDTO.AddOrUpdate(newSelectedPrintSetting);
+                PrintStringSettingRepositoryDTO.AddOrUpdate(newSelectedPrintStringSetting);
+                PrintStringSettingRepositoryDTO.AddOrUpdate(oldSelectedPrintStringSetting);
+                updateAllPrintSettings();
+            });
+            addPrintStringSetting = new RelayCommand(c =>
+            {
+                var dsid = printSettingRepositoryDTO.GetAllPrintSettingDTOs().
+                    Where(s => s.IsSelected == true).
+                    Select(s => s.Id).FirstOrDefault();
+                addNewCollumn(dsid, dsid);
+                updateAllPrintSettings();
+            }, c => printStringSettingDTOs.Count() < 15);
+            savePrintSettingChanges = new RelayCommand(c =>
+            {
+                foreach (var d in PrintSettingDTOs)
+                {
+                    printSettingRepositoryDTO.AddOrUpdate(d);
+                }
+                foreach (var dc in printStringSettingDTOs)
+                {
+                    PrintStringSettingRepositoryDTO.AddOrUpdate(dc);
+                }
+                System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+                Application.Current.Shutdown();
+            });
+            delPrintStringSetting = new RelayCommand(c =>
+            {
+                var sel_ds = printStringSettingRepositoryDTO.GetAllPrintStringSettingDTOs().
+                        Where(s => s.IsSelected == true).
+                        FirstOrDefault();
+                var del_ds = PrintStringSettingRepositoryDTO.GetAllPrintStringSettingDTOs().
+                        Where(d => d.Id == selectedPrintStringSetting.Id).
+                        FirstOrDefault();
+                printStringSettingRepositoryDTO.RemovePrintStringSettingDTO
+                (selectedPrintStringSetting);
+                if (sel_ds.Id == del_ds.Id)
+                {
+                    var sel_s_id = printSettingRepositoryDTO.
+                    GetAllPrintSettingDTOs().
+                        Where(d => d.IsSelected == true).
+                        FirstOrDefault().Id;
+                    var new_sel_ds = PrintStringSettingRepositoryDTO.
+                    GetAllPrintStringSettingDTOs().
+                        Where(s => s.PrintSettingId == sel_s_id).
+                        FirstOrDefault();
+                    new_sel_ds.IsSelected = true;
+                    PrintStringSettingRepositoryDTO.AddOrUpdate(new_sel_ds);
+                }
+                updateAllPrintSettings();
+            }, c => printStringSettingDTOs.Count() > 1);
+            #endregion
             #endregion
             #region Implementation command for File
             addDataFromFileToDatabase = new RelayCommand(c =>
@@ -2983,7 +3284,7 @@ namespace EX.ViewModel
                 statusRepository.SaveStatusestoFile();
             });
             #endregion
-
+            #region Implementation command for Raport
             changeCategoryRegistredVisitors = new RelayCommand(c =>
             {
                 InitRaportInformation("registred");
@@ -3044,9 +3345,39 @@ namespace EX.ViewModel
             {
                 InitRaportInformation("all");
             });
-
+            #endregion
         }
         #region Implemetation methods
+        private void addNewCollumn(int dsid, int osid)
+        {
+            string _name = "NewCollumn1";
+            while (printStringSettingRepositoryDTO.GetAllPrintStringSettingDTOs().
+                Where(s => s.Name == _name).Select(s => s).Count() > 0)
+            {
+                string d_name = _name.Trim(new char[] {
+                        'N', 'e', 'w', 'C', 'o', 'l', 'u', 'm', 'n' });
+                int d = int.Parse(d_name) + 1;
+                _name = "NewCollumn" + d.ToString();
+            }
+            var oldSelectedPrintStringSetting = printStringSettingRepositoryDTO.GetAllPrintStringSettingDTOs().
+                Where(s => s.IsSelected == true && s.PrintSettingId == osid).
+                FirstOrDefault();
+            oldSelectedPrintStringSetting.IsSelected = false;
+            var newSelectedPrintStringSetting = printStringSettingRepositoryDTO.AddOrUpdate(new
+                PrintStringSettingDTO
+            {
+                Name = _name,
+                FontName = "Verdana",
+                FontSize = 18,
+                FontWeight = 400,
+                Visible = true,
+                ToUpper = true,
+                PrintSettingId = dsid,
+                IsSelected = true
+            });
+            printStringSettingRepositoryDTO.AddOrUpdate(oldSelectedPrintStringSetting);
+            printStringSettingRepositoryDTO.AddOrUpdate(newSelectedPrintStringSetting);
+        }
         private void addNewCollumn(string _intendant, int dsid, int osid)
         {
             string _name = "NewCollumn1";
@@ -3165,6 +3496,22 @@ namespace EX.ViewModel
             SelectedCollumnSettingForm = DSCollumnSettingsForm.
                 Where(s => s.IsSelected == true).
                 FirstOrDefault();
+        }
+        private void updateAllPrintSettings()
+        {
+            PrintSettingDTOs = new ObservableCollection<PrintSettingDTO>
+                (printSettingRepositoryDTO.GetAllPrintSettingDTOs());
+            SelectedPrintSetting = PrintSettingDTOs.
+                Where(s => s.IsSelected == true).
+                FirstOrDefault();
+            PrintStringSettingDTOs = new ObservableCollection<PrintStringSettingDTO>
+            (printStringSettingRepositoryDTO.GetAllPrintStringSettingDTOs().//?
+            Where(ds => ds.PrintSettingId == selectedPrintSetting.Id));
+            SelectedPrintStringSetting = printStringSettingDTOs.
+                Where(s => s.IsSelected == true).
+                FirstOrDefault();
+            SelectedFont = selectedPrintStringSetting.FontName + " "
+                + selectedPrintStringSetting.FontSize.ToString();
         }
         private void ProgressChanged(Progress_Bar progress)
         {

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EX.Model.DTO.Setting
 {
-    class PrintSettingDTO : INotifyPropertyChanged
+    public class PrintSettingDTO : INotifyPropertyChanged
     {
         int id;
         string name;

@@ -6,11 +6,11 @@ using System.Linq;
 
 namespace EX.Model.Repositories.Setting
 {
-    class PrintStringSettingRpository
+    public class PrintStringSettingRepository
     {
         EContext context;
 
-        public PrintStringSettingRpository()
+        public PrintStringSettingRepository()
         {
             context = new EContext();
         }
@@ -25,7 +25,7 @@ namespace EX.Model.Repositories.Setting
             p.Visible == printStringSetting.Visible &&
             p.PrintSettingId == printStringSetting.PrintSettingId).FirstOrDefault();
         }
-        public IEnumerable<PrintStringSetting> GetAllStringSettings()
+        public IEnumerable<PrintStringSetting> GetAllPrintStringSettings()
         {
             var p = context.PrintStringSettings.ToList();
             return p;

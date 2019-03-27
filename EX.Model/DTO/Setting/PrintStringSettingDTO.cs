@@ -8,15 +8,16 @@ using System.Threading.Tasks;
 
 namespace EX.Model.DTO.Setting
 {
-    class PrintStringSettingDTO : INotifyPropertyChanged
+    public class PrintStringSettingDTO : INotifyPropertyChanged
     {
         int id;
         string name;
         string fontName;
-        string fontStyle;
+        int fontWeight;
         int fontSize;
         bool visible;
         bool toUpper;
+        bool isSelected;
         int printSettingId;
 
         public int Id {
@@ -45,13 +46,13 @@ namespace EX.Model.DTO.Setting
                 OnPropertyChanged(nameof(FontName));
             }
         }
-        public string FontStyle
+        public int FontWeight
         {
-            get { return fontStyle; }
+            get { return fontWeight; }
             set
             {
-                fontStyle = value;
-                OnPropertyChanged(nameof(FontStyle));
+                fontWeight = value;
+                OnPropertyChanged(nameof(FontWeight));
             }
         }
         public int FontSize
@@ -79,6 +80,15 @@ namespace EX.Model.DTO.Setting
             {
                 toUpper = value;
                 OnPropertyChanged(nameof(ToUpper));
+            }
+        }
+        public bool IsSelected
+        {
+            get { return isSelected; }
+            set
+            {
+                isSelected = value;
+                OnPropertyChanged(nameof(IsSelected));
             }
         }
         public int PrintSettingId

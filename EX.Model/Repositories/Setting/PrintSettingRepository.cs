@@ -6,11 +6,11 @@ using System.Linq;
 
 namespace EX.Model.Repositories.Setting
 {
-    class PrintsSettingRepository
+    class PrintSettingRepository
     {
         EContext context;
 
-        public PrintsSettingRepository()
+        public PrintSettingRepository()
         {
             context = new EContext();
         }
