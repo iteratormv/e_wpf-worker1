@@ -2497,8 +2497,8 @@ namespace EX.ViewModel
                 {
                     dSCollumnSettingDTORepository.AddOrUpdate(dc);
                 }
-                System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
-                Application.Current.Shutdown();
+         //       System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+         //       Application.Current.Shutdown();
             });
             delCollumnRaport = new RelayCommand(c =>
             {
@@ -2640,8 +2640,8 @@ namespace EX.ViewModel
                 {
                     dSCollumnSettingDTORepository.AddOrUpdate(dc);
                 }
-                System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
-                Application.Current.Shutdown();
+      //          System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+      //          Application.Current.Shutdown();
             });
             delCollumnDesctop = new RelayCommand(c =>
             {
@@ -2792,8 +2792,6 @@ namespace EX.ViewModel
                 {
                     dSCollumnSettingDTORepository.AddOrUpdate(dc);
                 }
-                System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
-                Application.Current.Shutdown();
             });
             delCollumnForm = new RelayCommand(c =>
             {
@@ -2932,8 +2930,8 @@ namespace EX.ViewModel
                 {
                     PrintStringSettingRepositoryDTO.AddOrUpdate(dc);
                 }
-                System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
-                Application.Current.Shutdown();
+     //           System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+     //           Application.Current.Shutdown();
             });
             delPrintStringSetting = new RelayCommand(c =>
             {
@@ -3536,9 +3534,10 @@ namespace EX.ViewModel
                     .FirstOrDefault(); }
             for (int i = 0; i < count_headers; i++)
             {
-                try { columnCheckedDesctop[i] = _columnChecked[i]; }
-                catch { columnCheckedDesctop[i] = false; }
+                try { ColumnCheckedDesctop[i] = _columnChecked[i]; }
+                catch { ColumnCheckedDesctop[i] = false; }
             }
+            ColumnCheckedDesctop = columnCheckedDesctop;
             //коллекция алиасов
             string[] _alias = new string[sc.Count()];
             for (int i = 0; i < sc.Count(); i++)
@@ -3549,9 +3548,10 @@ namespace EX.ViewModel
             }
             for (int i = 0; i < count_headers; i++)
             {
-                try { aliasDesctop[i] = _alias[i]; }
-                catch { aliasDesctop[i] = "none"; }
+                try { AliasDesctop[i] = _alias[i]; }
+                catch { AliasDesctop[i] = "none"; }
             }
+            AliasDesctop = aliasDesctop;
             //коллекция width
             int[] _width = new int[sc.Count()];
             for (int i = 0; i < sc.Count(); i++)
@@ -3563,9 +3563,10 @@ namespace EX.ViewModel
             }
             for (int i = 0; i < count_headers; i++)
             {
-                try { widthDesctop[i] = _width[i]; }
-                catch { widthDesctop[i] = 100; }
+                try { WidthDesctop[i] = _width[i]; }
+                catch { WidthDesctop[i] = 100; }
             }
+            WidthDesctop = widthDesctop;
         }
         private void initHeaderRaport(ObservableCollection<DSCollumnSettingDTO> _dSColumnSettings)
         {
@@ -3581,9 +3582,10 @@ namespace EX.ViewModel
             }
             for (int i = 0; i < count_headers; i++)
             {
-                try { columnCheckedRaport[i] = _columnChecked[i]; }
-                catch { columnCheckedRaport[i] = false; }
+                try { ColumnCheckedRaport[i] = _columnChecked[i]; }
+                catch { ColumnCheckedRaport[i] = false; }
             }
+            ColumnCheckedRaport = columnCheckedRaport;
             //коллекция алиасов
             var _alias = new string[sc.Count()];
             for (int i = 0; i < sc.Count(); i++)
@@ -3594,9 +3596,10 @@ namespace EX.ViewModel
             }
             for (int i = 0; i < count_headers; i++)
             {
-                try { aliasRaport[i] = _alias[i]; }
-                catch { aliasRaport[i] = "none"; }
+                try { AliasRaport[i] = _alias[i]; }
+                catch { AliasRaport[i] = "none"; }
             }
+            AliasRaport = aliasRaport;
             //коллекция width
             var _width = new int[sc.Count()];
             for (int i = 0; i < sc.Count(); i++)
@@ -3611,6 +3614,7 @@ namespace EX.ViewModel
                 try { widthRaport[i] = _width[i]; }
                 catch { widthRaport[i] = 100; }
             }
+            WidthRaport = widthRaport;
         }
         private void initLabelsForm(ObservableCollection<DSCollumnSettingDTO> _dSCollumnSettingsForm)
         {
@@ -3626,9 +3630,10 @@ namespace EX.ViewModel
             }
             for(int i = 0; i< count_form_fields; i++)
             {
-                try { rowCheckedForm[i] = _rowChecked[i]; }
-                catch { rowCheckedForm[i] = false; }
+                try { RowChedForm[i] = _rowChecked[i]; }
+                catch { RowChedForm[i] = false; }
             }
+            RowChedForm = rowCheckedForm;
             //коллекция алиасов
             string[] _alias = new string[sr.Count()];
             for(int i = 0; i < sr.Count(); i++)
@@ -3640,9 +3645,10 @@ namespace EX.ViewModel
             }
             for(int i=0; i<count_form_fields; i++)
             {
-                try { aliasForm[i] = _alias[i]; }
-                catch { aliasForm[i] = "none"; }
+                try { AliasForm[i] = _alias[i]; }
+                catch { AliasForm[i] = "none"; }
             }
+            AliasForm = aliasForm;
             //коллекция height
             int[] _height = new int[sr.Count()];
             for(int i = 0; i < sr.Count(); i++)
@@ -3654,9 +3660,10 @@ namespace EX.ViewModel
             }
             for( int i = 0;i < count_form_fields; i++ )
             {
-                try { heightForm[i] = _height[i]; }
-                catch { heightForm[i] = 0; }
+                try { HeightForm[i] = _height[i]; }
+                catch { HeightForm[i] = 0; }
             }
+            HeightForm = heightForm;
         }
         private void UpdateAllVisitorFields(ObservableCollection<VisitorDTO> _visitors)
         {

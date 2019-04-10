@@ -1071,14 +1071,24 @@
                             Margin="10"
                             Content="Импортировать посетителей из файла"
                             Command="{Binding ImportVisitorFromFileWithId}"/>
+                        <Button 
+                            Margin="10"
+                            Content="Импортировать пользователей из файла"/>
+                        <Button 
+                            Margin="10"
+                            Content="Импортировать статусы из файла"/>
                         <Button
                             Margin="10" 
                             Command="{Binding SaveVisitorsToFile}" 
                             Content="Выгрузить посетителей в файл Exel"/>
                         <Button 
+                            Margin="10" 
+                            Content="Выгрузить пользователей в файл Exel"/>
+                        <Button 
                             Margin="10"
                             Command="{Binding SaveStatusesToFile}" 
                             Content="Выгрузить статусы в файл Exel"/>
+                        
                     </StackPanel>
                     <DataGrid Grid.Column="1"
                               Margin="10,55,10,10" 
