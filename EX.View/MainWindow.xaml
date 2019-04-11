@@ -1634,6 +1634,7 @@
                                         Padding="5" 
                                         Command="{
                                         Binding SaveSettingChangesDesctop}"
+                                        CommandParameter="desctop"
                                         >Сохранить изменения
                                     </Button>
                                 </StackPanel>
@@ -1801,6 +1802,7 @@
                                         Padding="5" 
                                         Command="{
                                         Binding SaveSettingChangesRaport}"
+                                        CommandParameter="raport"
                                         >Сохранить изменения
                                     </Button>
                                 </StackPanel>

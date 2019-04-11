@@ -1455,7 +1455,6 @@ namespace EX.ViewModel
         #endregion
         #endregion
 
-
         public MainVM()
         {
             #region Init value for Desctop Operation (first part)
@@ -2497,8 +2496,7 @@ namespace EX.ViewModel
                 {
                     dSCollumnSettingDTORepository.AddOrUpdate(dc);
                 }
-         //       System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
-         //       Application.Current.Shutdown();
+                updateAllSettingsRaport(_intendant);
             });
             delCollumnRaport = new RelayCommand(c =>
             {
@@ -2640,8 +2638,7 @@ namespace EX.ViewModel
                 {
                     dSCollumnSettingDTORepository.AddOrUpdate(dc);
                 }
-      //          System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
-      //          Application.Current.Shutdown();
+                updateAllSettingsDesctop(_intendant);
             });
             delCollumnDesctop = new RelayCommand(c =>
             {
@@ -2792,6 +2789,7 @@ namespace EX.ViewModel
                 {
                     dSCollumnSettingDTORepository.AddOrUpdate(dc);
                 }
+                updateAllSettingsForm(_intendant);
             });
             delCollumnForm = new RelayCommand(c =>
             {
