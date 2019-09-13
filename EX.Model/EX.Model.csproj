@@ -44,6 +44,7 @@
       <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -77,6 +78,8 @@
     <Compile Include="DTO\RoleDTO.cs" />
     <Compile Include="DTO\Setting\DisplaySettingDTO.cs" />
     <Compile Include="DTO\Setting\DSCollumnSettingDTO.cs" />
+    <Compile Include="DTO\Setting\PrintSettingDTO.cs" />
+    <Compile Include="DTO\Setting\PrintStringSettingDTO.cs" />
     <Compile Include="DTO\StatusDTO.cs" />
     <Compile Include="DTO\SubTabDTO.cs" />
     <Compile Include="DTO\TabDTO.cs" />
@@ -104,11 +107,17 @@
     <Compile Include="Repositories\Setting\DSCollumnSettingRepository.cs" />
     <Compile Include="Repositories\ForVisitor\VisitorRepository.cs" />
     <Compile Include="Repositories\ForVisitor\VisitorRepositoryDTO.cs" />
+    <Compile Include="Repositories\Setting\PrintSettingRepository.cs" />
+    <Compile Include="Repositories\Setting\PrintSettingRepositoryDTO.cs" />
+    <Compile Include="Repositories\Setting\PrintStringSettingRepository.cs" />
+    <Compile Include="Repositories\Setting\PrintStringSettingRepositoryDTO.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -21,30 +21,31 @@ namespace EX.Model.Repositories.ForVisitor
             });
             mapper = config.CreateMapper();
         }
-
         public IEnumerable<StatusDTO> GetAllStatuses()
         {
             var st = statusRepository.GetAllStatuses().
                 Select(s => mapper.Map<StatusDTO>(s));
             return st;
         }
-
         public void RemoveStatusDTO(StatusDTO statusDTO)
         {
             statusRepository.RemoveStatus(
                 mapper.Map<Status>(statusDTO));
         }
-
-        public StatusDTO AddOrUpdate(StatusDTO statusDTO)
+        public StatusDTO Add(StatusDTO statusDTO)
         {
             var status = mapper.Map<Status>(statusDTO);
             if (status != null)
             {
                 statusDTO = mapper.Map<StatusDTO>
-                    (statusRepository.AddOrUpdateStatus
+                    (statusRepository.Add
                     (status));
             }
             return statusDTO;
+        }
+        public void SaveStatusestoFile()
+        {
+            statusRepository.SaveStatusesToFile();
         }
     }
 }

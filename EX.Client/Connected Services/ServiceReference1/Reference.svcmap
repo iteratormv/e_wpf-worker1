@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="2cb5d1b7-f809-4299-84ff-9935c5361aff" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="57122bc4-0491-404b-94ff-1373b62e4dbe" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,13 +19,14 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="net.tcp://192.168.0.31/Visitor/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="net.tcp://192.168.0.26/Visitor/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="42127244-8c43-430d-b4fb-05eefde5a371" SourceId="1" SourceUrl="net.tcp://192.168.0.31/Visitor/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="8ae6805d-ad7f-4d91-aa1f-3489af50647e" SourceId="1" SourceUrl="net.tcp://192.168.0.31/Visitor/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="485a7b44-d58f-4103-9e18-238c8afeb52c" SourceId="1" SourceUrl="net.tcp://192.168.0.31/Visitor/mex" />
-    <MetadataFile FileName="iterator.org.xsd" MetadataType="Schema" ID="f2616239-f46d-4338-b736-793705008ecb" SourceId="1" SourceUrl="net.tcp://192.168.0.31/Visitor/mex" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="6378ac70-a2ef-4067-a30a-c0a413d5c156" SourceId="1" SourceUrl="net.tcp://192.168.0.26/Visitor/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="ec5fd376-4fdf-46b0-a640-be3b0c3d4e7f" SourceId="1" SourceUrl="net.tcp://192.168.0.26/Visitor/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="7a295526-e205-40db-8730-9f02a1e8bff2" SourceId="1" SourceUrl="net.tcp://192.168.0.26/Visitor/mex" />
+    <MetadataFile FileName="iterator.org.xsd" MetadataType="Schema" ID="30fe3bfe-97c7-46ea-989b-c87e9b89b14e" SourceId="1" SourceUrl="net.tcp://192.168.0.26/Visitor/mex" />
+    <MetadataFile FileName="EX.Model.DTO.xsd" MetadataType="Schema" ID="744b6905-85e6-4320-860f-8faf1c1935ba" SourceId="1" SourceUrl="net.tcp://192.168.0.26/Visitor/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

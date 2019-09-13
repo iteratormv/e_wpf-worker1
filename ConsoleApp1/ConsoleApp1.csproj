@@ -58,7 +58,7 @@
     <None Include="Connected Services\ServiceReference1\ConsoleApp1.ServiceReference1.VisitorDTO.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\ServiceReference1\EX.Model.DTO.xsd">
+    <None Include="Connected Services\ServiceReference1\iterator.org.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\ServiceReference1\service.wsdl" />

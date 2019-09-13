@@ -22,13 +22,19 @@ namespace EX.Model.Repositories
                 cfg.CreateMap<VisitorDTO, Visitor>();
             });
             mapper = config.CreateMapper();
-        }
-       
+        }      
         public void InitRepositoryFromFole(string fileName)
         {
             visitorRepository.initRepositoryFromFile(fileName, progressChanged);
         }
-
+        public void ImportRepositoryFromFole(string fileName)
+        {
+            visitorRepository.importRepositoryFromFile(fileName, progressChanged);
+        }
+        public void ImportVisitorsRepositoryFromFileWithId(string filename)
+        {
+            visitorRepository.importRepositoryFromFileWithId(filename, progressChanged);
+        }
         public VisitorDTO AddOrUpdateVisitor(VisitorDTO visitorDTO)
         {
             Visitor visitor = mapper.Map<Visitor>(visitorDTO);
@@ -40,18 +46,15 @@ namespace EX.Model.Repositories
             }
             return visitorDTO;
         }
-
         public IEnumerable<VisitorDTO> GetAllVisitors()
         {
             var result = visitorRepository.GetAllVisitors().Select(s => mapper.Map<VisitorDTO>(s)).ToList();
             return result;
         }
-
         public VisitorDTO GetVisitorById(int Id)
         {
             return mapper.Map<VisitorDTO>(visitorRepository.GetVisitorById(Id));
         }
-
         public bool RemoveVisitorDTO(VisitorDTO visitorDTO)
         {
             bool result;
@@ -64,7 +67,6 @@ namespace EX.Model.Repositories
             catch { result = false; }
             return result;
         }
-
         public bool RemoveVisitorById(int Id)
         {
             bool result;
@@ -75,6 +77,11 @@ namespace EX.Model.Repositories
             }
             catch { result = false; }
             return result;
+        }
+
+        public void SaveVisitorsToFile()
+        {
+            visitorRepository.saveVisitorsTofile();
         }
 
         public event Action<Progress_Bar> progressChanged;

@@ -6,7 +6,7 @@ namespace EX.Model.DbLayer
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public DateTime? ActionTime { get; set; }
+        public string ActionTime { get; set; }
 
         public int UserId { get; set; }
         public int VisitorId { get; set; }

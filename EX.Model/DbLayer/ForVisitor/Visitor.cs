@@ -20,6 +20,7 @@ namespace EX.Model.DbLayer
         public string Column13 { get; set; }
         public string Column14 { get; set; }
         public string Column15 { get; set; }
+        public string CurrentStatus { get; set; }
 
         public virtual List<Status> Statuses { get; set; }
     }

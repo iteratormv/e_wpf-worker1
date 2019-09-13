@@ -23,8 +23,25 @@
       <xs:element minOccurs="0" name="Column7" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Column8" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Column9" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CurrentStatus" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Id" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="VisitorDTO" nillable="true" type="tns:VisitorDTO" />
+  <xs:complexType name="StatusDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ActionTime" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserId" type="xs:int" />
+      <xs:element minOccurs="0" name="VisitorId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="StatusDTO" nillable="true" type="tns:StatusDTO" />
+  <xs:complexType name="ArrayOfStatusDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="StatusDTO" nillable="true" type="tns:StatusDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfStatusDTO" nillable="true" type="tns:ArrayOfStatusDTO" />
 </xs:schema>

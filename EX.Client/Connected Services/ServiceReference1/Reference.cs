@@ -68,6 +68,9 @@ namespace EX.Client.ServiceReference1 {
         private string Column9Field;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CurrentStatusField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int IdField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
@@ -276,6 +279,19 @@ namespace EX.Client.ServiceReference1 {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CurrentStatus {
+            get {
+                return this.CurrentStatusField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CurrentStatusField, value) != true)) {
+                    this.CurrentStatusField = value;
+                    this.RaisePropertyChanged("CurrentStatus");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public int Id {
             get {
                 return this.IdField;
@@ -284,6 +300,333 @@ namespace EX.Client.ServiceReference1 {
                 if ((this.IdField.Equals(value) != true)) {
                     this.IdField = value;
                     this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="StatusDTO", Namespace="http://iterator.org")]
+    [System.SerializableAttribute()]
+    public partial class StatusDTO : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ActionTimeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int UserIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int VisitorIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ActionTime {
+            get {
+                return this.ActionTimeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ActionTimeField, value) != true)) {
+                    this.ActionTimeField = value;
+                    this.RaisePropertyChanged("ActionTime");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int UserId {
+            get {
+                return this.UserIdField;
+            }
+            set {
+                if ((this.UserIdField.Equals(value) != true)) {
+                    this.UserIdField = value;
+                    this.RaisePropertyChanged("UserId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int VisitorId {
+            get {
+                return this.VisitorIdField;
+            }
+            set {
+                if ((this.VisitorIdField.Equals(value) != true)) {
+                    this.VisitorIdField = value;
+                    this.RaisePropertyChanged("VisitorId");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="UserInRoleDTO", Namespace="http://schemas.datacontract.org/2004/07/EX.Model.DTO")]
+    [System.SerializableAttribute()]
+    public partial class UserInRoleDTO : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int RoleIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int UserIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int RoleId {
+            get {
+                return this.RoleIdField;
+            }
+            set {
+                if ((this.RoleIdField.Equals(value) != true)) {
+                    this.RoleIdField = value;
+                    this.RaisePropertyChanged("RoleId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int UserId {
+            get {
+                return this.UserIdField;
+            }
+            set {
+                if ((this.UserIdField.Equals(value) != true)) {
+                    this.UserIdField = value;
+                    this.RaisePropertyChanged("UserId");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="UserDTO", Namespace="http://schemas.datacontract.org/2004/07/EX.Model.DTO")]
+    [System.SerializableAttribute()]
+    public partial class UserDTO : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FirstNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsDefaultField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsSelectedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LastNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LoginField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PasswordField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FirstName {
+            get {
+                return this.FirstNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FirstNameField, value) != true)) {
+                    this.FirstNameField = value;
+                    this.RaisePropertyChanged("FirstName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsDefault {
+            get {
+                return this.IsDefaultField;
+            }
+            set {
+                if ((this.IsDefaultField.Equals(value) != true)) {
+                    this.IsDefaultField = value;
+                    this.RaisePropertyChanged("IsDefault");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsSelected {
+            get {
+                return this.IsSelectedField;
+            }
+            set {
+                if ((this.IsSelectedField.Equals(value) != true)) {
+                    this.IsSelectedField = value;
+                    this.RaisePropertyChanged("IsSelected");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LastName {
+            get {
+                return this.LastNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LastNameField, value) != true)) {
+                    this.LastNameField = value;
+                    this.RaisePropertyChanged("LastName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Login {
+            get {
+                return this.LoginField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LoginField, value) != true)) {
+                    this.LoginField = value;
+                    this.RaisePropertyChanged("Login");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Password {
+            get {
+                return this.PasswordField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PasswordField, value) != true)) {
+                    this.PasswordField = value;
+                    this.RaisePropertyChanged("Password");
                 }
             }
         }
@@ -315,10 +658,10 @@ namespace EX.Client.ServiceReference1 {
         System.Threading.Tasks.Task<EX.Client.ServiceReference1.VisitorDTO> GetVisitorByIdAsync(int Id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVisitorContract/AddOrUpdateVisitor", ReplyAction="http://tempuri.org/IVisitorContract/AddOrUpdateVisitorResponse")]
-        void AddOrUpdateVisitor(EX.Client.ServiceReference1.VisitorDTO visitor);
+        EX.Client.ServiceReference1.VisitorDTO AddOrUpdateVisitor(EX.Client.ServiceReference1.VisitorDTO visitor);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVisitorContract/AddOrUpdateVisitor", ReplyAction="http://tempuri.org/IVisitorContract/AddOrUpdateVisitorResponse")]
-        System.Threading.Tasks.Task AddOrUpdateVisitorAsync(EX.Client.ServiceReference1.VisitorDTO visitor);
+        System.Threading.Tasks.Task<EX.Client.ServiceReference1.VisitorDTO> AddOrUpdateVisitorAsync(EX.Client.ServiceReference1.VisitorDTO visitor);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVisitorContract/RemoveVisitor", ReplyAction="http://tempuri.org/IVisitorContract/RemoveVisitorResponse")]
         void RemoveVisitor(EX.Client.ServiceReference1.VisitorDTO visitor);
@@ -331,6 +674,60 @@ namespace EX.Client.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVisitorContract/RemoveVisitorById", ReplyAction="http://tempuri.org/IVisitorContract/RemoveVisitorByIdResponse")]
         System.Threading.Tasks.Task RemoveVisitorByIdAsync(int Id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVisitorContract/AddStatus", ReplyAction="http://tempuri.org/IVisitorContract/AddStatusResponse")]
+        void AddStatus(EX.Client.ServiceReference1.StatusDTO status);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVisitorContract/AddStatus", ReplyAction="http://tempuri.org/IVisitorContract/AddStatusResponse")]
+        System.Threading.Tasks.Task AddStatusAsync(EX.Client.ServiceReference1.StatusDTO status);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVisitorContract/RemoveStatus", ReplyAction="http://tempuri.org/IVisitorContract/RemoveStatusResponse")]
+        void RemoveStatus(EX.Client.ServiceReference1.StatusDTO status);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVisitorContract/RemoveStatus", ReplyAction="http://tempuri.org/IVisitorContract/RemoveStatusResponse")]
+        System.Threading.Tasks.Task RemoveStatusAsync(EX.Client.ServiceReference1.StatusDTO status);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVisitorContract/GetAllStatuses", ReplyAction="http://tempuri.org/IVisitorContract/GetAllStatusesResponse")]
+        EX.Client.ServiceReference1.StatusDTO[] GetAllStatuses();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVisitorContract/GetAllStatuses", ReplyAction="http://tempuri.org/IVisitorContract/GetAllStatusesResponse")]
+        System.Threading.Tasks.Task<EX.Client.ServiceReference1.StatusDTO[]> GetAllStatusesAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVisitorContract/AddUserInRole", ReplyAction="http://tempuri.org/IVisitorContract/AddUserInRoleResponse")]
+        void AddUserInRole(EX.Client.ServiceReference1.UserInRoleDTO userInRoleDTO);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVisitorContract/AddUserInRole", ReplyAction="http://tempuri.org/IVisitorContract/AddUserInRoleResponse")]
+        System.Threading.Tasks.Task AddUserInRoleAsync(EX.Client.ServiceReference1.UserInRoleDTO userInRoleDTO);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVisitorContract/RemoveUserInRole", ReplyAction="http://tempuri.org/IVisitorContract/RemoveUserInRoleResponse")]
+        void RemoveUserInRole(EX.Client.ServiceReference1.UserInRoleDTO userInRoleDTO);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVisitorContract/RemoveUserInRole", ReplyAction="http://tempuri.org/IVisitorContract/RemoveUserInRoleResponse")]
+        System.Threading.Tasks.Task RemoveUserInRoleAsync(EX.Client.ServiceReference1.UserInRoleDTO userInRoleDTO);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVisitorContract/GetAllUserInRole", ReplyAction="http://tempuri.org/IVisitorContract/GetAllUserInRoleResponse")]
+        EX.Client.ServiceReference1.UserInRoleDTO[] GetAllUserInRole();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVisitorContract/GetAllUserInRole", ReplyAction="http://tempuri.org/IVisitorContract/GetAllUserInRoleResponse")]
+        System.Threading.Tasks.Task<EX.Client.ServiceReference1.UserInRoleDTO[]> GetAllUserInRoleAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVisitorContract/AddUser", ReplyAction="http://tempuri.org/IVisitorContract/AddUserResponse")]
+        void AddUser(EX.Client.ServiceReference1.UserDTO userDTO);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVisitorContract/AddUser", ReplyAction="http://tempuri.org/IVisitorContract/AddUserResponse")]
+        System.Threading.Tasks.Task AddUserAsync(EX.Client.ServiceReference1.UserDTO userDTO);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVisitorContract/RemoveUser", ReplyAction="http://tempuri.org/IVisitorContract/RemoveUserResponse")]
+        void RemoveUser(EX.Client.ServiceReference1.UserDTO userDTO);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVisitorContract/RemoveUser", ReplyAction="http://tempuri.org/IVisitorContract/RemoveUserResponse")]
+        System.Threading.Tasks.Task RemoveUserAsync(EX.Client.ServiceReference1.UserDTO userDTO);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVisitorContract/GetAllUsers", ReplyAction="http://tempuri.org/IVisitorContract/GetAllUsersResponse")]
+        EX.Client.ServiceReference1.UserDTO[] GetAllUsers();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVisitorContract/GetAllUsers", ReplyAction="http://tempuri.org/IVisitorContract/GetAllUsersResponse")]
+        System.Threading.Tasks.Task<EX.Client.ServiceReference1.UserDTO[]> GetAllUsersAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -376,11 +773,11 @@ namespace EX.Client.ServiceReference1 {
             return base.Channel.GetVisitorByIdAsync(Id);
         }
         
-        public void AddOrUpdateVisitor(EX.Client.ServiceReference1.VisitorDTO visitor) {
-            base.Channel.AddOrUpdateVisitor(visitor);
+        public EX.Client.ServiceReference1.VisitorDTO AddOrUpdateVisitor(EX.Client.ServiceReference1.VisitorDTO visitor) {
+            return base.Channel.AddOrUpdateVisitor(visitor);
         }
         
-        public System.Threading.Tasks.Task AddOrUpdateVisitorAsync(EX.Client.ServiceReference1.VisitorDTO visitor) {
+        public System.Threading.Tasks.Task<EX.Client.ServiceReference1.VisitorDTO> AddOrUpdateVisitorAsync(EX.Client.ServiceReference1.VisitorDTO visitor) {
             return base.Channel.AddOrUpdateVisitorAsync(visitor);
         }
         
@@ -398,6 +795,78 @@ namespace EX.Client.ServiceReference1 {
         
         public System.Threading.Tasks.Task RemoveVisitorByIdAsync(int Id) {
             return base.Channel.RemoveVisitorByIdAsync(Id);
+        }
+        
+        public void AddStatus(EX.Client.ServiceReference1.StatusDTO status) {
+            base.Channel.AddStatus(status);
+        }
+        
+        public System.Threading.Tasks.Task AddStatusAsync(EX.Client.ServiceReference1.StatusDTO status) {
+            return base.Channel.AddStatusAsync(status);
+        }
+        
+        public void RemoveStatus(EX.Client.ServiceReference1.StatusDTO status) {
+            base.Channel.RemoveStatus(status);
+        }
+        
+        public System.Threading.Tasks.Task RemoveStatusAsync(EX.Client.ServiceReference1.StatusDTO status) {
+            return base.Channel.RemoveStatusAsync(status);
+        }
+        
+        public EX.Client.ServiceReference1.StatusDTO[] GetAllStatuses() {
+            return base.Channel.GetAllStatuses();
+        }
+        
+        public System.Threading.Tasks.Task<EX.Client.ServiceReference1.StatusDTO[]> GetAllStatusesAsync() {
+            return base.Channel.GetAllStatusesAsync();
+        }
+        
+        public void AddUserInRole(EX.Client.ServiceReference1.UserInRoleDTO userInRoleDTO) {
+            base.Channel.AddUserInRole(userInRoleDTO);
+        }
+        
+        public System.Threading.Tasks.Task AddUserInRoleAsync(EX.Client.ServiceReference1.UserInRoleDTO userInRoleDTO) {
+            return base.Channel.AddUserInRoleAsync(userInRoleDTO);
+        }
+        
+        public void RemoveUserInRole(EX.Client.ServiceReference1.UserInRoleDTO userInRoleDTO) {
+            base.Channel.RemoveUserInRole(userInRoleDTO);
+        }
+        
+        public System.Threading.Tasks.Task RemoveUserInRoleAsync(EX.Client.ServiceReference1.UserInRoleDTO userInRoleDTO) {
+            return base.Channel.RemoveUserInRoleAsync(userInRoleDTO);
+        }
+        
+        public EX.Client.ServiceReference1.UserInRoleDTO[] GetAllUserInRole() {
+            return base.Channel.GetAllUserInRole();
+        }
+        
+        public System.Threading.Tasks.Task<EX.Client.ServiceReference1.UserInRoleDTO[]> GetAllUserInRoleAsync() {
+            return base.Channel.GetAllUserInRoleAsync();
+        }
+        
+        public void AddUser(EX.Client.ServiceReference1.UserDTO userDTO) {
+            base.Channel.AddUser(userDTO);
+        }
+        
+        public System.Threading.Tasks.Task AddUserAsync(EX.Client.ServiceReference1.UserDTO userDTO) {
+            return base.Channel.AddUserAsync(userDTO);
+        }
+        
+        public void RemoveUser(EX.Client.ServiceReference1.UserDTO userDTO) {
+            base.Channel.RemoveUser(userDTO);
+        }
+        
+        public System.Threading.Tasks.Task RemoveUserAsync(EX.Client.ServiceReference1.UserDTO userDTO) {
+            return base.Channel.RemoveUserAsync(userDTO);
+        }
+        
+        public EX.Client.ServiceReference1.UserDTO[] GetAllUsers() {
+            return base.Channel.GetAllUsers();
+        }
+        
+        public System.Threading.Tasks.Task<EX.Client.ServiceReference1.UserDTO[]> GetAllUsersAsync() {
+            return base.Channel.GetAllUsersAsync();
         }
     }
 }

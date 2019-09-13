@@ -34,6 +34,7 @@
         public virtual DbSet<PrintSetting> PrintSettings { get; set; }
         public virtual DbSet<PrintStringSetting> PrintStringSettings { get; set; }
         public virtual DbSet<ColorSetting> ColorSettings { get; set; }
+
     }
 
     //public class MyEntity

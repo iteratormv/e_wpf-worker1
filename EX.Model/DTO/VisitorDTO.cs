@@ -37,5 +37,7 @@ namespace EX.Model.DTO
         public string Column14 { get; set; }
         [DataMember]
         public string Column15 { get; set; }
+        [DataMember]
+        public string CurrentStatus { get; set; }
     }
 }

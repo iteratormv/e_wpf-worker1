@@ -15,7 +15,7 @@ namespace ConsoleApp1.ServiceReference1 {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="VisitorDTO", Namespace="http://schemas.datacontract.org/2004/07/EX.Model.DTO")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="VisitorDTO", Namespace="http://iterator.org")]
     [System.SerializableAttribute()]
     public partial class VisitorDTO : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -66,6 +66,9 @@ namespace ConsoleApp1.ServiceReference1 {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string Column9Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CurrentStatusField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int IdField;
@@ -276,6 +279,19 @@ namespace ConsoleApp1.ServiceReference1 {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CurrentStatus {
+            get {
+                return this.CurrentStatusField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CurrentStatusField, value) != true)) {
+                    this.CurrentStatusField = value;
+                    this.RaisePropertyChanged("CurrentStatus");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public int Id {
             get {
                 return this.IdField;
@@ -284,6 +300,115 @@ namespace ConsoleApp1.ServiceReference1 {
                 if ((this.IdField.Equals(value) != true)) {
                     this.IdField = value;
                     this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="StatusDTO", Namespace="http://iterator.org")]
+    [System.SerializableAttribute()]
+    public partial class StatusDTO : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ActionTimeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int UserIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int VisitorIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ActionTime {
+            get {
+                return this.ActionTimeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ActionTimeField, value) != true)) {
+                    this.ActionTimeField = value;
+                    this.RaisePropertyChanged("ActionTime");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int UserId {
+            get {
+                return this.UserIdField;
+            }
+            set {
+                if ((this.UserIdField.Equals(value) != true)) {
+                    this.UserIdField = value;
+                    this.RaisePropertyChanged("UserId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int VisitorId {
+            get {
+                return this.VisitorIdField;
+            }
+            set {
+                if ((this.VisitorIdField.Equals(value) != true)) {
+                    this.VisitorIdField = value;
+                    this.RaisePropertyChanged("VisitorId");
                 }
             }
         }
@@ -331,6 +456,12 @@ namespace ConsoleApp1.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVisitorContract/RemoveVisitorById", ReplyAction="http://tempuri.org/IVisitorContract/RemoveVisitorByIdResponse")]
         System.Threading.Tasks.Task RemoveVisitorByIdAsync(int Id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVisitorContract/AddStatus", ReplyAction="http://tempuri.org/IVisitorContract/AddStatusResponse")]
+        void AddStatus(ConsoleApp1.ServiceReference1.StatusDTO status);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVisitorContract/AddStatus", ReplyAction="http://tempuri.org/IVisitorContract/AddStatusResponse")]
+        System.Threading.Tasks.Task AddStatusAsync(ConsoleApp1.ServiceReference1.StatusDTO status);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -398,6 +529,14 @@ namespace ConsoleApp1.ServiceReference1 {
         
         public System.Threading.Tasks.Task RemoveVisitorByIdAsync(int Id) {
             return base.Channel.RemoveVisitorByIdAsync(Id);
+        }
+        
+        public void AddStatus(ConsoleApp1.ServiceReference1.StatusDTO status) {
+            base.Channel.AddStatus(status);
+        }
+        
+        public System.Threading.Tasks.Task AddStatusAsync(ConsoleApp1.ServiceReference1.StatusDTO status) {
+            return base.Channel.AddStatusAsync(status);
         }
     }
 }
