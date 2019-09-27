@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using EX.Client;
-using EX.Model.DbLayer.Settings;
 using EX.Model.DTO;
 using EX.Model.DTO.Setting;
 using EX.Model.Infrastructure;
@@ -22,12 +21,25 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
-using System.Windows.Media;
+using BarcodeLib;
+using System.Drawing;
+using System.Drawing.Printing;
+using System.Windows.Xps.Packaging;
+using System.IO;
+using Json.Net;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Gma.QrCodeNet.Encoding;
+using QRCoder;
+//using System.Web.Script.Serialization;
 
 namespace EX.ViewModel
 {
     public class MainVM : INotifyPropertyChanged
     {
+        string pv;
+
+
         #region Context for Administration
         #region Visibte Tab Settigs
         int visibleManageUserRole;
@@ -3344,6 +3356,7 @@ namespace EX.ViewModel
             #endregion
         }
         #region Implemetation methods
+
         private void addNewCollumn(int dsid, int osid)
         {
             string _name = "NewCollumn1";
@@ -3823,35 +3836,151 @@ namespace EX.ViewModel
         {
             if(printDialog.ShowDialog() == true)
             {
-                Run runName = new Run(visitor.Column8.ToUpper() + "\n" + visitor.Column9.ToUpper());
-                Run runCompany = new Run(visitor.Column11.ToUpper());
+
+                string vn = visitor.Column8.ToUpper();
+                string vs = visitor.Column9.ToUpper();
+                string vb = visitor.Column1;
+                pv = vn + " " + vs;
+                string vis = vn + "\n" + vs;
+                string comp = visitor.Column11.ToUpper();
+
+                Run runName = new Run(vis);
+                Run runCompany = new Run(comp);
+                System.Drawing.Image img1 = System.Drawing.Image.FromFile("b1.png");
+       //         System.Windows.Media.Imaging.BitmapImage bi = new System.Windows.Media.Imaging.BitmapImage(new Uri("b1.png"));
+                //   Run im = new Run(img1);
                 Paragraph paragraphName = new Paragraph(runName);
                 Paragraph paragraphCompany = new Paragraph(runCompany);
+                Paragraph paragraphIm = new Paragraph();
+                
+          //      Inline item = new Inline();
+          //      paragraphIm.Inlines.Add((UIElement)b);
+                BlockUIContainer buk = new BlockUIContainer();
+              //  buk.i
+
 
                 paragraphName.LineStackingStrategy = LineStackingStrategy.MaxHeight;
-                paragraphName.FontFamily = new FontFamily("Verdana");
+                paragraphName.FontFamily = new System.Windows.Media.FontFamily("Verdana");
                 paragraphName.TextAlignment = TextAlignment.Center;
-                paragraphName.FontSize = 22;
+                paragraphName.FontSize = 10;
                 paragraphName.FontWeight = FontWeight.FromOpenTypeWeight(400);
 
                 paragraphCompany.LineStackingStrategy = LineStackingStrategy.BlockLineHeight;
-                paragraphCompany.FontFamily = new FontFamily("Verdana");
+                paragraphCompany.FontFamily = new System.Windows.Media.FontFamily("Verdana");
                 paragraphCompany.TextAlignment = TextAlignment.Center;
-                paragraphCompany.FontSize = 22;
+                paragraphCompany.FontSize = 10;
                 paragraphCompany.FontWeight = FontWeight.FromOpenTypeWeight(900);
 
 
-                FlowDocument flowDocument = new FlowDocument();
+                 FlowDocument flowDocument = new FlowDocument();
                 flowDocument.Blocks.Add(paragraphName);
-                flowDocument.Blocks.Add(paragraphCompany);
+       //         flowDocument.Blocks.Add(paragraphCompany);
+        //        flowDocument.Blocks.Add(paragraphIm);
                 flowDocument.PagePadding = new Thickness(30);
                 flowDocument.PageWidth = printDialog.PrintableAreaWidth;
                 flowDocument.Name = "FlowDoc";
                 IDocumentPaginatorSource source = flowDocument;
-                printDialog.PrintDocument(source.DocumentPaginator, "print Visitor - "
-                    + visitor.Column8 + "\n" + visitor.Column9);
+          //      printDialog.PrintDocument(source.DocumentPaginator, "print Visitor - "
+          //          + visitor.Column8 + "\n" + visitor.Column9);
+
+                Barcode b = new Barcode();
+                System.Drawing.Color foreColor = System.Drawing.Color.Black;
+                System.Drawing.Color backColor = System.Drawing.Color.White;
+                System.Drawing.Image img = b.Encode(TYPE.CODE128, vb,
+                    foreColor, backColor, 225, 30);
+                img.Save("b2.png");
+
+                var jsonObject = new JObject();
+
+                jsonObject.Add("FirstName", vn);
+                jsonObject.Add("LastName", vs);
+                jsonObject.Add("Barcode", vb);
+
+                dynamic dj = jsonObject;
+
+                dj.FirstName = vn;
+                dj.LastName = vs;
+                dj.QRCode = vb;
+
+                
+
+
+                string qrText = "";
+
+                //                qrText = Convert.ToString(dj);
+                qrText = jsonObject.ToString();
+                qrText = qrText.Replace("\n", "|");
+                qrText = qrText.Replace("\r", "#");
+
+                //           qrText = vn + "|" + vs + "|" + vb;
+
+                qrText = vb;
+
+                QRCodeGenerator qrGenerator = new QRCodeGenerator();
+                QRCodeData qrCodeData = qrGenerator.CreateQrCode(qrText,
+                QRCodeGenerator.ECCLevel.Q);
+                QRCode qrCode = new QRCode(qrCodeData);
+                Bitmap qrCodeImage = qrCode.GetGraphic(2);
+                qrCodeImage.Save("b4.png");
+
+
+
+                PrintDocument pd = new PrintDocument();
+                pd.PrintPage += PrintPage;
+                pd.Print();
             }           
         }
+
+        private void PrintPage(object o, PrintPageEventArgs e)
+        {
+            //  e.Graphics.DrawString("Text", new Font("Times New Roman", 14, System.Drawing.FontStyle.Bold), System.Drawing.Brushes.Gray, new PointF(100,100));
+
+            //       InvokePrint(o);
+
+            System.Drawing.Image image =
+                System.Drawing.Image.FromFile("b4.png");
+            System.Drawing.Point loc = new System.Drawing.Point(50, 20);
+
+            e.Graphics.DrawImage(image, loc);
+
+            Font fnt1 = new Font("Times New Roman", 8f, System.Drawing.FontStyle.Regular);
+            System.Drawing.Brush br = System.Drawing.Brushes.Black;
+            PointF pf = new PointF(100f, 10f);
+            string te = pv;
+            e.Graphics.DrawString(te, fnt1, br, pf);
+
+
+            //int charactersOnPage = 0;
+            //int linesPerPage = 0;
+            //Graphics graphics = e.Graphics;
+
+            //string stringToPrint = "tutu";
+
+            // Sets the value of charactersOnPage to the number of characters 
+            // of stringToPrint that will fit within the bounds of the page.
+  //          graphics.MeasureString(stringToPrint, fnt1,
+   //             e.MarginBounds.Size, StringFormat.GenericTypographic,
+  //              out charactersOnPage, out linesPerPage);
+
+            // Draws the string within the bounds of the page
+  //          graphics.DrawString(stringToPrint, fnt1, System.Drawing.Brushes.Black,
+  //              e.MarginBounds, StringFormat.GenericTypographic);
+
+            // Remove the portion of the string that has been printed.
+ //           stringToPrint = stringToPrint.Substring(charactersOnPage);
+
+            // Check to see if more pages are to be printed.
+ //           e.HasMorePages = (stringToPrint.Length > 0);
+
+
+
+
+
+            //     Font fnt1 = new Font("Arial", 12f, System.Drawing.FontStyle.Bold);
+          //       e.Graphics.DrawString("RES", fnt1, System.Drawing.Brushes.Black, new PointF(10f, 10f));
+            //     e.Graphics.DrawString("Use Item -% Off for the 15%. Scan coupon barcode or enter coupon code. Collect coupon with purchase as coupon may only be redeemed once per customer.", fnt1, System.Drawing.Brushes.Black, new RectangleF(new PointF(10f, 290f), new SizeF(570f, 50f)));
+         }
+
         private void UpdateVistor(VisitorDTO selectedSearchVisitor)
         {
             if (dataMode != "Клиент службы баз данных")
@@ -4373,6 +4502,27 @@ namespace EX.ViewModel
                 }
             }
         }
+
+
+
+        private void InvokePrint(object sender)
+        {
+            // Create the print dialog object and set options
+            PrintDialog pDialog = new PrintDialog();
+            pDialog.PageRangeSelection = PageRangeSelection.AllPages;
+            pDialog.UserPageRangeEnabled = true;
+
+            // Display the dialog. This returns true if the user presses the Print button.
+            Nullable<Boolean> print = pDialog.ShowDialog();
+            if (print == true)
+            {
+                XpsDocument xpsDocument = new XpsDocument("C:\\FixedDocumentSequence.xps", FileAccess.ReadWrite);
+                FixedDocumentSequence fixedDocSeq = xpsDocument.GetFixedDocumentSequence();
+                pDialog.PrintDocument(fixedDocSeq.DocumentPaginator, "Test print job");
+            }
+        }
+
+
         #endregion
         #region Events
         public event PropertyChangedEventHandler PropertyChanged;
