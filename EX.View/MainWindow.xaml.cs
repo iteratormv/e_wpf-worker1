@@ -25,9 +25,14 @@ namespace EX.View
             InitializeComponent();
         }
 
-        private void Workgrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        //private void Workgrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
 
-        }
+        //}
+
+        //private void Button_Click(object sender, RoutedEventArgs e)
+        //{
+
+        //}
     }
 }

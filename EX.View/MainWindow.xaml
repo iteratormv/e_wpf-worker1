@@ -16,7 +16,7 @@
 
     </Window.DataContext>
 
-    <Grid>
+    <Grid Margin="0">
         <TabControl 
             x:Name="tabControl"
             HorizontalAlignment="Stretch" 
@@ -199,7 +199,7 @@
                             Margin="5" 
                             AutoGenerateColumns="False"
                             ItemsSource="{Binding DesctopVisitors}" 
-                            SelectionChanged="Workgrid_SelectionChanged">
+                            >
                             <DataGrid.RowStyle>
                                 <Style TargetType="DataGridRow">
                                     <Setter Property="Background" Value="{Binding Column2, Converter={StaticResource stringToColorConverter}}"/>
@@ -1088,7 +1088,11 @@
                             Margin="10"
                             Command="{Binding SaveStatusesToFile}" 
                             Content="Выгрузить статусы в файл Exel"/>
-                        
+                        <Button 
+                            Margin="10"
+                            Command="{Binding IntegrateZone}" 
+                            Content="Интегрировать информацию о зонах"/>
+
                     </StackPanel>
                     <DataGrid Grid.Column="1"
                               Margin="10,55,10,10" 
@@ -1292,6 +1296,7 @@
                                         Command="{Binding SavePrintSettingChanges}"
                                         >Сохранить изменения
                                     </Button>
+
                                 </StackPanel>
                             </Grid>
                         </TabItem>
@@ -1647,8 +1652,8 @@
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="212*"></RowDefinition>
-                                    <RowDefinition Height="153*"></RowDefinition>
+                                    <RowDefinition Height="215*"></RowDefinition>
+                                    <RowDefinition Height="180*"></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" >
                                     <Grid.RowDefinitions>
@@ -1695,6 +1700,7 @@
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*" ></RowDefinition>
                                         <RowDefinition Height="40"></RowDefinition>
+                                        <RowDefinition Height="40"></RowDefinition>
                                     </Grid.RowDefinitions>
                                     <ListBox 
                                         ItemsSource="{Binding DisplaySettingsRaport}" 
@@ -1727,13 +1733,23 @@
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
                                     </ListBox>
-                                    <WrapPanel Orientation="Horizontal" Margin="20,0" HorizontalAlignment="Center" Grid.Row="1" Width="auto">
+                                    <Grid 
+                                        Grid.Row="1"
+                                        Margin="20,0,20,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                        </Grid.ColumnDefinitions>
+
                                         <Button 
+                                            Grid.Column="0"
                                             Margin="5" 
                                             Padding="5" 
                                             Command="{Binding AddSettingRaport}"
                                             CommandParameter="raport">Добавить настройку</Button>
                                         <Button
+                                            Grid.Column="1"
                                             Margin="5"
                                             Padding="5"
                                             Command="{Binding DelSettingRaport}" 
@@ -1741,13 +1757,38 @@
                                             >Удалить настройку
                                         </Button>
                                         <Button 
+                                            Grid.Column="2"
                                             Margin="5" 
                                             Padding="5" 
                                             Command="{Binding ChangeDisplaySettingDefaultRaport}" 
                                             CommandParameter="raport"
                                             >Сделать выделенную настройку текущей
                                         </Button>
-                                    </WrapPanel>
+                                    </Grid>
+                                    <Grid 
+                                        Grid.Row="2"
+                                        Margin="20,0,20,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button 
+                                        Grid.Column="0"
+                                        Margin="5" 
+                                        Padding="5"
+                                        Command="{Binding SaveSettingToFile}"
+                                        CommandParameter="raport"
+                                        Content="Сохранить в файл">
+                                        </Button>
+                                        <Button 
+                                            Grid.Column="1"
+                                        Margin="5" 
+                                        Padding="5"
+                                        Command="{Binding IntegrateSettingFromFile}"
+                                        CommandParameter="raport"
+                                        Content="Импортировать из файла">
+                                        </Button>
+                                    </Grid>
                                 </Grid>
                                 <StackPanel Grid.Column="1" Grid.Row="1" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Center">
                                     <StackPanel Orientation="Horizontal" Margin="5">
@@ -1805,6 +1846,7 @@
                                         CommandParameter="raport"
                                         >Сохранить изменения
                                     </Button>
+                                    
                                 </StackPanel>
                             </Grid>
                         </TabItem>

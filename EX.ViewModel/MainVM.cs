@@ -31,6 +31,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Gma.QrCodeNet.Encoding;
 using QRCoder;
+using Nancy.Json;
 //using System.Web.Script.Serialization;
 
 namespace EX.ViewModel
@@ -38,6 +39,8 @@ namespace EX.ViewModel
     public class MainVM : INotifyPropertyChanged
     {
         string pv;
+        string pvf;
+        string pvl;
 
 
         #region Context for Administration
@@ -491,6 +494,18 @@ namespace EX.ViewModel
         {
             get { return changeDisplaySettingDefaultRaport; }
         }
+
+        RelayCommand saveSettingToFile;
+        public RelayCommand SaveSettingToFile
+        {
+            get { return saveSettingToFile; }
+        }
+
+        RelayCommand integrateSettingFromFile;
+        public RelayCommand IntegrateSettingFromFile
+        {
+            get { return integrateSettingFromFile; }
+        }
         #endregion
         #region Desctop
         RelayCommand addCollumnDesctop;
@@ -634,6 +649,11 @@ namespace EX.ViewModel
         public RelayCommand ImportVisitorFromFileWithId
         {
             get { return importVisitorFromFileWithId; }
+        }
+        RelayCommand integrateZone;
+        public RelayCommand IntegrateZone
+        {
+            get { return integrateZone; }
         }
         #endregion
         #endregion
@@ -1592,7 +1612,6 @@ namespace EX.ViewModel
                     Intendant = "raport",
                     DisplaySettingId = defaultDisplayRaportSettingId
                 });
-
                 dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
                 {
                     Name = "FirstName",
@@ -1603,7 +1622,6 @@ namespace EX.ViewModel
                     Intendant = "raport",
                     DisplaySettingId = defaultDisplayRaportSettingId
                 });
-
                 dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
                 {
                     Name = "LastName",
@@ -1614,7 +1632,6 @@ namespace EX.ViewModel
                     Intendant = "raport",
                     DisplaySettingId = defaultDisplayRaportSettingId
                 });
-
                 dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
                 {
                     Name = "Сompany",
@@ -1625,7 +1642,6 @@ namespace EX.ViewModel
                     Intendant = "raport",
                     DisplaySettingId = defaultDisplayRaportSettingId
                 });
-
                 dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
                 {
                     Name = "Jobtitle",
@@ -2024,7 +2040,7 @@ namespace EX.ViewModel
             printStringSettingDTOs = new ObservableCollection<PrintStringSettingDTO>
                 (printStringSettingRepositoryDTO.GetAllPrintStringSettingDTOs()
                 .Where(s => s.PrintSettingId == defaultPrintSettingId));
-            if(printStringSettingDTOs.Count() == 0)
+            if (printStringSettingDTOs.Count() == 0)
             {
                 printStringSettingRepositoryDTO.AddOrUpdate(new PrintStringSettingDTO
                 {
@@ -2396,6 +2412,145 @@ namespace EX.ViewModel
             });
             #endregion
             #region Implementation command for Settings
+            saveSettingToFile = new RelayCommand(c =>
+            {
+                var _intendant = c as string;
+                switch (_intendant)
+                {
+                    case "raport":
+
+
+                        //                      caseDS(selectedDisplaySettingRaport, _intendant);
+
+
+
+                        var curSetId = selectedDisplaySettingRaport.Id;
+                        DisplaySettingDTO curSet = new DisplaySettingDTO()
+                        {
+                            Name = selectedDisplaySettingRaport.Name,
+                            Intendant = _intendant,
+                            IsSelected = false
+                        };
+                        if (curSet.IsSelected == true)
+                        {
+                            curSet.IsSelected = false;
+                        }
+                        var curSetColumnList = DSCollumnSettingDTORepository
+                        .GetAllDSCollumnSettingDTOs()
+                        .Where(s => s.DisplaySettingId == curSetId);
+                        JavaScriptSerializer jss = new JavaScriptSerializer();
+                        var jsonSetting = jss.Serialize(curSet);
+                        var jsonColSetts = jss.Serialize(curSetColumnList);
+                        var jsonRaportSetting = jsonSetting + "|" + jsonColSetts;
+                        SaveFileDialog fileDialog = new SaveFileDialog();
+                        if (fileDialog.ShowDialog() == true)
+                        {
+                            string fileSettingName = fileDialog.FileName;
+                            using (var sw = new StreamWriter(fileSettingName))
+                            {
+                                sw.Write(jsonRaportSetting);
+                            }
+                        }
+                        break;
+                    case "desctop":
+
+                        break;
+                    case "form":
+
+                        break;
+                    default:
+                        break;
+                }
+            });
+            integrateSettingFromFile = new RelayCommand(c =>
+            {
+                var _intendant = c as string;
+                DisplaySettingDTO integrateSetting;
+                var integratedDSColumnSettings = new List<DSCollumnSettingDTO>();
+                JavaScriptSerializer jss = new JavaScriptSerializer();               
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    string fileSettingName = openFileDialog.FileName;
+                    using (var sr = new StreamReader(fileSettingName))
+                    {
+                        var srt = sr.ReadToEnd();
+                        string[] sar = srt.Split('|');
+                        var s1 = sar[0];
+                        var s2 = sar[1];
+                        integrateSetting = jss.Deserialize<DisplaySettingDTO>(s1);
+                        var colectionSet = displaySettingDTORepository
+                        .GetAllDisplaySettingDTOs()
+                        .Where(s => s.Intendant == _intendant)
+                        .Select(s=>s.Name)
+                        .ToList();
+
+                        integratedDSColumnSettings = jss.Deserialize<List<DSCollumnSettingDTO>>(s2);
+
+                        var cur_set = displaySettingDTORepository.GetAllDisplaySettingDTOs().
+                        Where(s => s.IsSelected == true && s.Intendant == _intendant).
+                        Select(s => s).FirstOrDefault();
+                        var osid = cur_set.Id;
+                        string new_set_name;
+                        var adder = displaySettingDTORepository
+                        .GetAllDisplaySettingDTOs()
+                        .LastOrDefault()
+                        .Id + 1;
+
+                        if (colectionSet.Contains(integrateSetting.Name))
+                        {
+                            new_set_name = integrateSetting.Name + adder;
+                        }
+                        else
+                        {
+                            new_set_name = integrateSetting.Name;
+                        }
+                        var _n_set = new DisplaySettingDTO()
+                        {
+                            Name = new_set_name,
+                            IsSelected = false,
+                            Intendant = _intendant
+                        };
+                        var n_set = displaySettingDTORepository.AddOrUpdate(_n_set);
+                        if (cur_set != null)
+                        {
+                            cur_set.IsSelected = false;
+                            displaySettingDTORepository.AddOrUpdate(cur_set);
+                        }
+                        n_set.IsSelected = true;
+                        displaySettingDTORepository.AddOrUpdate(n_set);
+                        updateAllSettingsRaport(_intendant);
+                        foreach(var sett in integratedDSColumnSettings)
+                        {
+                            dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
+                            {
+                                Name = sett.Name,
+                                Alias = sett.Alias,
+                                Width = sett.Width,
+                                Visible = sett.Visible,
+                                IsSelected = sett.IsSelected,
+                                Intendant = _intendant,
+                                DisplaySettingId = n_set.Id
+                            });
+                        }
+                        var cur_ds_colum = dSCollumnSettingDTORepository
+                        .GetAllDSCollumnSettingDTOs()
+                        .Where(s => s.IsSelected == true)
+                        .Where(s => s.Intendant ==_intendant)
+                        .FirstOrDefault();
+                        cur_ds_colum.IsSelected = false;
+                        dSCollumnSettingDTORepository.AddOrUpdate(cur_ds_colum);
+                        var new_cur_ds_column = dSCollumnSettingDTORepository
+                        .GetAllDSCollumnSettingDTOs()
+                        .Where(s => s.Intendant == _intendant)
+                        .Where(s => s.DisplaySettingId == n_set.Id)
+                        .FirstOrDefault();
+                        new_cur_ds_column.IsSelected = true;
+                        dSCollumnSettingDTORepository.AddOrUpdate(new_cur_ds_column);
+                        updateAllSettingsRaport(_intendant);
+                    }
+                }
+            });
             #region Raport
             addSettingRaport = new RelayCommand(c =>
             {
@@ -2437,7 +2592,8 @@ namespace EX.ViewModel
                 Where(s => s.IsSelected == true && s.Intendant == _intendant).FirstOrDefault();
                 var del_cs = dSCollumnSettingDTORepository.GetAllDSCollumnSettingDTOs().
                 Where(s => s.Intendant == _intendant).
-                Where(s => s.DisplaySettingId == selectedDisplaySettingRaport.Id);
+                Where(s => s.DisplaySettingId == s_ds.Id).ToList();
+                //                Where(s => s.DisplaySettingId == selectedDisplaySettingRaport.Id);
                 foreach (var dc in del_cs)
                 {
                     dSCollumnSettingDTORepository.RemoveDSCollumnSettingDTO(dc);
@@ -2471,7 +2627,7 @@ namespace EX.ViewModel
                     Where(s => s.IsSelected == true).
                 FirstOrDefault();
                 oldSelectedDisplaySetting.IsSelected = false;
-                oldSelectedCollumnSetting.IsSelected = false;
+                 oldSelectedCollumnSetting.IsSelected = false;
                 var newSelectedDisplaySetting = displaySettingDTORepository.GetAllDisplaySettingDTOs().
                     Where(s => s.Intendant == _intendant).
                     Where(s => s.Id == selectedDisplaySettingRaport.Id).
@@ -3065,6 +3221,80 @@ namespace EX.ViewModel
                     });
                 }
             });
+            integrateZone = new RelayCommand(c =>
+            {
+                var parseData = new List<string[]>();
+                string pathCSVFile;
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                _ProgressBar = new Progress_Bar
+                {
+                    Visible = true,
+                    Progress = 1,
+                    Status = "Start"
+                };
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    Task.Factory.StartNew(() =>
+                    {
+                        pathCSVFile = openFileDialog.FileName;
+                        _ProgressBar.Status = "Get data from file";
+                        _ProgressBar.Progress = 0;
+                        parseData = parseCSV(pathCSVFile, ref progressBar);
+                        _ProgressBar.Status = "Send data to database";
+                        _ProgressBar.Progress = 0;
+                        sendStatusesToDataBase(parseData, ref progressBar);
+                        Thread.Sleep(1000);
+                        //_ProgressBar.Status = "Update visitor statuses";
+                        //statusRepository = new StatusRepositoryDTO();
+                        //int f = 0, f_m = visitors.Count();
+
+                        //foreach (var v in visitors)
+                        //{
+                        //    var newStatus = new StatusDTO
+                        //    {
+                        //        Name = "registered",
+                        //        UserId = authorizedUser.Id,
+                        //        VisitorId = v.Id,
+                        //        ActionTime = DateTime.Now.ToString()
+
+                        //    };
+
+                        //    _ProgressBar.Progress = f * 100 / f_m;
+                        //    f++;
+                        //    v.CurrentStatus = newStatus.Name;
+                        //    visitorRepositoryDTO.AddOrUpdateVisitor(v);
+                        //    statusRepository.Add(newStatus);
+                        //}
+                        //Statuses = new ObservableCollection<StatusDTO>
+                        //    (statusRepository.GetAllStatuses());
+                        //_ProgressBar.Visible = false;
+                        //Visitors = new ObservableCollection<VisitorDTO>
+                        //(visitorRepositoryDTO.GetAllVisitors());
+                        //UpdateAllVisitorFields(visitors);
+                        //_ProgressBar.Status = "All operation complite";
+                        //_ProgressBar.Progress = 0;
+
+
+
+                        //foreach (var i in parseData)
+                        //{
+                        //    Console.WriteLine(i[0] + " " + i[1] + " " + i[4] + " " + i[5] + " " + i[6]);
+                        //    //foreach(var j in i)
+                        //    //{
+                        //    //    Console.WriteLine(j);
+                        //    //}
+                        //}
+
+
+
+
+
+
+
+
+                    });
+                }
+            });
             #endregion
             #region Implementation command for Service
             changeDataMode = new RelayCommand(c =>
@@ -3215,14 +3445,24 @@ namespace EX.ViewModel
 
                     var _editVisitor = visitorRepositoryDTO
                     .AddOrUpdateVisitor(editDesctopVisitor);
-                    statusRepository.Add(new StatusDTO
-                    {
-                        Name = _editVisitor.CurrentStatus,
-                        UserId = authorizedUser.Id,
-                        VisitorId = _editVisitor.Id,
-                        ActionTime = DateTime.Now.ToString()
-                    });
 
+                    ///Statuses
+                    ///
+                    bool isStatusInDataBase = statusRepository.GetAllStatuses()
+                    .Where(cr => cr.Name == _editVisitor.CurrentStatus)
+                    .Where(s => s.VisitorId == _editVisitor.Id).Count() > 0;
+                    if (!isStatusInDataBase)
+                    {
+                        statusRepository.Add(new StatusDTO
+                        {
+                            Name = _editVisitor.CurrentStatus,
+                            UserId = authorizedUser.Id,
+                            VisitorId = _editVisitor.Id,
+                            ActionTime = DateTime.Now.ToString()
+                        });
+                    }
+
+                    ///
                     Visitors = new ObservableCollection<VisitorDTO>
                     (visitorRepositoryDTO.GetAllVisitors());
                     UpdateAllVisitorFields(visitors, _editVisitor.Id);
@@ -3253,6 +3493,46 @@ namespace EX.ViewModel
                             VisitorId = _editVisitor.Id,
                             ActionTime = DateTime.Now.ToString()
                         }));
+
+                    ///Add Statuses by client
+
+                    //?????????????????????????????????????????????
+
+                    //                    bool isStatusInDataBase = statusRepository.GetAllStatuses()
+                    //.Where(cr => cr.Name == _editVisitor.CurrentStatus)
+                    //.Where(s => s.VisitorId == _editVisitor.Id).Count() > 0;
+
+                    bool isStatusInDataBase = clientExecutor.GetClient().GetAllStatuses()
+                    .Where(cr => cr.Name == _editVisitor.CurrentStatus)
+                    .Where(s => s.VisitorId == _editVisitor.Id).Count() > 0;
+                    if (!isStatusInDataBase)
+                    {
+                        clientExecutor.GetClient()
+                        .AddStatus(new EX.Client.ServiceReference1.StatusDTO
+                        {
+                            Name = _editVisitor.CurrentStatus,
+                            UserId = authorizedUser.Id,
+                            VisitorId = _editVisitor.Id,
+                            ActionTime = DateTime.Now.ToString()
+                        });
+
+
+
+
+
+
+                        //statusRepository.Add(new StatusDTO
+                        //{
+                        //    Name = _editVisitor.CurrentStatus,
+                        //    UserId = authorizedUser.Id,
+                        //    VisitorId = _editVisitor.Id,
+                        //    ActionTime = DateTime.Now.ToString()
+                        //});
+                    }
+
+
+                    ///
+
                     Visitors = new ObservableCollection<VisitorDTO>();
                     foreach (var v in _visitors) { Visitors.Add(mapper.Map<VisitorDTO>(v)); }
                     UpdateAllVisitorFields(visitors, _editVisitor.Id);
@@ -3356,7 +3636,6 @@ namespace EX.ViewModel
             #endregion
         }
         #region Implemetation methods
-
         private void addNewCollumn(int dsid, int osid)
         {
             string _name = "NewCollumn1";
@@ -3703,7 +3982,6 @@ namespace EX.ViewModel
                 .Where(v => v.CurrentStatus == "actual" ||
                 v.CurrentStatus == "create" ||
                 v.CurrentStatus == "edited"));
-  //          SelectDesctopVisitor = DesctopVisitors.Where(s => s.Id == selectedVisitorId).FirstOrDefault();
             CountActualVisitors = _visitors
                 .Where(v => v.CurrentStatus == "actual")
                 .Count();
@@ -3837,16 +4115,20 @@ namespace EX.ViewModel
             if(printDialog.ShowDialog() == true)
             {
 
-                string vn = visitor.Column8.ToUpper();
-                string vs = visitor.Column9.ToUpper();
+                //      string vn = visitor.Column8.ToUpper();
+                //      string vs = visitor.Column9.ToUpper();
+                string vn = visitor.Column8;
+                string vs = visitor.Column9;
                 string vb = visitor.Column1;
-                pv = vn + " " + vs;
+                pv = vn + "\n" + vs;
+                pvf = vn;
+                pvl = vs;
                 string vis = vn + "\n" + vs;
                 string comp = visitor.Column11.ToUpper();
 
                 Run runName = new Run(vis);
                 Run runCompany = new Run(comp);
-                System.Drawing.Image img1 = System.Drawing.Image.FromFile("b1.png");
+//               System.Drawing.Image img1 = System.Drawing.Image.FromFile("b1.png");
        //         System.Windows.Media.Imaging.BitmapImage bi = new System.Windows.Media.Imaging.BitmapImage(new Uri("b1.png"));
                 //   Run im = new Run(img1);
                 Paragraph paragraphName = new Paragraph(runName);
@@ -3862,13 +4144,13 @@ namespace EX.ViewModel
                 paragraphName.LineStackingStrategy = LineStackingStrategy.MaxHeight;
                 paragraphName.FontFamily = new System.Windows.Media.FontFamily("Verdana");
                 paragraphName.TextAlignment = TextAlignment.Center;
-                paragraphName.FontSize = 10;
+                paragraphName.FontSize = 18;
                 paragraphName.FontWeight = FontWeight.FromOpenTypeWeight(400);
 
                 paragraphCompany.LineStackingStrategy = LineStackingStrategy.BlockLineHeight;
                 paragraphCompany.FontFamily = new System.Windows.Media.FontFamily("Verdana");
                 paragraphCompany.TextAlignment = TextAlignment.Center;
-                paragraphCompany.FontSize = 10;
+                paragraphCompany.FontSize = 18;
                 paragraphCompany.FontWeight = FontWeight.FromOpenTypeWeight(900);
 
 
@@ -3930,24 +4212,70 @@ namespace EX.ViewModel
                 pd.Print();
             }           
         }
-
         private void PrintPage(object o, PrintPageEventArgs e)
         {
-            //  e.Graphics.DrawString("Text", new Font("Times New Roman", 14, System.Drawing.FontStyle.Bold), System.Drawing.Brushes.Gray, new PointF(100,100));
 
-            //       InvokePrint(o);
+            #region QR PRINT
+            ///// -----QR-----
 
-            System.Drawing.Image image =
-                System.Drawing.Image.FromFile("b4.png");
-            System.Drawing.Point loc = new System.Drawing.Point(50, 20);
+            //System.Drawing.Image image =
+            //    System.Drawing.Image.FromFile("b4.png");
+            //System.Drawing.Point loc = new System.Drawing.Point(10, 80);
+
+            //e.Graphics.DrawImage(image, loc);
+
+            //Font fnt1 = new Font("Verdana", 18f, System.Drawing.FontStyle.Bold);
+            //System.Drawing.Brush br = System.Drawing.Brushes.Black;
+            //PointF pf = new PointF(10f, 20f);
+            //string te = pv;
+            //e.Graphics.DrawString(te, fnt1, br, pf);
+
+            ///// ------QR-------
+            ///// 
+            #endregion
+
+            #region QR WITH CENTER
+            //QR WITH CENTER
+
+            System.Drawing.Image image =  System.Drawing.Image.FromFile("b4.png");
+            System.Drawing.Point loc = new System.Drawing.Point(10, 80);
 
             e.Graphics.DrawImage(image, loc);
 
-            Font fnt1 = new Font("Times New Roman", 8f, System.Drawing.FontStyle.Regular);
+            Font fnt1 = new Font("Verdana", 18f, System.Drawing.FontStyle.Bold);
             System.Drawing.Brush br = System.Drawing.Brushes.Black;
-            PointF pf = new PointF(100f, 10f);
-            string te = pv;
+            PointF pf = new PointF(10f, 20f);
+            string te = pv; 
             e.Graphics.DrawString(te, fnt1, br, pf);
+            
+
+
+            //QR WITH CENTER END
+            #endregion
+
+            #region CODE128 PRINT
+
+            ///// -----Code128-----
+
+            //System.Drawing.Image image =
+            //    System.Drawing.Image.FromFile("b2.png");
+            //System.Drawing.Point loc = new System.Drawing.Point(-20, 90);
+
+            //e.Graphics.DrawImage(image, loc);
+
+            //Font fnt1 = new Font("Verdana", 18f, System.Drawing.FontStyle.Bold);
+            //System.Drawing.Brush br = System.Drawing.Brushes.Black;
+            //PointF pf = new PointF(10f, 20f);
+            //string te = pv;
+            //e.Graphics.DrawString(te, fnt1, br, pf);
+
+            ///// ------Code128-------
+            #endregion
+
+
+
+
+
 
 
             //int charactersOnPage = 0;
@@ -3958,29 +4286,28 @@ namespace EX.ViewModel
 
             // Sets the value of charactersOnPage to the number of characters 
             // of stringToPrint that will fit within the bounds of the page.
-  //          graphics.MeasureString(stringToPrint, fnt1,
-   //             e.MarginBounds.Size, StringFormat.GenericTypographic,
-  //              out charactersOnPage, out linesPerPage);
+            //          graphics.MeasureString(stringToPrint, fnt1,
+            //             e.MarginBounds.Size, StringFormat.GenericTypographic,
+            //              out charactersOnPage, out linesPerPage);
 
             // Draws the string within the bounds of the page
-  //          graphics.DrawString(stringToPrint, fnt1, System.Drawing.Brushes.Black,
-  //              e.MarginBounds, StringFormat.GenericTypographic);
+            //          graphics.DrawString(stringToPrint, fnt1, System.Drawing.Brushes.Black,
+            //              e.MarginBounds, StringFormat.GenericTypographic);
 
             // Remove the portion of the string that has been printed.
- //           stringToPrint = stringToPrint.Substring(charactersOnPage);
+            //           stringToPrint = stringToPrint.Substring(charactersOnPage);
 
             // Check to see if more pages are to be printed.
- //           e.HasMorePages = (stringToPrint.Length > 0);
+            //           e.HasMorePages = (stringToPrint.Length > 0);
 
 
 
 
 
             //     Font fnt1 = new Font("Arial", 12f, System.Drawing.FontStyle.Bold);
-          //       e.Graphics.DrawString("RES", fnt1, System.Drawing.Brushes.Black, new PointF(10f, 10f));
+            //       e.Graphics.DrawString("RES", fnt1, System.Drawing.Brushes.Black, new PointF(10f, 10f));
             //     e.Graphics.DrawString("Use Item -% Off for the 15%. Scan coupon barcode or enter coupon code. Collect coupon with purchase as coupon may only be redeemed once per customer.", fnt1, System.Drawing.Brushes.Black, new RectangleF(new PointF(10f, 290f), new SizeF(570f, 50f)));
-         }
-
+        }
         private void UpdateVistor(VisitorDTO selectedSearchVisitor)
         {
             if (dataMode != "Клиент службы баз данных")
@@ -4502,9 +4829,6 @@ namespace EX.ViewModel
                 }
             }
         }
-
-
-
         private void InvokePrint(object sender)
         {
             // Create the print dialog object and set options
@@ -4521,7 +4845,101 @@ namespace EX.ViewModel
                 pDialog.PrintDocument(fixedDocSeq.DocumentPaginator, "Test print job");
             }
         }
+        private List<string []> parseCSV(string pathFile, ref Progress_Bar progress_)
+        {
+            progress_.Progress = 0;
+            double maxbit = getProgressBit(pathFile);
+            double bitCounter = 0;
+            List<string[]> data = new List<string[]>();
+            using (var sr = new StreamReader(pathFile))
+            {
+                string line;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    string[] row = line.Split(';');
+                    data.Add(row);
+                    bitCounter = bitCounter + 100 / maxbit;
+                    progress_.Progress = (int)(bitCounter / 100);
+                }             
+            }
+            return data;
+        }
+        private double getProgressBit(string pathFile)
+        {
+            int lineCount = 0;
+            double progressbit;
+            using (var sr = new StreamReader(pathFile))
+            {
+                string line;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    lineCount++;
+                }
+            }
+            progressbit = 100 / lineCount;
+            return progressbit;
+        }
+        private bool sendStatusesToDataBase(List<string[]> data, ref Progress_Bar progress_)
+        {
+            double maxbit = data.Count;
+            double bitCounter = 0;
+            try
+            {
+                foreach (var statusData in data)
+                {
+                    var v = visitorRepositoryDTO.GetAllVisitors()
+                    .Where(c1 => c1.Column1 == statusData[1])
+                    .FirstOrDefault();
+                    statusRepository.Add(
+                        new StatusDTO
+                        {
 
+                                    // Данные о статусе  
+                            UserId = AuthorizedUser.Id,
+                            VisitorId = v.Id,
+                            ActionTime = statusData[4],
+                            Name = statusData[5] + " in " + statusData[6]
+
+                        });
+                    bitCounter = bitCounter + 100 / maxbit;
+                    progress_.Progress = (int)(bitCounter / 100);
+
+                }
+                return true;
+            }
+            catch { return false; }
+        }
+
+        private void caseDS(DisplaySettingDTO dSCollumnSetting, string _intendant)
+        {
+            var curSetId = dSCollumnSetting.Id;
+            DisplaySettingDTO curSet = new DisplaySettingDTO()
+            {
+                Name = dSCollumnSetting.Name,
+                Intendant = _intendant,
+                IsSelected = false
+            };
+            if (curSet.IsSelected == true)
+            {
+                curSet.IsSelected = false;
+            }
+            var curSetColumnList = DSCollumnSettingDTORepository
+            .GetAllDSCollumnSettingDTOs()
+            .Where(s => s.DisplaySettingId == curSetId);
+            JavaScriptSerializer jss = new JavaScriptSerializer();
+            var jsonSetting = jss.Serialize(curSet);
+            var jsonColSetts = jss.Serialize(curSetColumnList);
+            var jsonRaportSetting = jsonSetting + "|" + jsonColSetts;
+            SaveFileDialog fileDialog = new SaveFileDialog();
+            if (fileDialog.ShowDialog() == true)
+            {
+                string fileSettingName = fileDialog.FileName;
+                using (var sw = new StreamWriter(fileSettingName))
+                {
+                    sw.Write(jsonRaportSetting);
+                }
+            }
+        }
 
         #endregion
         #region Events
