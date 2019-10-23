@@ -726,8 +726,10 @@
                                 Visibility="{
                                 Binding RowChedForm[1],
                                 Converter={
-                                StaticResource boolToVisibilityConverter}}"/>
-                        <Label 
+                                StaticResource boolToVisibilityConverter}}"
+                                IsEnabled="False"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Label 
                             FontSize="15"
                                 Margin="0"
                                 Content="{Binding AliasForm[2]}"
@@ -736,6 +738,11 @@
                                 Binding RowChedForm[2],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
+                            <Label
+                                FontSize="15"
+                                    Content="{Binding StatusForm}"
+                                    Foreground="{Binding StatusFormColor}"/>
+                        </StackPanel>
                         <ComboBox 
                             FontSize="15"
                                 ItemsSource="{Binding Combo1Collection}"
@@ -749,7 +756,9 @@
                                 Visibility="{
                                 Binding RowChedForm[2],
                                 Converter={
-                                StaticResource boolToVisibilityConverter}}"/>
+                                StaticResource boolToVisibilityConverter}}"
+                                IsDropDownOpen="{Binding IsCombo1Collection}"
+                            IsTextSearchCaseSensitive="False"/>
 
                         <Label 
                             FontSize="15"
@@ -938,10 +947,7 @@
                                 Binding RowChedForm[11],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                            <Label
-                                FontSize="15"
-                                    Content="{Binding StatusForm}"
-                                    Foreground="{Binding StatusFormColor}"/>
+
                         </StackPanel>
                         <TextBox 
                             FontSize="15"
@@ -1360,26 +1366,25 @@
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*" ></RowDefinition>
                                         <RowDefinition Height="40"></RowDefinition>
+                                        <RowDefinition Height="40"></RowDefinition>
                                     </Grid.RowDefinitions>
-                                    <ListBox
-                                        Margin="20,20,20,5"
-                                        Grid.Row="0" 
-                                        ItemsSource="{Binding DisplaySettingsForm}"
+                                    <ListBox 
+                                        ItemsSource="{Binding DisplaySettingsForm}" 
                                         SelectedItem="{
                                         Binding SelectedDisplaySettingForm, 
-                                        Mode=TwoWay,
-                                        UpdateSourceTrigger=PropertyChanged}">
+                                        UpdateSourceTrigger=PropertyChanged, 
+                                        Mode=TwoWay}" Margin="20,20,20,5" Grid.Row="0" >
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Center"  >
                                                     <TextBlock 
-                                                        Text="{Binding Name}"
-                                                        Margin="5" />
-                                                    <CheckBox  
+                                                        Margin="5"
+                                                        Text="{Binding Name}" />
+                                                    <CheckBox 
                                                         IsChecked="{
                                                         Binding IsSelected,
-                                                        Mode=OneWay}" 
-                                                        Margin="5" 
+                                                        Mode=OneWay}"  
+                                                        Margin="5"
                                                         RenderTransformOrigin="0.5,0.5">
                                                         <CheckBox.RenderTransform>
                                                             <TransformGroup>
@@ -1394,15 +1399,23 @@
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
                                     </ListBox>
-                                    <WrapPanel Orientation="Horizontal" Margin="20,0" HorizontalAlignment="Center" Grid.Row="1" Width="auto">
+                                    <Grid 
+                                        Grid.Row="1"
+                                        Margin="20,0,20,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                        </Grid.ColumnDefinitions>
+
                                         <Button 
+                                            Grid.Column="0"
                                             Margin="5" 
                                             Padding="5" 
                                             Command="{Binding AddSettingForm}"
-                                            CommandParameter="form"
-                                            >Добавить настройку
-                                        </Button>
-                                        <Button 
+                                            CommandParameter="form">Добавить настройку</Button>
+                                        <Button
+                                            Grid.Column="1"
                                             Margin="5"
                                             Padding="5"
                                             Command="{Binding DelSettingForm}" 
@@ -1410,13 +1423,38 @@
                                             >Удалить настройку
                                         </Button>
                                         <Button 
+                                            Grid.Column="2"
                                             Margin="5" 
                                             Padding="5" 
                                             Command="{Binding ChangeDisplaySettingDefaultForm}" 
                                             CommandParameter="form"
                                             >Сделать выделенную настройку текущей
                                         </Button>
-                                    </WrapPanel>
+                                    </Grid>
+                                    <Grid 
+                                        Grid.Row="2"
+                                        Margin="20,0,20,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button 
+                                        Grid.Column="0"
+                                        Margin="5" 
+                                        Padding="5"
+                                        Command="{Binding SaveSettingToFile}"
+                                        CommandParameter="form"
+                                        Content="Сохранить в файл">
+                                        </Button>
+                                        <Button 
+                                            Grid.Column="1"
+                                        Margin="5" 
+                                        Padding="5"
+                                        Command="{Binding IntegrateSettingFromFile}"
+                                        CommandParameter="form"
+                                        Content="Импортировать из файла">
+                                        </Button>
+                                    </Grid>
                                 </Grid>
                                 <StackPanel Grid.Column="1" Grid.Row="1" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Center">
                                     <StackPanel Orientation="Horizontal" Margin="5">
@@ -1528,9 +1566,51 @@
                                         </Button>
                                     </WrapPanel>
                                 </Grid>
+                                <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="40"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <ListBox 
+                                        Grid.Row="0" 
+                                        ItemsSource="{Binding DSCollumnSettingsDesctop}" 
+                                        SelectedItem="{
+                                        Binding SelectedCollumnSettingDesctop,
+                                        Mode=TwoWay, 
+                                        UpdateSourceTrigger=PropertyChanged}" 
+                                        Margin="20,20,20,5" 
+                                        VerticalContentAlignment="Stretch" 
+                                        VerticalAlignment="Stretch">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Center">
+                                                    <TextBlock Width="200" Margin="5" Text="{Binding Name}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+
+                                    <WrapPanel  Grid.Row="1" Orientation="Horizontal" Margin="20,0" HorizontalAlignment="Center" Width="auto">
+                                        <Button
+                                            Margin="5"
+                                            Padding="5"
+                                            Command="{Binding AddCollumnRaport}"
+                                            CommandParameter="raport"
+                                            >Добавить колонку
+                                        </Button>
+                                        <Button 
+                                            Margin="5"
+                                            Padding="5"
+                                            Command="{Binding DelCollumnRaport}" 
+                                            CommandParameter="raport"
+                                            >Удалить колонку
+                                        </Button>
+                                    </WrapPanel>
+                                </Grid>
                                 <Grid  Grid.Column="1" Grid.Row="0" VerticalAlignment="Stretch">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*" ></RowDefinition>
+                                        <RowDefinition Height="40"></RowDefinition>
                                         <RowDefinition Height="40"></RowDefinition>
                                     </Grid.RowDefinitions>
                                     <ListBox 
@@ -1564,13 +1644,23 @@
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
                                     </ListBox>
-                                    <WrapPanel Orientation="Horizontal" Margin="20,0" HorizontalAlignment="Center" Grid.Row="1" Width="auto">
+                                    <Grid 
+                                        Grid.Row="1"
+                                        Margin="20,0,20,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                        </Grid.ColumnDefinitions>
+
                                         <Button 
+                                            Grid.Column="0"
                                             Margin="5" 
                                             Padding="5" 
                                             Command="{Binding AddSettingDesctop}"
                                             CommandParameter="desctop">Добавить настройку</Button>
                                         <Button
+                                            Grid.Column="1"
                                             Margin="5"
                                             Padding="5"
                                             Command="{Binding DelSettingDesctop}" 
@@ -1578,13 +1668,38 @@
                                             >Удалить настройку
                                         </Button>
                                         <Button 
+                                            Grid.Column="2"
                                             Margin="5" 
                                             Padding="5" 
                                             Command="{Binding ChangeDisplaySettingDefaultDesctop}" 
                                             CommandParameter="desctop"
                                             >Сделать выделенную настройку текущей
                                         </Button>
-                                    </WrapPanel>
+                                    </Grid>
+                                    <Grid 
+                                        Grid.Row="2"
+                                        Margin="20,0,20,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button 
+                                        Grid.Column="0"
+                                        Margin="5" 
+                                        Padding="5"
+                                        Command="{Binding SaveSettingToFile}"
+                                        CommandParameter="desctop"
+                                        Content="Сохранить в файл">
+                                        </Button>
+                                        <Button 
+                                            Grid.Column="1"
+                                        Margin="5" 
+                                        Padding="5"
+                                        Command="{Binding IntegrateSettingFromFile}"
+                                        CommandParameter="desctop"
+                                        Content="Импортировать из файла">
+                                        </Button>
+                                    </Grid>
                                 </Grid>
                                 <StackPanel Grid.Column="1" Grid.Row="1" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Center">
                                     <StackPanel Orientation="Horizontal" Margin="5">
@@ -4267,6 +4382,7 @@
                                         <ComboBox 
                                             Grid.Row="1" 
                                             IsEditable="True"
+                                            Text="{Binding TextRaportCategory}"
                                             ItemsSource="{Binding Combo2Collection}"
                                             SelectedItem="{
                                             Binding SelectedRaportAllCategory}">

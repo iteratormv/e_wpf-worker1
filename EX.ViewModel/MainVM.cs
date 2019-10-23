@@ -32,6 +32,9 @@ using Newtonsoft.Json.Linq;
 using Gma.QrCodeNet.Encoding;
 using QRCoder;
 using Nancy.Json;
+using System.Windows.Media.Imaging;
+using System.Windows.Media;
+//using Image = System.Windows.Controls.Image;
 //using System.Web.Script.Serialization;
 
 namespace EX.ViewModel
@@ -720,6 +723,41 @@ namespace EX.ViewModel
         #endregion
         #region Context Desctop Operation
         #region Collection for Desctop Operation
+
+        string[] regionCollection = {
+            "Одеськая",
+            "Дніпропетровська",
+            "Чернігівська",
+            "Харьківская",
+            "Житомирська",
+            "Полтавська",
+            "Херсонська",
+            "Київська",
+            "Запорізька",
+            "Луганська", 
+            "Донецька",
+            "Вінницька",
+            "Крим",
+            "Миколаївська",
+            "Кировоградська",
+            "Сумська",
+            "Львівська",
+            "Черкаська",
+            "Хмельницька",
+            "Волинська",
+            "Рівненська",
+            "Івано-Франківська",
+            "Тернопільська",
+            "Закарпатська",
+            "Чернівецька",
+            "Молдова",
+            "Грузія"
+        };
+
+
+
+
+
         ObservableCollection<VisitorDTO> desctopVisitors;
         public ObservableCollection<VisitorDTO> DesctopVisitors
         {
@@ -733,7 +771,18 @@ namespace EX.ViewModel
         ObservableCollection<string> combo1Collection;
         public ObservableCollection<string> Combo1Collection
         {
-            get { return combo1Collection; }
+            get 
+            {
+                if (combo1Collection.Count() > 0)
+                {
+                    IsCombo1Collection = true;
+                }
+                else
+                {
+                    IsCombo1Collection = false;
+                }
+                return combo1Collection; 
+            }
             set
             {
                 combo1Collection = value;
@@ -772,6 +821,32 @@ namespace EX.ViewModel
         }
         #endregion
         #region Fields for Desctop Operation
+
+        string generateVisiorId;
+        public string GenerateVisitorId
+        {
+            get { return generateVisiorId; }
+            set
+            {
+                generateVisiorId = value;
+                OnPropertyChanged(nameof(GenerateVisitorId));
+            }
+        }
+
+
+        bool isCombo1collection;
+        public bool IsCombo1Collection
+        {
+            get { return isCombo1collection; }
+            set
+            {
+                isCombo1collection = value;
+                OnPropertyChanged(nameof(IsCombo1Collection));
+            }
+        }
+
+
+
         int countRegistredVisitors;
         public int CountRegistredVisitors
         {
@@ -845,10 +920,44 @@ namespace EX.ViewModel
         VisitorDTO editDesctopVisitor;
         public VisitorDTO EditDesctopVisitor
         {
-            get { return editDesctopVisitor; }
+            get 
+            {
+                if (editDesctopVisitor.Column2 != null
+                    &&editDesctopVisitor.Column2!="")
+  //   )
+                {
+                    //if (editDesctopVisitor.Column2 == "")
+                    //{
+                    //    Combo1Collection = new ObservableCollection<string>();
+                    //}
+         ///           else
+         ///           
+         //           {
+                        foreach(var c in regionCollection)
+                    {
+                        if(editDesctopVisitor.Column2 == c)
+                        {
+                            Combo1Collection = new ObservableCollection<string>();
+                            return editDesctopVisitor;
+                        }
+                    }
+                        var colle = regionCollection.Where(s => s.ToUpper().Contains
+                                    (editDesctopVisitor.Column2.ToUpper())).ToList();
+                        if (colle.Count() > 0)
+                        {
+                            Combo1Collection = new ObservableCollection<string>(colle);
+                        }
+                        else
+                        {
+                            Combo1Collection = new ObservableCollection<string>();
+                        }
+           //         }
+                }
+                return editDesctopVisitor; 
+            }
             set
             {
-                editDesctopVisitor = value;
+                editDesctopVisitor = value;          
                 OnPropertyChanged(nameof(EditDesctopVisitor));
             }
         }
@@ -944,6 +1053,18 @@ namespace EX.ViewModel
                 OnPropertyChanged(nameof(PaymentStatusForegraund));
             }
         }
+
+        string searchCombo1;
+        public string SearchCombo1
+        {
+            get { return searchCombo1; }
+            set
+            {
+                searchCombo1 = value;
+                OnPropertyChanged(nameof(SearchCombo1));
+            }
+        }
+
         #endregion
         #region Service Fields for Desctop Operation
         bool canExecuteCreateVisitor;
@@ -1197,6 +1318,18 @@ namespace EX.ViewModel
             {
                 selectedRaportAllCategory = value;
                 OnPropertyChanged(nameof(SelectedRaportAllCategory));
+            }
+        }
+
+        string textRaportCategory;
+        public string TextRaportCategory
+        {
+            get { return textRaportCategory; }
+            set
+            {
+                textRaportCategory = value;
+               
+                OnPropertyChanged(nameof(TextRaportCategory));
             }
         }
 
@@ -1499,6 +1632,7 @@ namespace EX.ViewModel
             StartShowTime();
             statusFormColor = "Red";
             statusForm = "";
+            isCombo1collection = false;
             #endregion
             #region Init value for Administration
             userRepository = new UserRepositoryDTO();
@@ -2110,12 +2244,22 @@ namespace EX.ViewModel
 
             combo1Collection = new ObservableCollection<string>(new List<string>
             {
-                "PAID", "UNPAID", "FOC", "CXLD"
+      //          "PAID", "UNPAID", "FOC", "CXLD"
             });
             combo2Collection = new ObservableCollection<string>(new List<string>
             {
-                "3 DAY PACKAGE", "2 DAY PACKAGE", "FOCUS DAY", "MEDIA",
-                "SPEAKER", "PRESS PASS", "SPEX GUEST", "GUEST", "ORGANIZER"
+                //кардиохирург
+///кардиолог
+//анестезиолог
+//реаниматолог
+//перфузиолог
+//педиатр
+//аритмолог
+//интервеционист
+//интерн
+//студент
+                "Кардиохирург", "Кардиолог", "Анестезиолог", "Реаниматолог",
+                "Перфузиолог", "Педиатр", "Аритмолог", "Интервеционист", "Интерн","Cтудент"
             });
             combo3Collection = new ObservableCollection<string>(new List<string>
             {
@@ -2420,43 +2564,45 @@ namespace EX.ViewModel
                     case "raport":
 
 
-                        //                      caseDS(selectedDisplaySettingRaport, _intendant);
+                        caseDS(selectedDisplaySettingRaport, _intendant);
 
 
 
-                        var curSetId = selectedDisplaySettingRaport.Id;
-                        DisplaySettingDTO curSet = new DisplaySettingDTO()
-                        {
-                            Name = selectedDisplaySettingRaport.Name,
-                            Intendant = _intendant,
-                            IsSelected = false
-                        };
-                        if (curSet.IsSelected == true)
-                        {
-                            curSet.IsSelected = false;
-                        }
-                        var curSetColumnList = DSCollumnSettingDTORepository
-                        .GetAllDSCollumnSettingDTOs()
-                        .Where(s => s.DisplaySettingId == curSetId);
-                        JavaScriptSerializer jss = new JavaScriptSerializer();
-                        var jsonSetting = jss.Serialize(curSet);
-                        var jsonColSetts = jss.Serialize(curSetColumnList);
-                        var jsonRaportSetting = jsonSetting + "|" + jsonColSetts;
-                        SaveFileDialog fileDialog = new SaveFileDialog();
-                        if (fileDialog.ShowDialog() == true)
-                        {
-                            string fileSettingName = fileDialog.FileName;
-                            using (var sw = new StreamWriter(fileSettingName))
-                            {
-                                sw.Write(jsonRaportSetting);
-                            }
-                        }
+                        //var curSetId = selectedDisplaySettingRaport.Id;
+                        //DisplaySettingDTO curSet = new DisplaySettingDTO()
+                        //{
+                        //    Name = selectedDisplaySettingRaport.Name,
+                        //    Intendant = _intendant,
+                        //    IsSelected = false
+                        //};
+                        //if (curSet.IsSelected == true)
+                        //{
+                        //    curSet.IsSelected = false;
+                        //}
+                        //var curSetColumnList = DSCollumnSettingDTORepository
+                        //.GetAllDSCollumnSettingDTOs()
+                        //.Where(s => s.DisplaySettingId == curSetId);
+                        //JavaScriptSerializer jss = new JavaScriptSerializer();
+                        //var jsonSetting = jss.Serialize(curSet);
+                        //var jsonColSetts = jss.Serialize(curSetColumnList);
+                        //var jsonRaportSetting = jsonSetting + "|" + jsonColSetts;
+                        //SaveFileDialog fileDialog = new SaveFileDialog();
+                        //if (fileDialog.ShowDialog() == true)
+                        //{
+                        //    string fileSettingName = fileDialog.FileName;
+                        //    using (var sw = new StreamWriter(fileSettingName))
+                        //    {
+                        //        sw.Write(jsonRaportSetting);
+                        //    }
+                        //}
+
+
                         break;
                     case "desctop":
-
+                        caseDS(selectedDisplaySettingDesctop, _intendant);
                         break;
                     case "form":
-
+                        caseDS(selectedDisplaySettingForm, _intendant);
                         break;
                     default:
                         break;
@@ -2519,7 +2665,21 @@ namespace EX.ViewModel
                         }
                         n_set.IsSelected = true;
                         displaySettingDTORepository.AddOrUpdate(n_set);
-                        updateAllSettingsRaport(_intendant);
+                        switch (_intendant)
+                        {
+                            case "raport":
+                                updateAllSettingsRaport(_intendant);
+                                break;
+                            case "desctop":
+                                updateAllSettingsDesctop(_intendant);
+                                break;
+                            case "form":
+                                updateAllSettingsForm(_intendant);
+                                break;
+                            default:
+                                break;
+                        }
+//                        updateAllSettingsRaport(_intendant);
                         foreach(var sett in integratedDSColumnSettings)
                         {
                             dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
@@ -2547,7 +2707,21 @@ namespace EX.ViewModel
                         .FirstOrDefault();
                         new_cur_ds_column.IsSelected = true;
                         dSCollumnSettingDTORepository.AddOrUpdate(new_cur_ds_column);
-                        updateAllSettingsRaport(_intendant);
+                        switch (_intendant)
+                        {
+                            case "raport":
+                                updateAllSettingsRaport(_intendant);
+                                break;
+                            case "desctop":
+                                updateAllSettingsDesctop(_intendant);
+                                break;
+                            case "form":
+                                updateAllSettingsForm(_intendant);
+                                break;
+                            default:
+                                break;
+                        }
+                        //                       updateAllSettingsRaport(_intendant);
                     }
                 }
             });
@@ -3299,7 +3473,7 @@ namespace EX.ViewModel
             #region Implementation command for Service
             changeDataMode = new RelayCommand(c =>
             {
-                ErrorConnectServer = "";
+                ErrorConnectServer = ""; 
                 DataMode = (string)c;
                 if (DataMode == "Клиент службы баз данных")
                 {
@@ -3314,8 +3488,40 @@ namespace EX.ViewModel
                     }
                     catch
                     {
-                        DataMode = "Локальная база данных";
-                        ErrorConnectServer = "Сервер недоступен";
+ //                     
+
+
+                        //IsEnabledDataModeChecker = true;
+                        //serviceExecutor = new ServiceExecutor(/*"192.168.0.27"*/);
+                        //serviceExecutor.statusChanged += StatusChanged;
+
+                        clientExecutor = new ClientExecutor();
+                        config = new MapperConfiguration(cfg =>
+                        {
+                            cfg.CreateMap<VisitorDTO, EX.Client.ServiceReference1.VisitorDTO>();
+                            cfg.CreateMap<EX.Client.ServiceReference1.VisitorDTO, VisitorDTO>();
+                            cfg.CreateMap<StatusDTO, EX.Client.ServiceReference1.StatusDTO>();
+                            cfg.CreateMap<EX.Client.ServiceReference1.StatusDTO, StatusDTO>();
+                        });
+                        mapper = config.CreateMapper();
+                        errorConnectServer = "";
+
+                        try
+                        {
+                            var _visitors = clientExecutor.GetClient().GetAllVisitors();
+                            VisitorDTO visitorDTO = new VisitorDTO();
+                            Visitors = new ObservableCollection<VisitorDTO>();
+                            foreach (var v in _visitors) { Visitors.Add(mapper.Map<VisitorDTO>(v)); }
+                            ErrorConnectServer = "";
+                        }
+                        catch
+                        {
+                            DataMode = "Локальная база данных";
+                            ErrorConnectServer = "Сервер недоступен";
+                        }
+
+
+
                     }
 
                 }
@@ -3343,11 +3549,13 @@ namespace EX.ViewModel
                 if (editDesctopVisitor.Column4 != null &&
                     editDesctopVisitor.Column8 != null &&
                     editDesctopVisitor.Column9 != null &&
-                    editDesctopVisitor.Column11 != null)
+                    editDesctopVisitor.Column2 != null)
                 {
+                    generateVisiorId = "VHS-" + (countAllVisitors+11).ToString() + "-2019";
                     createDesctopVisitor = editDesctopVisitor;
                     createDesctopVisitor.CurrentStatus = "create";
                     IsShowChanger = false;
+                    createDesctopVisitor.Column1 = generateVisiorId;
                     createDesctopVisitor.Column12 = DateTime.Now.ToString(); // time collumn
                     if (dataMode != "Клиент службы баз данных")
                     {
@@ -3380,6 +3588,9 @@ namespace EX.ViewModel
                                 VisitorId = _createVisitor.Id,
                                 ActionTime = DateTime.Now.ToString()
                             }));
+                        //clientExecutor.GetClient().AddStatus(mapper.Map
+                        //    <EX.Client.ServiceReference1.st>)
+
                         //                    Visitors.Add(mapper.Map<VisitorDTO>(_createVisitor));
                         Visitors = new ObservableCollection<VisitorDTO>();
                         foreach (var v in _visitors) { Visitors.Add(mapper.Map<VisitorDTO>(v)); }
@@ -3570,6 +3781,22 @@ namespace EX.ViewModel
             saveStatusesToFile = new RelayCommand(c =>
             {
                 statusRepository.SaveStatusestoFile();
+            });
+            printAllVisitors = new RelayCommand(c =>
+            {
+                var printvisitors = raportAllVisitors;
+                foreach(var item in printvisitors)
+                {
+                    PrintVisitor(item);
+                }
+            });
+            printCreateVisitors = new RelayCommand(c =>
+            {
+                var printvisitors = raportCreateVisitors;
+                foreach (var item in printvisitors)
+                {
+                    PrintVisitorWithOut(item);
+                }
             });
             #endregion
             #region Implementation command for Raport
@@ -4048,11 +4275,12 @@ namespace EX.ViewModel
                         _searchVisitors = visitorRepositoryDTO
                             .GetAllVisitors()
                             .Where(v => v.Column9.ToUpper().Contains(search) ||
-                                        v.Column8.ToUpper().Contains(search) ||
-                                        v.Column11.ToUpper().Contains(search));
+                                        v.Column8.ToUpper().Contains(search)
+                            //                                    ||   v.Column11.ToUpper().Contains(search))
+                            ).ToList();
                         SearchVisitorCollection = new ObservableCollection<VisitorDTO>(_searchVisitors);
 
-                        if (searchVisitorCollection != null)
+                        if (searchVisitorCollection.Count()!=0)
                         {
                             SearchVisitorFontsize = 15;
                             SearchVisitorBackGround = "Blue";
@@ -4061,8 +4289,8 @@ namespace EX.ViewModel
                             var _searchVisitor = SearchVisitorCollection
                             .FirstOrDefault();
                             SearchVisitor = _searchVisitor.Column8.ToUpper() + " " +
-                                            _searchVisitor.Column9.ToUpper() + " (" +
-                                            _searchVisitor.Column11.ToUpper() + ")";
+                                            _searchVisitor.Column9.ToUpper() /*+ " (" +
+                                            _searchVisitor.Column11.ToUpper() + ")"*/;
                             SelectedSearchVisitor = searchVisitorCollection.FirstOrDefault();
                         }
                     }
@@ -4072,6 +4300,30 @@ namespace EX.ViewModel
             }
             else
             {
+
+                //var _visitors = _client_visitors.Select(s => mapper.Map<VisitorDTO>(s));
+                //clientExecutor.GetClient().AddStatus(mapper.Map
+                //        <EX.Client.ServiceReference1.StatusDTO>(new StatusDTO
+                //        {
+                //            Name = selectedSearchVisitor.CurrentStatus,
+                //            UserId = authorizedUser.Id,
+                //            VisitorId = selectedSearchVisitor.Id,
+                //            ActionTime = DateTime.Now.ToString()
+                //        }));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 IEnumerable<EX.Client.ServiceReference1.VisitorDTO> _searchVisitors;
                 if (searchVisitor == "") { Find = false; }
                 if (searchVisitor.Length <= 3)
@@ -4083,29 +4335,90 @@ namespace EX.ViewModel
                     if (find == false)
                     {
                         search = searchVisitor.ToUpper();
-                        _searchVisitors = clientExecutor.GetClient()
-                            .GetAllVisitors()
-                            .Where(v => v.Column9.ToUpper().Contains(search) ||
-                                        v.Column8.ToUpper().Contains(search) ||
-                                        v.Column11.ToUpper().Contains(search));
-                        SearchVisitorCollection = new ObservableCollection<VisitorDTO>();
-                        foreach (var v in _searchVisitors)
-                            SearchVisitorCollection.Add(mapper.Map<VisitorDTO>(v));
 
-                        if (searchVisitorCollection != null)
+                        try
                         {
-                            SearchVisitorBackGround = "Blue";
-                            SearchVisitorFontsize = 15;
-                            SearchVisitorBackGround = "Blue";
-                            SearchVisitorForegraund = "Black";
-                            find = true;
-                            var _searchVisitor = SearchVisitorCollection
-                            .FirstOrDefault();
-                            SearchVisitor = _searchVisitor.Column8.ToUpper() + " " +
-                                            _searchVisitor.Column9.ToUpper() + " (" +
-                                            _searchVisitor.Column11.ToUpper() + ")";
-                            SelectedSearchVisitor = searchVisitorCollection.FirstOrDefault();
+                            _searchVisitors = clientExecutor.GetClient()
+                                             .GetAllVisitors()
+                                             .Where(v => v.Column9.ToUpper().Contains(search) ||
+                                               v.Column8.ToUpper().Contains(search)
+//                                      || v.Column11.ToUpper().Contains(search));
+                                             ).ToList();
+                            var svi = _searchVisitors.Select(s => mapper.Map<VisitorDTO>(s));
+                            SearchVisitorCollection = new ObservableCollection<VisitorDTO>();
+                            foreach (var v in _searchVisitors)
+                                SearchVisitorCollection.Add(mapper.Map<VisitorDTO>(v));
+
+                            if (searchVisitorCollection.Count() != 0)
+                            {
+                                //    SearchVisitorBackGround = "Blue";
+                                SearchVisitorFontsize = 15;
+                                SearchVisitorBackGround = "Blue";
+                                SearchVisitorForegraund = "Black";
+                                find = true;
+                                var _searchVisitor = SearchVisitorCollection
+                                .FirstOrDefault();
+                                SearchVisitor = _searchVisitor.Column8.ToUpper() + " " +
+                                                _searchVisitor.Column9.ToUpper() /*+ " (" +
+                                            _searchVisitor.Column11.ToUpper() + ")"*/;
+                                SelectedSearchVisitor = searchVisitorCollection.FirstOrDefault();
+                            }
                         }
+                        catch
+                        {
+                            clientExecutor = new ClientExecutor();
+                            var config = new MapperConfiguration(cfg =>
+                            {
+                                cfg.CreateMap<VisitorDTO, EX.Client.ServiceReference1.VisitorDTO>();
+                                cfg.CreateMap<EX.Client.ServiceReference1.VisitorDTO, VisitorDTO>();
+                                cfg.CreateMap<StatusDTO, EX.Client.ServiceReference1.StatusDTO>();
+                                cfg.CreateMap<EX.Client.ServiceReference1.StatusDTO, StatusDTO>();
+                            });
+                            mapper = config.CreateMapper();
+                            errorConnectServer = "";
+
+                            try
+                            {
+                                _searchVisitors = clientExecutor.GetClient()
+                                                 .GetAllVisitors()
+                                                 .Where(v => v.Column9.ToUpper().Contains(search) ||
+                                                   v.Column8.ToUpper().Contains(search)
+                                                 //                                      || v.Column11.ToUpper().Contains(search));
+                                                 ).ToList();
+                                var svi = _searchVisitors.Select(s => mapper.Map<VisitorDTO>(s));
+                                SearchVisitorCollection = new ObservableCollection<VisitorDTO>();
+                                foreach (var v in _searchVisitors)
+                                    SearchVisitorCollection.Add(mapper.Map<VisitorDTO>(v));
+
+                                if (searchVisitorCollection.Count() != 0)
+                                {
+                                    //    SearchVisitorBackGround = "Blue";
+                                    SearchVisitorFontsize = 15;
+                                    SearchVisitorBackGround = "Blue";
+                                    SearchVisitorForegraund = "Black";
+                                    find = true;
+                                    var _searchVisitor = SearchVisitorCollection
+                                    .FirstOrDefault();
+                                    SearchVisitor = _searchVisitor.Column8.ToUpper() + " " +
+                                                    _searchVisitor.Column9.ToUpper() /*+ " (" +
+                                            _searchVisitor.Column11.ToUpper() + ")"*/;
+                                    SelectedSearchVisitor = searchVisitorCollection.FirstOrDefault();
+                                }
+                            }
+                            catch
+                            {
+
+                            }
+
+
+                        }
+
+
+
+
+
+
+
                     }
                 }
             }
@@ -4124,15 +4437,15 @@ namespace EX.ViewModel
                 pvf = vn;
                 pvl = vs;
                 string vis = vn + "\n" + vs;
-                string comp = visitor.Column11.ToUpper();
+//                string comp = visitor.Column11.ToUpper();
 
-                Run runName = new Run(vis);
-                Run runCompany = new Run(comp);
+                Run runName = new Run(vis.ToUpper());
+//                Run runCompany = new Run(comp);
 //               System.Drawing.Image img1 = System.Drawing.Image.FromFile("b1.png");
        //         System.Windows.Media.Imaging.BitmapImage bi = new System.Windows.Media.Imaging.BitmapImage(new Uri("b1.png"));
                 //   Run im = new Run(img1);
                 Paragraph paragraphName = new Paragraph(runName);
-                Paragraph paragraphCompany = new Paragraph(runCompany);
+ //               Paragraph paragraphCompany = new Paragraph(runCompany);
                 Paragraph paragraphIm = new Paragraph();
                 
           //      Inline item = new Inline();
@@ -4140,30 +4453,37 @@ namespace EX.ViewModel
                 BlockUIContainer buk = new BlockUIContainer();
               //  buk.i
 
+                
+
 
                 paragraphName.LineStackingStrategy = LineStackingStrategy.MaxHeight;
                 paragraphName.FontFamily = new System.Windows.Media.FontFamily("Verdana");
                 paragraphName.TextAlignment = TextAlignment.Center;
-                paragraphName.FontSize = 18;
-                paragraphName.FontWeight = FontWeight.FromOpenTypeWeight(400);
+                paragraphName.FontSize = 25;
+                paragraphName.FontWeight = FontWeight.FromOpenTypeWeight(900);
+                paragraphName.Padding = new Thickness(0);
+                paragraphName.Margin = new Thickness(0);
 
-                paragraphCompany.LineStackingStrategy = LineStackingStrategy.BlockLineHeight;
-                paragraphCompany.FontFamily = new System.Windows.Media.FontFamily("Verdana");
-                paragraphCompany.TextAlignment = TextAlignment.Center;
-                paragraphCompany.FontSize = 18;
-                paragraphCompany.FontWeight = FontWeight.FromOpenTypeWeight(900);
+                
+                //                paragraphCompany.LineStackingStrategy = LineStackingStrategy.BlockLineHeight;
+                //                paragraphCompany.FontFamily = new System.Windows.Media.FontFamily("Verdana");
+                //                paragraphCompany.TextAlignment = TextAlignment.Center;
+                //                paragraphCompany.FontSize = 18;
+                //                 paragraphCompany.FontWeight = FontWeight.FromOpenTypeWeight(900);
 
-
+         //       BlockUIContainer blockUI = new BlockUIContainer();
+                
                  FlowDocument flowDocument = new FlowDocument();
                 flowDocument.Blocks.Add(paragraphName);
+
        //         flowDocument.Blocks.Add(paragraphCompany);
         //        flowDocument.Blocks.Add(paragraphIm);
-                flowDocument.PagePadding = new Thickness(30);
+                flowDocument.PagePadding = new Thickness(10);
                 flowDocument.PageWidth = printDialog.PrintableAreaWidth;
                 flowDocument.Name = "FlowDoc";
-                IDocumentPaginatorSource source = flowDocument;
-          //      printDialog.PrintDocument(source.DocumentPaginator, "print Visitor - "
-          //          + visitor.Column8 + "\n" + visitor.Column9);
+                //IDocumentPaginatorSource source = flowDocument;
+                //printDialog.PrintDocument(source.DocumentPaginator, "print Visitor - "
+                //    + visitor.Column8 + "\n" + visitor.Column9);
 
                 Barcode b = new Barcode();
                 System.Drawing.Color foreColor = System.Drawing.Color.Black;
@@ -4171,6 +4491,10 @@ namespace EX.ViewModel
                 System.Drawing.Image img = b.Encode(TYPE.CODE128, vb,
                     foreColor, backColor, 225, 30);
                 img.Save("b2.png");
+
+
+
+
 
                 var jsonObject = new JObject();
 
@@ -4184,7 +4508,7 @@ namespace EX.ViewModel
                 dj.LastName = vs;
                 dj.QRCode = vb;
 
-                
+
 
 
                 string qrText = "";
@@ -4202,15 +4526,184 @@ namespace EX.ViewModel
                 QRCodeData qrCodeData = qrGenerator.CreateQrCode(qrText,
                 QRCodeGenerator.ECCLevel.Q);
                 QRCode qrCode = new QRCode(qrCodeData);
-                Bitmap qrCodeImage = qrCode.GetGraphic(2);
-                qrCodeImage.Save("b4.png");
+                Bitmap qrCodeImage = qrCode.GetGraphic(3);
+                qrCodeImage.Save("b4.bmp");
 
 
 
-                PrintDocument pd = new PrintDocument();
-                pd.PrintPage += PrintPage;
-                pd.Print();
+
+                //                System.Drawing.Bitmap bitmap = ...
+                var bitmapImage = new BitmapImage();
+
+                using (var memoryStream = new MemoryStream())
+                {
+                    qrCodeImage.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Bmp);
+                    bitmapImage.BeginInit();
+                    bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmapImage.StreamSource = memoryStream;
+                    bitmapImage.EndInit();
+                }
+
+
+
+
+                //            var imgs = new BitmapImage(new Uri("b4.bmp", UriKind.RelativeOrAbsolute));
+                var image = new System.Windows.Controls.Image
+                {
+                    Source = bitmapImage,
+                    Stretch = Stretch.None,
+                    StretchDirection = StretchDirection.Both
+                };
+                buk.Child = image;
+       //        buk.Margin = new Thickness(0);
+       //         buk.Padding = new Thickness(0);
+
+                flowDocument.Blocks.Add(buk);
+
+
+
+                IDocumentPaginatorSource source = flowDocument;
+                printDialog.PrintDocument(source.DocumentPaginator, "print Visitor - "
+                    + visitor.Column8 + "\n" + visitor.Column9);
+
+
+
+
+
+                //PrintDocument pd = new PrintDocument();
+                //pd.PrintPage += PrintPage;
+                //pd.Print();
             }           
+        }
+        private void PrintVisitorWithOut(VisitorDTO visitor)
+        {
+            string vn = visitor.Column8;
+            string vs = visitor.Column9;
+            string vb = visitor.Column1;
+            pv = vn + "\n" + vs;
+            pvf = vn;
+            pvl = vs;
+            string vis = vn + "\n" + vs;
+            //                string comp = visitor.Column11.ToUpper();
+
+            Run runName = new Run(vis.ToUpper());
+            //                Run runCompany = new Run(comp);
+            //               System.Drawing.Image img1 = System.Drawing.Image.FromFile("b1.png");
+            //         System.Windows.Media.Imaging.BitmapImage bi = new System.Windows.Media.Imaging.BitmapImage(new Uri("b1.png"));
+            //   Run im = new Run(img1);
+            Paragraph paragraphName = new Paragraph(runName);
+            //               Paragraph paragraphCompany = new Paragraph(runCompany);
+            Paragraph paragraphIm = new Paragraph();
+
+            //      Inline item = new Inline();
+            //      paragraphIm.Inlines.Add((UIElement)b);
+            BlockUIContainer buk = new BlockUIContainer();
+            //  buk.i
+
+
+
+
+            paragraphName.LineStackingStrategy = LineStackingStrategy.MaxHeight;
+            paragraphName.FontFamily = new System.Windows.Media.FontFamily("Verdana");
+            paragraphName.TextAlignment = TextAlignment.Center;
+            paragraphName.FontSize = 25;
+            paragraphName.FontWeight = FontWeight.FromOpenTypeWeight(900);
+            paragraphName.Padding = new Thickness(0);
+            paragraphName.Margin = new Thickness(0);
+
+
+            //                paragraphCompany.LineStackingStrategy = LineStackingStrategy.BlockLineHeight;
+            //                paragraphCompany.FontFamily = new System.Windows.Media.FontFamily("Verdana");
+            //                paragraphCompany.TextAlignment = TextAlignment.Center;
+            //                paragraphCompany.FontSize = 18;
+            //                 paragraphCompany.FontWeight = FontWeight.FromOpenTypeWeight(900);
+
+            //       BlockUIContainer blockUI = new BlockUIContainer();
+
+            FlowDocument flowDocument = new FlowDocument();
+            flowDocument.Blocks.Add(paragraphName);
+
+            //         flowDocument.Blocks.Add(paragraphCompany);
+            //        flowDocument.Blocks.Add(paragraphIm);
+            flowDocument.PagePadding = new Thickness(10);
+            flowDocument.PageWidth = printDialog.PrintableAreaWidth;
+            flowDocument.Name = "FlowDoc";
+            //IDocumentPaginatorSource source = flowDocument;
+            //printDialog.PrintDocument(source.DocumentPaginator, "print Visitor - "
+            //    + visitor.Column8 + "\n" + visitor.Column9);
+
+            Barcode b = new Barcode();
+            System.Drawing.Color foreColor = System.Drawing.Color.Black;
+            System.Drawing.Color backColor = System.Drawing.Color.White;
+            System.Drawing.Image img = b.Encode(TYPE.CODE128, vb,
+                foreColor, backColor, 225, 30);
+            img.Save("b2.png");
+
+
+
+
+
+            var jsonObject = new JObject();
+
+            jsonObject.Add("FirstName", vn);
+            jsonObject.Add("LastName", vs);
+            jsonObject.Add("Barcode", vb);
+
+            dynamic dj = jsonObject;
+
+            dj.FirstName = vn;
+            dj.LastName = vs;
+            dj.QRCode = vb;
+
+
+
+
+            string qrText = "";
+
+            //                qrText = Convert.ToString(dj);
+            qrText = jsonObject.ToString();
+            qrText = qrText.Replace("\n", "|");
+            qrText = qrText.Replace("\r", "#");
+
+            //           qrText = vn + "|" + vs + "|" + vb;
+
+            qrText = vb;
+
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(qrText,
+            QRCodeGenerator.ECCLevel.Q);
+            QRCode qrCode = new QRCode(qrCodeData);
+            Bitmap qrCodeImage = qrCode.GetGraphic(3);
+            qrCodeImage.Save("b4.bmp");
+
+
+
+
+            //                System.Drawing.Bitmap bitmap = ...
+            var bitmapImage = new BitmapImage();
+
+            using (var memoryStream = new MemoryStream())
+            {
+                qrCodeImage.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Bmp);
+                bitmapImage.BeginInit();
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.StreamSource = memoryStream;
+                bitmapImage.EndInit();
+            };
+            var image = new System.Windows.Controls.Image
+            {
+                Source = bitmapImage,
+                Stretch = Stretch.None,
+                StretchDirection = StretchDirection.Both
+            };
+            buk.Child = image;
+            flowDocument.Blocks.Add(buk);
+
+
+
+            IDocumentPaginatorSource source = flowDocument;
+            printDialog.PrintDocument(source.DocumentPaginator, "print Visitor - "
+                + visitor.Column8 + "\n" + visitor.Column9);
         }
         private void PrintPage(object o, PrintPageEventArgs e)
         {
@@ -4238,15 +4731,15 @@ namespace EX.ViewModel
             //QR WITH CENTER
 
             System.Drawing.Image image =  System.Drawing.Image.FromFile("b4.png");
-            System.Drawing.Point loc = new System.Drawing.Point(10, 80);
+            System.Drawing.Point loc = new System.Drawing.Point(10, 70);
 
             e.Graphics.DrawImage(image, loc);
 
-            Font fnt1 = new Font("Verdana", 18f, System.Drawing.FontStyle.Bold);
+            Font fnt1 = new Font("Verdana", 20f, System.Drawing.FontStyle.Bold);
             System.Drawing.Brush br = System.Drawing.Brushes.Black;
-            PointF pf = new PointF(10f, 20f);
+            PointF pf = new PointF(10f, 10f);
             string te = pv; 
-            e.Graphics.DrawString(te, fnt1, br, pf);
+            e.Graphics.DrawString(te.ToUpper(), fnt1, br, pf);
             
 
 
@@ -4598,7 +5091,8 @@ namespace EX.ViewModel
                         CountRaportCreateVisitors = raportCreateVisitors.Count();
                         break;
                     case "all":
-                        if (selectedRaportAllCategory == null)
+                        if (textRaportCategory == null)
+ //                           if (selectedRaportAllCategory == null
                         {
                             RaportAllVisitors = new ObservableCollection<VisitorDTO>
                                  (visitorRepositoryDTO.GetAllVisitors());
@@ -4607,7 +5101,8 @@ namespace EX.ViewModel
                         {
                             RaportAllVisitors = new ObservableCollection<VisitorDTO>
                                  (visitorRepositoryDTO.GetAllVisitors()
-                                  .Where(s => s.Column4 == selectedRaportAllCategory));
+//                                  .Where(s => s.Column4 == selectedRaportAllCategory));
+                                  .Where(s => s.Column4.Contains(textRaportCategory)));
                         }
                         if (selectedRaportAllPaymentStatus == null)
                         {
@@ -4617,7 +5112,8 @@ namespace EX.ViewModel
                         {
                             RaportAllVisitors = new ObservableCollection<VisitorDTO>
                                 (raportAllVisitors
-                                .Where(s => s.Column2 == selectedRaportAllPaymentStatus));
+//                                .Where(s => s.Column2 == selectedRaportAllPaymentStatus));
+                                .Where(s => s.Column2.Contains(selectedRaportAllPaymentStatus)));
                         }
                         if (selectedRaportAllChanged == null)
                         {
@@ -4627,7 +5123,8 @@ namespace EX.ViewModel
                         {
                             RaportAllVisitors = new ObservableCollection<VisitorDTO>
                                 (raportAllVisitors
-                                .Where(s => s.Column6 == selectedRaportCreateChanged));
+ //                               .Where(s => s.Column6 == selectedRaportCreateChanged));
+                                .Where(s => s.Column6.Contains(selectedRaportCreateChanged)));
                         }
                         CountRaportAllVisitors = raportAllVisitors.Count();
                         break;
@@ -4801,7 +5298,8 @@ namespace EX.ViewModel
                         else
                         {
                             _visitors = _visitors
-                                  .Where(s => s.Column4 == selectedRaportAllCategory);
+      //                          .Where(s => s.Column4 == selectedRaportAllCategory);
+                                  .Where(s => s.Column4.Contains(selectedRaportAllCategory));
                         }
                         RaportAllVisitors = new ObservableCollection<VisitorDTO>(_visitors);
                         if (selectedRaportAllPaymentStatus == null)
@@ -4812,7 +5310,8 @@ namespace EX.ViewModel
                         {
                             RaportAllVisitors = new ObservableCollection<VisitorDTO>
                                 (raportAllVisitors
-                                .Where(s => s.Column2 == selectedRaportAllPaymentStatus));
+ //                               .Where(s => s.Column2 == selectedRaportAllPaymentStatus));
+                                .Where(s => s.Column2.Contains(selectedRaportAllPaymentStatus)));
                         }
                         if (selectedRaportAllChanged == null)
                         {
@@ -4822,7 +5321,8 @@ namespace EX.ViewModel
                         {
                             RaportAllVisitors = new ObservableCollection<VisitorDTO>
                                 (raportAllVisitors
-                                .Where(s => s.Column6 == selectedRaportAllChanged));
+ //                               .Where(s => s.Column6 == selectedRaportAllChanged));
+                                .Where(s => s.Column6.Contains(selectedRaportAllChanged)));
                         }
                         CountRaportAllVisitors = raportAllVisitors.Count();
                         break;
@@ -4909,7 +5409,6 @@ namespace EX.ViewModel
             }
             catch { return false; }
         }
-
         private void caseDS(DisplaySettingDTO dSCollumnSetting, string _intendant)
         {
             var curSetId = dSCollumnSetting.Id;
