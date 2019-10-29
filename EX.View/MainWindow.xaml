@@ -17,12 +17,16 @@
     </Window.DataContext>
 
     <Grid Margin="0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="92*"/>
+            <ColumnDefinition Width="571*"/>
+        </Grid.ColumnDefinitions>
         <TabControl 
             x:Name="tabControl"
             HorizontalAlignment="Stretch" 
             Margin="10,10,10,10"
             VerticalAlignment="Stretch" 
-            Grid.ColumnSpan="4">
+            Grid.ColumnSpan="2">
             <TabItem Header="Главная">
                 <Grid Background="#FFE5E5E5" Margin="6,2,0,0" >
                     <Grid.Resources>
@@ -1060,10 +1064,11 @@
             <TabItem Header="Файл">
                 <Grid Background="#FFE5E5E5"  >
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="200*"/>
-                        <ColumnDefinition Width="600*"/>
+                        <ColumnDefinition Width="216*"/>
+                        <ColumnDefinition Width="109*"/>
+                        <ColumnDefinition Width="975*"/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel >
+                    <StackPanel Grid.ColumnSpan="2" >
                         <Label
                             Margin="10" 
                             Content="{
@@ -1082,7 +1087,8 @@
                             Content="Импортировать пользователей из файла"/>
                         <Button 
                             Margin="10"
-                            Content="Импортировать статусы из файла"/>
+                            Content="Импортировать статусы из файла"
+                            Command="{Binding ImportStatusFromFileWithId}"/>
                         <Button
                             Margin="10" 
                             Command="{Binding SaveVisitorsToFile}" 
@@ -1098,13 +1104,17 @@
                             Margin="10"
                             Command="{Binding IntegrateZone}" 
                             Content="Интегрировать информацию о зонах"/>
+                        <Button 
+                            Margin="10"
+                            Command="{}" 
+                            Content="Выгрузить пользователей со статусами"/>
 
                     </StackPanel>
-                    <DataGrid Grid.Column="1"
+                    <DataGrid Grid.Column="2"
                               Margin="10,55,10,10" 
                               AutoGenerateColumns="True" 
                               ItemsSource="{Binding  Visitors, UpdateSourceTrigger=PropertyChanged}"/>
-                    <ProgressBar Grid.Column="1"
+                    <ProgressBar Grid.Column="2"
                                  HorizontalAlignment="Left" 
                                  Height="30" Margin="10,10,0,0" 
                                  VerticalAlignment="Top" 
@@ -1264,7 +1274,7 @@
                                             Mode=TwoWay, 
                                             UpdateSourceTrigger=PropertyChanged}"/>
                                     </StackPanel>
-                                    
+
                                     <StackPanel Orientation="Horizontal" Margin="5">
                                         <Label Margin="5">Видимость</Label>
                                         <CheckBox 
@@ -1961,7 +1971,7 @@
                                         CommandParameter="raport"
                                         >Сохранить изменения
                                     </Button>
-                                    
+
                                 </StackPanel>
                             </Grid>
                         </TabItem>
@@ -3765,7 +3775,7 @@
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </Grid>
-                            </Grid>     
+                            </Grid>
                         </TabItem>
                         <TabItem Header="Созданные">
                             <Grid>
@@ -4950,7 +4960,7 @@
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </Grid>
-                            </Grid>    
+                            </Grid>
                         </TabItem>
                     </TabControl>
                 </Grid>

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using EX.Model.DbLayer;
 using EX.Model.DTO;
+using EX.Model.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -32,6 +34,15 @@ namespace EX.Model.Repositories.ForVisitor
             statusRepository.RemoveStatus(
                 mapper.Map<Status>(statusDTO));
         }
+
+
+        public void ImportStatusRepositoryFromFileWithId(string filemame)
+        {
+            statusRepository.importStatusRepositoryFromFileWithId(filemame, progressChanged);
+        }
+
+
+
         public StatusDTO Add(StatusDTO statusDTO)
         {
             var status = mapper.Map<Status>(statusDTO);
@@ -47,5 +58,9 @@ namespace EX.Model.Repositories.ForVisitor
         {
             statusRepository.SaveStatusesToFile();
         }
+
+
+        public event Action<Progress_Bar> progressChanged;
+
     }
 }

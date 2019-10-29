@@ -61,7 +61,6 @@ namespace EX.ViewModel
         UserInRoleRepositoryDTO userInRoleRepository;
         CommandRepositoryDTO commandRepository;
         TabRepositoryDTO tabRepository;
-        StatusRepositoryDTO statusRepository;
         #endregion
         #region Collection for Administration
         ObservableCollection<UserDTO> users;
@@ -611,7 +610,8 @@ namespace EX.ViewModel
         #region Context for File
         #region Repository for File
         VisitorRepositoryDTO visitorRepositoryDTO;
-   //     StatusRepositoryDTO statusRepositoryDTO;
+        StatusRepositoryDTO statusRepository;
+        //       StatusRepositoryDTO statusRepositoryDTO;
         #endregion
         #region Collection for File
         ObservableCollection<VisitorDTO> visitors;
@@ -648,16 +648,35 @@ namespace EX.ViewModel
         {
             get { return importDataFromFileToDatabase; }
         }
+
         RelayCommand importVisitorFromFileWithId;
         public RelayCommand ImportVisitorFromFileWithId
         {
             get { return importVisitorFromFileWithId; }
         }
+
+        RelayCommand importUserFromFile;
+        public RelayCommand ImpotrtUserFromFile
+        {
+            get { return importUserFromFile; }
+        }
         RelayCommand integrateZone;
+
+        RelayCommand importStatusFromFileWithId;
+        public RelayCommand ImportStatusFromFileWithId
+        {
+            get { return importStatusFromFileWithId; }
+        }
         public RelayCommand IntegrateZone
         {
             get { return integrateZone; }
         }
+        RelayCommand exportVisitorsAndStatusesToFile;
+        public RelayCommand ExportVisitorsAndStatusesToFile
+        {
+            get { return exportVisitorsAndStatusesToFile; }
+        }
+
         #endregion
         #endregion
         #region Context for Sevice
@@ -753,9 +772,6 @@ namespace EX.ViewModel
             "Молдова",
             "Грузія"
         };
-
-
-
 
 
         ObservableCollection<VisitorDTO> desctopVisitors;
@@ -2217,6 +2233,7 @@ namespace EX.ViewModel
             visitorRepositoryDTO = new VisitorRepositoryDTO();
             visitorRepositoryDTO.progressChanged += ProgressChanged;
             statusRepository = new StatusRepositoryDTO();
+            statusRepository.progressChanged += ProgressChanged;
             #endregion
             #region Init value for Service
             IsEnabledDataModeChecker = true;
@@ -3395,6 +3412,37 @@ namespace EX.ViewModel
                     });
                 }
             });
+            importStatusFromFileWithId = new RelayCommand(c =>
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                _ProgressBar = new Progress_Bar
+                {
+                    Visible = true,
+                    Progress = 1,
+                    Status = "Start"
+                };
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    Task.Factory.StartNew(() =>
+                    {
+
+                        statusRepository.ImportStatusRepositoryFromFileWithId
+                        (openFileDialog.FileName);
+                        statuses = new ObservableCollection<StatusDTO>
+                        (statusRepository.GetAllStatuses());
+                        _ProgressBar.Status = "All operation complite";
+                        _ProgressBar.Progress = 0;
+
+                        //visitorRepositoryDTO.ImportVisitorsRepositoryFromFileWithId
+                        //(openFileDialog.FileName);
+                        //visitors = new ObservableCollection<VisitorDTO>
+                        //(visitorRepositoryDTO.GetAllVisitors());
+                        //_ProgressBar.Status = "All operation complite";
+                        //_ProgressBar.Progress = 0;
+
+                    });
+                }
+            });
             integrateZone = new RelayCommand(c =>
             {
                 var parseData = new List<string[]>();
@@ -3418,56 +3466,12 @@ namespace EX.ViewModel
                         _ProgressBar.Progress = 0;
                         sendStatusesToDataBase(parseData, ref progressBar);
                         Thread.Sleep(1000);
-                        //_ProgressBar.Status = "Update visitor statuses";
-                        //statusRepository = new StatusRepositoryDTO();
-                        //int f = 0, f_m = visitors.Count();
-
-                        //foreach (var v in visitors)
-                        //{
-                        //    var newStatus = new StatusDTO
-                        //    {
-                        //        Name = "registered",
-                        //        UserId = authorizedUser.Id,
-                        //        VisitorId = v.Id,
-                        //        ActionTime = DateTime.Now.ToString()
-
-                        //    };
-
-                        //    _ProgressBar.Progress = f * 100 / f_m;
-                        //    f++;
-                        //    v.CurrentStatus = newStatus.Name;
-                        //    visitorRepositoryDTO.AddOrUpdateVisitor(v);
-                        //    statusRepository.Add(newStatus);
-                        //}
-                        //Statuses = new ObservableCollection<StatusDTO>
-                        //    (statusRepository.GetAllStatuses());
-                        //_ProgressBar.Visible = false;
-                        //Visitors = new ObservableCollection<VisitorDTO>
-                        //(visitorRepositoryDTO.GetAllVisitors());
-                        //UpdateAllVisitorFields(visitors);
-                        //_ProgressBar.Status = "All operation complite";
-                        //_ProgressBar.Progress = 0;
-
-
-
-                        //foreach (var i in parseData)
-                        //{
-                        //    Console.WriteLine(i[0] + " " + i[1] + " " + i[4] + " " + i[5] + " " + i[6]);
-                        //    //foreach(var j in i)
-                        //    //{
-                        //    //    Console.WriteLine(j);
-                        //    //}
-                        //}
-
-
-
-
-
-
-
-
                     });
                 }
+            });
+            exportVisitorsAndStatusesToFile = new RelayCommand(c =>
+            {
+
             });
             #endregion
             #region Implementation command for Service
@@ -3535,7 +3539,7 @@ namespace EX.ViewModel
                 Task.Factory.StartNew(serviceExecutor.Start);
                 Thread.Sleep(200);
             }, c =>
-                 DataMode == "Сервер службы баз данных" && ServerStatus != "listerning....");
+            DataMode == "Сервер службы баз данных" && ServerStatus != "listerning....");
             stopServer = new RelayCommand(c =>
             {
                 IsEnabledDataModeChecker = true;

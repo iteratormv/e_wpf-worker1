@@ -101,7 +101,7 @@ namespace EX.Model.Exel
         }
         public ExelData(string fName, Action<Progress_Bar> progressChanged_)
         {
-            Progress_Bar progress = new Progress_Bar { Visible = true, Progress = 0, Status = "Extracr data forom file" };
+            Progress_Bar progress = new Progress_Bar { Visible = true, Progress = 0, Status = "Extract data from file" };
 
 
             Microsoft.Office.Interop.Excel.Application excel_app =
@@ -235,6 +235,23 @@ namespace EX.Model.Exel
                 visitorCollection.Add(visitor);
             }
         }
+
+        public void importDataStatusToCollection(DbSet<Status> statusCollection, Action<Progress_Bar> progressChanged_)
+        {
+            for (int row = 0; row < excelWorksheetRow; row++)
+            {
+                Progress_Bar progress = new Progress_Bar { Visible = true, Progress = 0, Status = "import Exel data statuses to database" };
+
+                Status status = new Status();
+                progress.Progress = row * 100 / excelWorksheetRow;
+                progressChanged_(progress);
+                status.Name = data[row, 1];
+                status.ActionTime = data[row, 2];
+                status.UserId = int.Parse(data[row, 3]);
+                status.VisitorId = int.Parse(data[row, 4]);
+                statusCollection.Add(status);
+            }
+        }
         public void exportDataFromFile(DbSet<Visitor> visitorCollection)
         {
 
@@ -261,7 +278,6 @@ namespace EX.Model.Exel
                 visitorCollection.Add(visitor);
             }
         }
-
         public void importVisitorsToCollectionWithId(List<Visitor> visitorCollection, Action<Progress_Bar> progressChanged_)
         {
             for (int row = 0; row < excelWorksheetRow; row++)
@@ -294,7 +310,29 @@ namespace EX.Model.Exel
                 visitorCollection.Add(visitor);
             }
         }
+        public void importSatausToCollectionWithId(List<Status> statusCollection, Action<Progress_Bar> progressChanged_)
+        {
+            for (int row = 0; row < excelWorksheetRow; row++)
+            {
+                Progress_Bar progress = new Progress_Bar { Visible = true, Progress = 0, Status = "import Exel data to database" };
 
+                Status status = new Status();
+                progress.Progress = row * 100 / excelWorksheetRow;
+                progressChanged_(progress);
+
+                try { status.Id = int.Parse(data[row, 0]); }
+                catch { status.Id = 0; }
+
+                status.Name = data[row, 1];
+                status.ActionTime = data[row, 2];
+                try { status.UserId = int.Parse(data[row, 3]); }
+                catch { status.UserId = 0; }
+                try { status.VisitorId = int.Parse(data[row, 4]); }
+                catch { status.VisitorId = 0; }
+
+                statusCollection.Add(status);
+            }
+        }
         public void saveVisitorsTofile(IEnumerable<Visitor> visitors)
         {
             var _visitors = visitors.ToArray();
@@ -370,6 +408,40 @@ namespace EX.Model.Exel
                 worksheet.Rows[1].Columns[5] = "VisitorId";
 
                 for(int i = 1; i<statuses.Count(); i++)
+                {
+                    worksheet.Rows[i + 1].Columns[1] = _statuses[i].Id;
+                    worksheet.Rows[i + 1].Columns[2] = _statuses[i].Name;
+                    worksheet.Rows[i + 1].Columns[3] = _statuses[i].ActionTime;
+                    worksheet.Rows[i + 1].Columns[4] = _statuses[i].UserId;
+                    worksheet.Rows[i + 1].Columns[5] = _statuses[i].VisitorId;
+                }
+
+                exelapp.AlertBeforeOverwriting = false;
+                workbook.SaveAs(path);
+                exelapp.Quit();
+            }
+        }
+        public void saveVisitorsWithStatusesToFile
+            (IEnumerable<Visitor> visitors, IEnumerable<Status> statuses)
+        {
+            var _visitors = visitors.ToArray();
+            var _statuses = statuses.ToArray();
+            SaveFileDialog sfd = new SaveFileDialog();
+            if (sfd.ShowDialog() == true)
+            {
+                string path = sfd.FileName + ".xlsx";
+                Microsoft.Office.Interop.Excel.Application exelapp =
+                    new Microsoft.Office.Interop.Excel.Application();
+                Microsoft.Office.Interop.Excel.Workbook workbook = exelapp.Workbooks.Add();
+                Microsoft.Office.Interop.Excel.Worksheet worksheet = workbook.ActiveSheet;
+
+                worksheet.Rows[1].Columns[1] = "Id";
+                worksheet.Rows[1].Columns[2] = "Статус";
+                worksheet.Rows[1].Columns[3] = "Время";
+                worksheet.Rows[1].Columns[4] = "UserId";
+                worksheet.Rows[1].Columns[5] = "VisitorId";
+
+                for (int i = 1; i < statuses.Count(); i++)
                 {
                     worksheet.Rows[i + 1].Columns[1] = _statuses[i].Id;
                     worksheet.Rows[i + 1].Columns[2] = _statuses[i].Name;
