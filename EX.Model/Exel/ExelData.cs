@@ -99,6 +99,56 @@ namespace EX.Model.Exel
                 }
             }
         }
+        public ExelData(string fName, int maxcol)
+        {
+            Progress_Bar progress = new Progress_Bar { Visible = true, Progress = 0, Status = "Extracr data forom file" };
+
+            Microsoft.Office.Interop.Excel.Application excel_app =
+                new Microsoft.Office.Interop.Excel.Application();
+
+            string[] partsPath = fName.Split('\\');
+            foreach (string s in partsPath)
+            {
+                Console.WriteLine(s);
+            }
+            Console.WriteLine("\n" + partsPath.Length.ToString());
+            string res = "";
+            for (int i = 0; i < partsPath.Length - 1; i++)
+            {
+                res += partsPath[i] + "\\";
+            }
+            res += partsPath[partsPath.Length - 1];
+
+            string file_name = res;
+
+            Workbook work_book = excel_app.Workbooks.Open(file_name, Type.Missing);
+
+            Worksheet work_shet = (Worksheet)work_book.Worksheets[1];
+
+            Range excelRange = work_shet.UsedRange;
+
+            object[,] vallueArray = (object[,])excelRange.get_Value(XlRangeValueDataType.xlRangeValueDefault);
+
+            excelWorksheetRow = work_shet.UsedRange.Rows.Count;
+            excelWorksheetCol = maxcol;
+            //           excelWorksheetCol = work_shet.UsedRange.Columns.Count;
+
+            data = new string[excelWorksheetRow, excelWorksheetCol];
+
+            for (int row = 1; row <= excelWorksheetRow; ++row)
+            {
+                //               progress.Progress = (row * 100 / excelWorksheetRow);
+                for (int col = 1; col <= excelWorksheetCol; ++col)
+                {
+                    try
+                    {
+                        if (vallueArray[row, col] == null) data[row - 1, col - 1] = " ";
+                        else data[row - 1, col - 1] = vallueArray[row, col].ToString();
+                    }
+                    catch { data[row - 1, col - 1] = " "; }
+                }
+            }
+        }
         public ExelData(string fName, Action<Progress_Bar> progressChanged_)
         {
             Progress_Bar progress = new Progress_Bar { Visible = true, Progress = 0, Status = "Extract data from file" };
@@ -204,7 +254,6 @@ namespace EX.Model.Exel
                 visitorCollection.Add(visitor);
             }
         }
-
         public void importDataToCollection(DbSet<Visitor> visitorCollection, Action<Progress_Bar> progressChanged_)
         {
             for (int row = 0; row < excelWorksheetRow; row++)
@@ -235,7 +284,6 @@ namespace EX.Model.Exel
                 visitorCollection.Add(visitor);
             }
         }
-
         public void importDataStatusToCollection(DbSet<Status> statusCollection, Action<Progress_Bar> progressChanged_)
         {
             for (int row = 0; row < excelWorksheetRow; row++)

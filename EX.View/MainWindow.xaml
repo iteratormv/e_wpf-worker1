@@ -1107,7 +1107,19 @@
                         <Button 
                             Margin="10"
                             Command="{}" 
-                            Content="Выгрузить пользователей со статусами"/>
+                            Content="Выгрузить пользователей со статусами" Click="Button_Click_3"/>
+                        <Button 
+                            Margin="10"
+                            Command="" 
+                            Content="перенести col12 -> col15 if actual or create" Click="Button_Click"/>
+                        <Button 
+                            Margin="10"
+                            Command="" 
+                            Content="if registered -> time registration -> col15" Click="Button_Click_1" />
+                        <Button 
+                            Margin="10"
+                            Command="" 
+                            Content="if actual -&gt; name -&gt; col12" Click="Button_Click_2"  />
 
                     </StackPanel>
                     <DataGrid Grid.Column="2"

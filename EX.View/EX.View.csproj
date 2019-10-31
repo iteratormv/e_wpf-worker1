@@ -44,6 +44,10 @@
     <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Expression.Interaction.3.0.40218.0\lib\net46\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -127,6 +131,10 @@
     <ProjectReference Include="..\EX.Client\EX.Client.csproj">
       <Project>{d3bba954-354d-4e68-bc65-da15dcb999f2}</Project>
       <Name>EX.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EX.Model\EX.Model.csproj">
+      <Project>{B5228112-E301-41B3-B95B-CE80499580A8}</Project>
+      <Name>EX.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\EX.Service\EX.Service.csproj">
       <Project>{a31c39f1-225f-453c-b52f-5df76ce7bacd}</Project>
