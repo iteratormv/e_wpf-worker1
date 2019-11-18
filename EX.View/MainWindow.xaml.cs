@@ -29,6 +29,9 @@ namespace EX.View
         public MainWindow()
         {
             InitializeComponent();
+            stbo.Focus();
+ //           lb.ItemsSource = new string[] {"sfdas", "asdf", "fdafdsfa" };
+ //           lb.SelectedItem = "sfdas";
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -45,7 +48,6 @@ namespace EX.View
 
             }
         }
-
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             var rep = new VisitorRepositoryDTO();
@@ -72,8 +74,6 @@ namespace EX.View
                 }
             } 
         }
-
-
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             var rep = new VisitorRepositoryDTO();
@@ -284,6 +284,65 @@ private void Button_Click_3(object sender, RoutedEventArgs e)
                     exelapp.Quit();
                 }
             }            
+        }
+
+        //private void stbo_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if(e.Key == Key.Down)
+        //    {
+        //        testTB.Text = "проверка";
+        //    }
+        //}
+
+   //     private void stbo_KeyUp(object sender, KeyEventArgs e)
+   //     {
+   //         if (e.Key == Key.Down)
+   //         {
+   ////             testTB.Text = "проверка";
+   //             lb.Focus();
+   //         }
+   //     }
+
+        private void stbo_KeyUp_1(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Down)
+            {
+                lb.Focus();
+            }
+        }
+
+        private void lb_KeyDown(object sender, KeyEventArgs e)
+        {
+            EX.ViewModel.MainVM vm = this.DataContext as EX.ViewModel.MainVM;
+            if (e.Key == Key.Enter&&btn_save_desctop.IsEnabled == false)
+            {
+ 
+                if ((vm != null) && (vm.AddVisitorToFact.CanExecute(null)))
+                {
+                    stbo.Text = "";
+                    vm.AddVisitorToFact.Execute(null);
+                }
+                    
+            }
+            else if(e.Key == Key.Enter&&btn_save_desctop.IsEnabled == true)
+            {
+                vm.SaveEditVisitor.Execute(null);
+                stbo.Focus();
+            }
+        }
+
+        private void TabItem_KeyUp(object sender, KeyEventArgs e)
+        {
+            EX.ViewModel.MainVM vm = this.DataContext as EX.ViewModel.MainVM;
+            if (e.Key == Key.Escape)
+            {
+                vm.ResetEditDesctopVisitor();
+            }
+        }
+
+        private void workgrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

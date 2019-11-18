@@ -9,26 +9,46 @@
         mc:Ignorable="d"
         xmlns:i = "http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        Title="Exhibition Manager" Height="722" Width="1334" WindowState="Maximized">
+        Title="Exhibition Manager" Height="722" Width="1334" WindowState="Maximized"
+        xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+        >
+
+    <Window.Resources>
+
+    </Window.Resources>
+
+    <Window.InputBindings>
+        <KeyBinding Key="Esc" Command="{Binding ClickESK}"/>
+    </Window.InputBindings>
 
     <Window.DataContext>
         <vm:MainVM/>
-
     </Window.DataContext>
 
-    <Grid Margin="0">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="92*"/>
-            <ColumnDefinition Width="571*"/>
-        </Grid.ColumnDefinitions>
+    <Grid
+        Margin="0"
+        >
+
         <TabControl 
             x:Name="tabControl"
             HorizontalAlignment="Stretch" 
             Margin="10,10,10,10"
             VerticalAlignment="Stretch" 
             Grid.ColumnSpan="2">
-            <TabItem Header="Главная">
+            <TabItem Header="Главная" KeyUp="TabItem_KeyUp">
+                
+                <!--<TextBox.InputBindings>
+                                        <KeyBinding Key="Down" Command="{Binding ClickKeyDownInSearch}"/>
+                                    </TextBox.InputBindings>-->
+                <!--<i:Interaction.Triggers>
+                    <i:EventTrigger  EventName="SelectionChanged">
+                        <i:InvokeCommandAction 
+                            Command="{Binding  ChangeCategoryRegistredVisitors}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>-->
+
                 <Grid Background="#FFE5E5E5" Margin="6,2,0,0" >
+
                     <Grid.Resources>
                         <vmi:BoolToVisibilityConverter 
                             x:Key="boolToVisibilityConverter"/>
@@ -36,16 +56,21 @@
                             x:Key="stringToColorConverter"/>
                     </Grid.Resources>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="50*"/>
-                        <ColumnDefinition Width="12*"/>
+                        <ColumnDefinition Width="20*"/>
+                        <ColumnDefinition Width="502*"/>
+                        <ColumnDefinition Width="125*"/>
                     </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0" Margin="5">
+                    <Grid Grid.Column="0" Margin="5" Grid.ColumnSpan="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="11*"/>
+                            <ColumnDefinition Width="36*"/>
+                        </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="100*"/>
                             <RowDefinition Height="150*"/>
                             <RowDefinition Height="400*"/>
                         </Grid.RowDefinitions>
-                        <Grid Grid.Row="0">
+                        <Grid Grid.Row="0" Grid.ColumnSpan="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
@@ -71,6 +96,7 @@
                                 Orientation="Vertical" 
                                 Margin="5">
                                 <TextBlock
+                                    Name="testTB"
                                     HorizontalAlignment="Center"
                                     Text="Актуализировано"/>
                                 <TextBlock
@@ -120,41 +146,102 @@
                                     Text="{Binding CountAllVisitors}"/>
                             </StackPanel>
                         </Grid>
-                        <Grid Grid.Row="1">
+                        <Grid Grid.Row="1" Grid.ColumnSpan="2" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="3*"/>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <Grid Grid.Column="0" Margin="5">
+                            <Grid Grid.Column="0" Margin="5"
+
+                                  
+                                  >
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="10*"/>
                                     <RowDefinition Height="35*"/>
                                 </Grid.RowDefinitions>
-                                <TextBox 
+                                <TextBox                                                                        
+                                                                      
+                                    Name="stbo"
+                                    Focusable="True"
                                     Padding="3"
                                     Foreground="Gray"
                                     FontSize="20"
+                                    
+                                    
+                                    
                                     Grid.Row="0"
                                     Text="{Binding SearchVisitor, 
                                     Mode=TwoWay, 
-                                    UpdateSourceTrigger=PropertyChanged}"/>
-                                <Grid Grid.Row="1">
-                                    <ListBox    
+                                    UpdateSourceTrigger=PropertyChanged}" KeyUp="stbo_KeyUp_1" >
+                                    
+                                    <!--<TextBox.InputBindings>
+                                        <KeyBinding Key="Down" Command="{Binding ClickKeyDownInSearch}"/>
+                                    </TextBox.InputBindings>-->
+                                    <!--<i:Interaction.Triggers>
+                                        <i:EventTrigger  EventName="KeyUp" >
+                                            <i:InvokeCommandAction 
+                                              Command="{Binding ClickKeyDownInSearch}"
+                                              CommandParameter="{}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>-->
+                                </TextBox>
+
+
+                                <!--KeyDown="stbo_KeyDown"
+                                    //>KeyUp="stbo_KeyUp"
+                                    />-->
+                                <Grid
+                                    Grid.Row="1"
+                                    >
+
+
+                                    <ListBox      
+
+                                        Focusable="True"                                       
                                         Visibility="Visible" 
+                                        Name="lb"
                                         ItemsSource="{
                                         Binding SearchVisitorCollection}"
+                                                                               
+                                        
                                         SelectedItem="{
                                         Binding SelectedSearchVisitor, 
-                                        UpdateSourceTrigger=PropertyChanged}"
+                                        UpdateSourceTrigger=PropertyChanged,
+                                        Mode=TwoWay}"
+
                                         Foreground="Black"   
-                                        FontSize="15">
+                                        FontSize="15" Margin="0,0,0,1" KeyDown="lb_KeyDown" Grid.ColumnSpan="2" 
+                                        
+                                        
+                                                                                               
+                                        >
+
+                                        <!--<i:Interaction.Triggers>
+                                        <i:EventTrigger  EventName="KeyUp" >
+                                            <i:InvokeCommandAction 
+                                              Command="{Binding ClickKeyDownInSearch}"
+                                              CommandParameter=" "/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>-->
+
                                         <i:Interaction.Triggers>
-                                            <i:EventTrigger  EventName="MouseDoubleClick">
+                                            <i:EventTrigger EventName="MouseDoubleClick">
                                                 <i:InvokeCommandAction 
-                                              Command="{Binding AddVisitorToFact}"/>
+                                                    Command="{Binding AddVisitorToFact}"/>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
+
+
+                                        <ListBox.Resources>
+                                            <vmi:BindingProxy 
+                                x:Key="FN" 
+                                Data="{
+                                Binding FocusName,
+                                UpdateSourceTrigger=PropertyChanged}" />
+                                        </ListBox.Resources>
+
+
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal">
@@ -167,6 +254,10 @@
                                                 </StackPanel>
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
+                                        <dxmvvm:Interaction.Behaviors>
+                                            <dxmvvm:FocusBehavior SourceObject="{Binding ViewModel}" PropertyName="FocusName" EventName="PropertyChanged" />
+                                        </dxmvvm:Interaction.Behaviors>
+
                                     </ListBox>
                                 </Grid>
                             </Grid>
@@ -202,7 +293,7 @@
                             x:Name="workgrid"
                             Margin="5" 
                             AutoGenerateColumns="False"
-                            ItemsSource="{Binding DesctopVisitors}" 
+                            ItemsSource="{Binding DesctopVisitors}" Grid.ColumnSpan="2" SelectionChanged="workgrid_SelectionChanged" 
                             >
                             <DataGrid.RowStyle>
                                 <Style TargetType="DataGridRow">
@@ -699,16 +790,23 @@
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
-                    <StackPanel Grid.Column="1">
+                    <StackPanel Grid.Column="2">
                         <Label 
                             FontSize="15"
                                 Content="Дата Актуализации"
-                                Height="{Binding HeightForm[0]}"/>
+                                Height="30"/>
                         <TextBox 
                             FontSize="15"
                                 Margin="0"
                                 Text="{Binding CurrentTime}"
-                                Height="{Binding HeightForm[0]}"/>
+                                Height="25"/>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
 
                         <Label 
                             FontSize="15"
@@ -732,6 +830,8 @@
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"
                                 IsEnabled="False"/>
+                        
+                        
                         <StackPanel Orientation="Horizontal">
                             <Label 
                             FontSize="15"
@@ -744,8 +844,9 @@
                                 StaticResource boolToVisibilityConverter}}"/>
                             <Label
                                 FontSize="15"
-                                    Content="{Binding StatusForm}"
-                                    Foreground="{Binding StatusFormColor}"/>
+                                Height="{Binding HeightForm[2]}"
+                                Content="{Binding StatusForm}"
+                                Foreground="{Binding StatusFormColor}"/>
                         </StackPanel>
                         <ComboBox 
                             FontSize="15"
@@ -763,6 +864,7 @@
                                 StaticResource boolToVisibilityConverter}}"
                                 IsDropDownOpen="{Binding IsCombo1Collection}"
                             IsTextSearchCaseSensitive="False"/>
+                        
 
                         <Label 
                             FontSize="15"
@@ -795,8 +897,9 @@
                                 StaticResource boolToVisibilityConverter}}"/>
                             <Label
                                 FontSize="15"
-                                    Content="{Binding StatusForm}"
-                                    Foreground="{Binding StatusFormColor}"/>
+                                Height="{Binding HeightForm[4]}"
+                                Content="{Binding StatusForm}"
+                                Foreground="{Binding StatusFormColor}"/>
                         </StackPanel>
                         <ComboBox 
                             FontSize="15"
@@ -884,8 +987,9 @@
                                 StaticResource boolToVisibilityConverter}}"/>
                             <Label
                                 FontSize="15"
-                                    Content="{Binding StatusForm}"
-                                    Foreground="{Binding StatusFormColor}"/>
+                                Height="{Binding HeightForm[8]}"
+                                Content="{Binding StatusForm}"
+                                Foreground="{Binding StatusFormColor}"/>
                         </StackPanel>
                         <TextBox 
                             FontSize="15"
@@ -1054,6 +1158,7 @@
                                 Margin="5"
                                 Command="{Binding EditVisitor}"/>
                         <Button 
+                            x:Name="btn_save_desctop"
                             FontSize="15"
                                 Content="Сохранить изменения"
                                 Margin="5"
