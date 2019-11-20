@@ -9,6 +9,7 @@
         public int Width { get; set; }
         public bool IsSelected { get; set; }
         public string Intendant { get; set; }
+        public bool IsRequiredInput { get; set; }
 
         public int DisplaySettingId { get; set; }
         public virtual DisplaySetting DisplaySetting { get; set; }

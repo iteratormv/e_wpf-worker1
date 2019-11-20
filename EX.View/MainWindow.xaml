@@ -791,6 +791,8 @@
                         </DataGrid>
                     </Grid>
                     <StackPanel Grid.Column="2">
+                        
+                        
                         <Label 
                             FontSize="15"
                                 Content="Дата Актуализации"
@@ -801,22 +803,58 @@
                                 Text="{Binding CurrentTime}"
                                 Height="25"/>
                         
-                        
-                        
-                        
-                        
-                        
-                        
-
-                        <Label 
+                        <StackPanel Orientation="Horizontal" >
+                            <Label 
+                                FontSize="15"
+                                Content="{Binding AliasForm[0]}"
+                                Height="{Binding HeightForm[0]}"
+                                Visibility="{
+                                Binding RowChedForm[0],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"/>
+                            <Label
+                                FontSize="15"
+                                Height="{Binding HeightForm[0]}"
+                                Visibility="{
+                                Binding IsRequired[0],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"
+                                Content="{Binding StatusForm}"
+                                Foreground="{Binding StatusFormColor}"/>
+                        </StackPanel>
+                        <TextBox 
                             FontSize="15"
                                 Margin="0"
+                                Text="{
+                                Binding EditDesctopVisitor.Id,
+                                Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"
+                                Height="{Binding HeightForm[0]}"
+                                Visibility="{
+                                Binding RowChedForm[0],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"
+                                IsEnabled="True"/>
+
+                        <StackPanel Orientation="Horizontal" >
+                            <Label 
+                                FontSize="15"
                                 Content="{Binding AliasForm[1]}"
                                 Height="{Binding HeightForm[1]}"
                                 Visibility="{
                                 Binding RowChedForm[1],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
+                            <Label
+                                FontSize="15"
+                                Height="{Binding HeightForm[1]}"
+                                Visibility="{
+                                Binding IsRequired[1],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"
+                                Content="{Binding StatusForm}"
+                                Foreground="{Binding StatusFormColor}"/>
+                        </StackPanel>
                         <TextBox 
                             FontSize="15"
                                 Margin="0"
@@ -830,8 +868,7 @@
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"
                                 IsEnabled="False"/>
-                        
-                        
+                                                
                         <StackPanel Orientation="Horizontal">
                             <Label 
                             FontSize="15"
@@ -845,10 +882,15 @@
                             <Label
                                 FontSize="15"
                                 Height="{Binding HeightForm[2]}"
+                                Visibility="{
+                                Binding IsRequired[2],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"
                                 Content="{Binding StatusForm}"
                                 Foreground="{Binding StatusFormColor}"/>
                         </StackPanel>
                         <ComboBox 
+                            
                             FontSize="15"
                                 ItemsSource="{Binding Combo1Collection}"
                                 Margin="0"
@@ -865,15 +907,26 @@
                                 IsDropDownOpen="{Binding IsCombo1Collection}"
                             IsTextSearchCaseSensitive="False"/>
                         
-
-                        <Label 
+                        <StackPanel Orientation="Horizontal">
+                            <Label 
                             FontSize="15"
+                                Margin="0"
                                 Content="{Binding AliasForm[3]}"
                                 Height="{Binding HeightForm[3]}"
                                 Visibility="{
                                 Binding RowChedForm[3],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
+                            <Label
+                                FontSize="15"
+                                Height="{Binding HeightForm[3]}"
+                                Visibility="{
+                                Binding IsRequired[3],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"
+                                Content="{Binding StatusForm}"
+                                Foreground="{Binding StatusFormColor}"/>
+                        </StackPanel>
                         <TextBox 
                             FontSize="15"
                                 Text="{
@@ -886,7 +939,7 @@
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
 
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" >
                             <Label 
                                 FontSize="15"
                                 Content="{Binding AliasForm[4]}"
@@ -898,6 +951,10 @@
                             <Label
                                 FontSize="15"
                                 Height="{Binding HeightForm[4]}"
+                                Visibility="{
+                                Binding IsRequired[4],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"
                                 Content="{Binding StatusForm}"
                                 Foreground="{Binding StatusFormColor}"/>
                         </StackPanel>
@@ -914,7 +971,9 @@
                                 Binding RowChedForm[4],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                        <Label 
+                        
+                        <StackPanel Orientation="Horizontal" >
+                            <Label 
                                 FontSize="15"
                                 Content="{Binding AliasForm[5]}"
                                 Height="{Binding HeightForm[5]}"
@@ -922,6 +981,16 @@
                                 Binding RowChedForm[5],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
+                            <Label
+                                FontSize="15"
+                                Height="{Binding HeightForm[5]}"
+                                Visibility="{
+                                Binding IsRequired[5],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"
+                                Content="{Binding StatusForm}"
+                                Foreground="{Binding StatusFormColor}"/>
+                        </StackPanel>
                         <TextBox 
                             FontSize="15"
                                 Text="{
@@ -934,15 +1003,25 @@
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
 
-                        <Label 
-                            FontSize="15"
+                        <StackPanel Orientation="Horizontal" >
+                            <Label 
+                                FontSize="15"
                                 Content="{Binding AliasForm[6]}"
                                 Height="{Binding HeightForm[6]}"
                                 Visibility="{
                                 Binding RowChedForm[6],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-
+                            <Label
+                                FontSize="15"
+                                Height="{Binding HeightForm[6]}"
+                                Visibility="{
+                                Binding IsRequired[6],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"
+                                Content="{Binding StatusForm}"
+                                Foreground="{Binding StatusFormColor}"/>
+                        </StackPanel>
                         <ComboBox 
                             FontSize="15"
                                 ItemsSource="{Binding Combo3Collection}"
@@ -957,14 +1036,26 @@
                                 Binding RowChedForm[6],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                        <Label 
-                            FontSize="15"
+                        
+                        <StackPanel Orientation="Horizontal" >
+                            <Label 
+                                FontSize="15"
                                 Content="{Binding AliasForm[7]}"
                                 Height="{Binding HeightForm[7]}"
                                 Visibility="{
                                 Binding RowChedForm[7],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
+                            <Label
+                                FontSize="15"
+                                Height="{Binding HeightForm[7]}"
+                                Visibility="{
+                                Binding IsRequired[7],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"
+                                Content="{Binding StatusForm}"
+                                Foreground="{Binding StatusFormColor}"/>
+                        </StackPanel>
                         <TextBox 
                             FontSize="15"
                                 Text="{
@@ -976,6 +1067,7 @@
                                 Binding RowChedForm[7],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
+                        
                         <StackPanel Orientation="Horizontal">
                             <Label 
                                 FontSize="15"
@@ -989,6 +1081,10 @@
                                 FontSize="15"
                                 Height="{Binding HeightForm[8]}"
                                 Content="{Binding StatusForm}"
+                                Visibility="{
+                                Binding IsRequired[8],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"
                                 Foreground="{Binding StatusFormColor}"/>
                         </StackPanel>
                         <TextBox 
@@ -1002,6 +1098,7 @@
                                 Binding RowChedForm[8],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
+                        
                         <StackPanel Orientation="Horizontal">
                             <Label 
                                 FontSize="15"
@@ -1013,8 +1110,13 @@
                                 StaticResource boolToVisibilityConverter}}"/>
                             <Label
                                 FontSize="15"
-                                    Content="{Binding StatusForm}"
-                                    Foreground="{Binding StatusFormColor}"/>
+                                Height="{Binding HeightForm[9]}"
+                                Content="{Binding StatusForm}"
+                                Visibility="{
+                                Binding IsRequired[9],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"
+                                Foreground="{Binding StatusFormColor}"/>
                         </StackPanel>
                         <TextBox 
                             FontSize="15"
@@ -1027,14 +1129,26 @@
                                 Binding RowChedForm[9],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                        <Label 
-                            FontSize="15"
+                        
+                        <StackPanel Orientation="Horizontal">
+                            <Label 
+                                FontSize="15"
                                 Content="{Binding AliasForm[10]}"
                                 Height="{Binding HeightForm[10]}"
                                 Visibility="{
                                 Binding RowChedForm[10],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
+                            <Label
+                                FontSize="15"
+                                Height="{Binding HeightForm[10]}"
+                                Content="{Binding StatusForm}"
+                                Visibility="{
+                                Binding IsRequired[10],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"
+                                Foreground="{Binding StatusFormColor}"/>
+                        </StackPanel>
                         <TextBox 
                             FontSize="15"
                                 Text="{
@@ -1046,6 +1160,7 @@
                                 Binding RowChedForm[10],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
+
                         <StackPanel Orientation="Horizontal">
                             <Label 
                                 FontSize="15"
@@ -1055,7 +1170,15 @@
                                 Binding RowChedForm[11],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-
+                            <Label
+                                FontSize="15"
+                                Height="{Binding HeightForm[11]}"
+                                Content="{Binding StatusForm}"
+                                Visibility="{
+                                Binding IsRequired[11],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"
+                                Foreground="{Binding StatusFormColor}"/>
                         </StackPanel>
                         <TextBox 
                             FontSize="15"
@@ -1068,14 +1191,26 @@
                                 Binding RowChedForm[11],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                        <Label 
-                            FontSize="15"
+                        
+                        <StackPanel Orientation="Horizontal">
+                            <Label 
+                                FontSize="15"
                                 Content="{Binding AliasForm[12]}"
                                 Height="{Binding HeightForm[12]}"
                                 Visibility="{
                                 Binding RowChedForm[12],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
+                            <Label
+                                FontSize="15"
+                                Height="{Binding HeightForm[12]}"
+                                Content="{Binding StatusForm}"
+                                Visibility="{
+                                Binding IsRequired[12],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"
+                                Foreground="{Binding StatusFormColor}"/>
+                        </StackPanel>
                         <TextBox 
                             FontSize="15"
                                 Text="{
@@ -1087,14 +1222,27 @@
                                 Binding RowChedForm[12],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                        <Label 
-                            FontSize="15"
+                        
+
+                        <StackPanel Orientation="Horizontal">
+                            <Label 
+                                FontSize="15"
                                 Content="{Binding AliasForm[13]}"
                                 Height="{Binding HeightForm[13]}"
                                 Visibility="{
                                 Binding RowChedForm[13],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
+                            <Label
+                                FontSize="15"
+                                Height="{Binding HeightForm[13]}"
+                                Content="{Binding StatusForm}"
+                                Visibility="{
+                                Binding IsRequired[13],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"
+                                Foreground="{Binding StatusFormColor}"/>
+                        </StackPanel>
                         <TextBox 
                             FontSize="15"
                                 Text="{
@@ -1107,14 +1255,26 @@
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
 
-                        <Label 
-                            FontSize="15"
+
+                        <StackPanel Orientation="Horizontal">
+                            <Label 
+                                FontSize="15"
                                 Content="{Binding AliasForm[14]}"
                                 Height="{Binding HeightForm[14]}"
                                 Visibility="{
                                 Binding RowChedForm[14],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
+                            <Label
+                                FontSize="15"
+                                Height="{Binding HeightForm[14]}"
+                                Content="{Binding StatusForm}"
+                                Visibility="{
+                                Binding IsRequired[14],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"
+                                Foreground="{Binding StatusFormColor}"/>
+                        </StackPanel>
                         <TextBox 
                             FontSize="15"
                                 Text="{
@@ -1127,14 +1287,25 @@
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
 
-                        <Label 
-                            FontSize="15"
+                        <StackPanel Orientation="Horizontal">
+                            <Label 
+                                FontSize="15"
                                 Content="{Binding AliasForm[15]}"
                                 Height="{Binding HeightForm[15]}"
                                 Visibility="{
                                 Binding RowChedForm[15],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
+                            <Label
+                                FontSize="15"
+                                Height="{Binding HeightForm[15]}"
+                                Content="{Binding StatusForm}"
+                                Visibility="{
+                                Binding IsRequired[15],
+                                Converter={
+                                StaticResource boolToVisibilityConverter}}"
+                                Foreground="{Binding StatusFormColor}"/>
+                        </StackPanel>
                         <TextBox 
                             FontSize="15"
                                 Text="{
@@ -1453,7 +1624,7 @@
                                     </Grid.RowDefinitions>
                                     <ListBox 
                                         Grid.Row="0" 
-                                        Margin="20,20,20,5" 
+                                        Margin="12,20,28,5" 
                                         VerticalContentAlignment="Stretch" 
                                         VerticalAlignment="Stretch"
                                         ItemsSource="{Binding DSCollumnSettingsForm}"
@@ -1464,10 +1635,27 @@
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Center">
-                                                    <TextBlock
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition/>
+                                                            <ColumnDefinition/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock
+                                                            Grid.Column="0"
                                                         Text="{Binding Name}"
                                                         Width="200" 
                                                         Margin="5"/>
+                                                        <CheckBox
+                                                            Grid.Column="1"
+                                                            IsChecked="{
+                                                            Binding IsRequiredInput,
+                                                            Mode=TwoWay,
+                                                            UpdateSourceTrigger=PropertyChanged
+                                                            }" 
+                                                            IsEnabled="{Binding Visible}"
+                                                            />
+                                                        
+                                                    </Grid>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>

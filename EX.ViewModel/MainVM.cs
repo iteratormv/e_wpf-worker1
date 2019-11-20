@@ -457,8 +457,8 @@ namespace EX.ViewModel
             }
         }
 
-        bool isRequired;
-        public bool IsRequired
+        bool[] isRequired;
+        public bool[] IsRequired
         {
             get { return isRequired; }
             set
@@ -1715,7 +1715,7 @@ namespace EX.ViewModel
             Visitors = new ObservableCollection<VisitorDTO>(visitorRepositoryDTO.GetAllVisitors());
             UpdateAllVisitorFields(visitors);
             StartShowTime();
-            statusFormColor = "Red";
+            statusFormColor = "Gray";
             statusForm = "";
             isCombo1collection = false;
             #endregion
@@ -2060,6 +2060,7 @@ namespace EX.ViewModel
             rowCheckedForm = new bool[count_form_fields];
             aliasForm = new string[count_form_fields];
             heightForm = new int[count_form_fields];
+            isRequired = new bool[count_form_fields];
 
             displaySettingsForm = new ObservableCollection<DisplaySettingDTO>
                 (displaySettingDTORepository.GetAllDisplaySettingDTOs().
@@ -2114,6 +2115,7 @@ namespace EX.ViewModel
                     Visible = true,
                     IsSelected = false,
                     Intendant = "form",
+                    IsRequiredInput = true,
                     DisplaySettingId = defaultDisplayFormSettingId
                 });
                 dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
@@ -2134,6 +2136,7 @@ namespace EX.ViewModel
                     Visible = true,
                     IsSelected = false,
                     Intendant = "form",
+                    IsRequiredInput = true,
                     DisplaySettingId = defaultDisplayFormSettingId
                 });
                 dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
@@ -2174,6 +2177,7 @@ namespace EX.ViewModel
                     Visible = true,
                     IsSelected = false,
                     Intendant = "form",
+                    IsRequiredInput = true,
                     DisplaySettingId = defaultDisplayFormSettingId
                 });
                 dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
@@ -2184,6 +2188,7 @@ namespace EX.ViewModel
                     Visible = true,
                     IsSelected = false,
                     Intendant = "form",
+                    IsRequiredInput = true,
                     DisplaySettingId = defaultDisplayFormSettingId
                 });
                 dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
@@ -2204,6 +2209,7 @@ namespace EX.ViewModel
                     Visible = true,
                     IsSelected = false,
                     Intendant = "form",
+                    IsRequiredInput = true,
                     DisplaySettingId = defaultDisplayFormSettingId
                 });
                 dSCollumnSettingDTORepository.AddOrUpdate(new DSCollumnSettingDTO
@@ -3207,7 +3213,7 @@ namespace EX.ViewModel
                     Select(s => s.Id).FirstOrDefault();
                 addNewCollumn(_intendant, dsid, dsid);
                 updateAllSettingsForm(_intendant);
-            }, c => dSCollumnSettingsForm.Count() < 15);
+            }, c => dSCollumnSettingsForm.Count() < 16);
             saveSettingChangesForm = new RelayCommand(c =>///jcn
             {
                 var _intendant = c as string;
@@ -3621,10 +3627,12 @@ namespace EX.ViewModel
             #region Implementation command for Desctop Operation
             createVisitor = new RelayCommand(c =>
             {
-                if (editDesctopVisitor.Column4 != null &&
-                    editDesctopVisitor.Column8 != null &&
-                    editDesctopVisitor.Column9 != null
-                    && editDesctopVisitor.Column11 != null)
+
+                var columns = isRequired;
+                //.GetAllDSCollumnSettingDTOs()
+                //.Where(s => s.DisplaySettingId == SelectedDisplaySettingForm.Id);
+                var isVisitorValidate = validateInputVisitor(editDesctopVisitor, columns);
+                if (isVisitorValidate)
                 {
                     generateVisiorId = "ISMK-" + (countAllVisitors+11).ToString() + "-C";
                     createDesctopVisitor = editDesctopVisitor;
@@ -3664,10 +3672,6 @@ namespace EX.ViewModel
                                 VisitorId = _createVisitor.Id,
                                 ActionTime = DateTime.Now.ToString()
                             }));
-                        //clientExecutor.GetClient().AddStatus(mapper.Map
-                        //    <EX.Client.ServiceReference1.st>)
-
-                        //                    Visitors.Add(mapper.Map<VisitorDTO>(_createVisitor));
                         Visitors = new ObservableCollection<VisitorDTO>();
                         foreach (var v in _visitors) { Visitors.Add(mapper.Map<VisitorDTO>(v)); }
                         UpdateAllVisitorFields(visitors, _createVisitor.Id);
@@ -3683,10 +3687,12 @@ namespace EX.ViewModel
                             if (i % 2 == 0)
                             {
                                 StatusForm = "Обязательные поля";
+                                StatusFormColor = "Red";
                             }
                             else
                             {
                                 StatusForm = "";
+                                StatusFormColor = "Gray";
                             }
                             Thread.Sleep(500);
                         }
@@ -3835,6 +3841,7 @@ namespace EX.ViewModel
             });
             #endregion
         }
+
         #region Implemetation methods
         private void addNewCollumn(int dsid, int osid)
         {
@@ -3894,7 +3901,8 @@ namespace EX.ViewModel
                 DisplaySettingId = dsid,
                 Width = 100,
                 Intendant = _intendant,
-                IsSelected = true
+                IsSelected = true,
+                IsRequiredInput = false
             });
             dSCollumnSettingDTORepository.AddOrUpdate(oldSelectedCollumnSetting);
             dSCollumnSettingDTORepository.AddOrUpdate(newSelectedCollumnSetting);
@@ -4106,7 +4114,7 @@ namespace EX.ViewModel
             }
             WidthRaport = widthRaport;
         }
-        private void initLabelsForm(ObservableCollection<DSCollumnSettingDTO> _dSCollumnSettingsForm)
+        public void initLabelsForm(ObservableCollection<DSCollumnSettingDTO> _dSCollumnSettingsForm)
         {
             var sr = _dSCollumnSettingsForm.ToArray();
             //коллекция visible
@@ -4124,6 +4132,21 @@ namespace EX.ViewModel
                 catch { RowChedForm[i] = false; }
             }
             RowChedForm = rowCheckedForm;
+            //коллекция statusFormVisible
+            bool[] _isRequired = new bool[sr.Count()];
+            for (int i = 0; i < sr.Count(); i++)
+            {
+                _isRequired[i] = dSCollumnSettingsForm
+                    .Where(s => s.Id == sr[i].Id)
+                    .Select(s => s.IsRequiredInput)
+                    .FirstOrDefault();
+            }
+            for (int i = 0; i < count_form_fields; i++)
+            {
+                try { IsRequired[i] = _isRequired[i]; }
+                catch { IsRequired[i] = false; }
+            }
+            IsRequired = isRequired;
             //коллекция алиасов
             string[] _alias = new string[sr.Count()];
             for(int i = 0; i < sr.Count(); i++)
@@ -5994,6 +6017,27 @@ namespace EX.ViewModel
             PaymentStatusPresenter = "Статус Оплаты";
             PaymentStatusFontsize = 12;
             PaymentStatusForegraund = "Gray";
+        }
+        private bool validateInputVisitor(VisitorDTO editDesctopVisitor, bool[] columns)
+        {
+     //       var _columns = columns.ToArray();
+            if(columns[0] == true && editDesctopVisitor.Id == 0)  return false; 
+            else if (columns[1] == true && editDesctopVisitor.Column1 == null) return false;
+            else if (columns[2] == true && editDesctopVisitor.Column2 == null) return false;
+            else if (columns[3] == true && editDesctopVisitor.Column3 == null) return false;
+            else if (columns[4] == true && editDesctopVisitor.Column4 == null) return false;
+            else if (columns[5] == true && editDesctopVisitor.Column5 == null) return false;
+            else if (columns[6] == true && editDesctopVisitor.Column6 == null) return false;
+            else if (columns[7] == true && editDesctopVisitor.Column7 == null) return false;
+            else if (columns[8] == true && editDesctopVisitor.Column8 == null) return false;
+            else if (columns[9] == true && editDesctopVisitor.Column9 == null) return false;
+            else if (columns[10] == true && editDesctopVisitor.Column10 == null) return false;
+            else if (columns[11] == true && editDesctopVisitor.Column11 == null) return false;
+            else if (columns[12] == true && editDesctopVisitor.Column12 == null) return false;
+            else if (columns[13] == true && editDesctopVisitor.Column13 == null) return false;
+            else if (columns[14] == true && editDesctopVisitor.Column14 == null) return false;
+            else if (columns[15] == true && editDesctopVisitor.Column15 == null) return false;
+            return true;
         }
 
         #endregion

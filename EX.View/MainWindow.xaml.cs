@@ -344,5 +344,25 @@ private void Button_Click_3(object sender, RoutedEventArgs e)
         {
 
         }
+
+        //private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        //{
+        //    EX.ViewModel.MainVM vm = this.DataContext as EX.ViewModel.MainVM;
+        //    var ds = vm
+        //        .DisplaySettingsForm
+        //        .Where(s => s.Intendant == "form")
+        //        .Where(s => s.IsSelected = true)
+        //        .FirstOrDefault();
+
+        //    var dsc = vm
+        //        .DSCollumnSettingDTORepository
+        //        .GetAllDSCollumnSettingDTOs()
+        //        .Where(s => s.Intendant == "form")
+        //        .Where(s=>s.DisplaySettingId == ds.Id);
+
+        //    vm.initLabelsForm(new System.Collections.ObjectModel
+        //        .ObservableCollection<Model.DTO.Setting
+        //        .DSCollumnSettingDTO>(dsc));
+        //}
     }
 }

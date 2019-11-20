@@ -24,6 +24,8 @@ namespace EX.Model.DTO.Setting
         string intendant;
         [DataMember]
         int displaySettingId;
+        [DataMember]
+        bool isRequiredInput;
 
         [DataMember]
         public int Id
@@ -87,6 +89,16 @@ namespace EX.Model.DTO.Setting
             get { return displaySettingId; }
             set { displaySettingId = value;
                 OnPropertyChanged(nameof(DisplaySettingId));
+            }
+        }
+        [DataMember]
+        public bool IsRequiredInput
+        {
+            get { return isRequiredInput; }
+            set
+            {
+                isRequiredInput = value;
+                OnPropertyChanged(nameof(IsRequiredInput));
             }
         }
 
