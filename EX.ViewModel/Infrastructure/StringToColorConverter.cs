@@ -25,6 +25,9 @@ namespace EX.ViewModel.Infrastructure
                 case "FOC":
                     color = "Aqua";
                     break;
+                case "FREE":
+                    color = "Aqua";
+                    break;
                 case "CXLD":
                     color = "DeepSkyBlue";
                     break;

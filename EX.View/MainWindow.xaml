@@ -36,7 +36,7 @@
             VerticalAlignment="Stretch" 
             Grid.ColumnSpan="2">
             <TabItem Header="Главная" KeyUp="TabItem_KeyUp">
-                
+
                 <!--<TextBox.InputBindings>
                                         <KeyBinding Key="Down" Command="{Binding ClickKeyDownInSearch}"/>
                                     </TextBox.InputBindings>-->
@@ -174,7 +174,7 @@
                                     Text="{Binding SearchVisitor, 
                                     Mode=TwoWay, 
                                     UpdateSourceTrigger=PropertyChanged}" KeyUp="stbo_KeyUp_1" >
-                                    
+
                                     <!--<TextBox.InputBindings>
                                         <KeyBinding Key="Down" Command="{Binding ClickKeyDownInSearch}"/>
                                     </TextBox.InputBindings>-->
@@ -194,6 +194,7 @@
                                 <Grid
                                     Grid.Row="1"
                                     >
+
 
 
                                     <ListBox      
@@ -791,8 +792,8 @@
                         </DataGrid>
                     </Grid>
                     <StackPanel Grid.Column="2">
-                        
-                        
+
+
                         <Label 
                             FontSize="15"
                                 Content="Дата Актуализации"
@@ -802,7 +803,7 @@
                                 Margin="0"
                                 Text="{Binding CurrentTime}"
                                 Height="25"/>
-                        
+
                         <StackPanel Orientation="Horizontal" >
                             <Label 
                                 FontSize="15"
@@ -868,7 +869,7 @@
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"
                                 IsEnabled="False"/>
-                                                
+
                         <StackPanel Orientation="Horizontal">
                             <Label 
                             FontSize="15"
@@ -906,7 +907,7 @@
                                 StaticResource boolToVisibilityConverter}}"
                                 IsDropDownOpen="{Binding IsCombo1Collection}"
                             IsTextSearchCaseSensitive="False"/>
-                        
+
                         <StackPanel Orientation="Horizontal">
                             <Label 
                             FontSize="15"
@@ -971,7 +972,7 @@
                                 Binding RowChedForm[4],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                        
+
                         <StackPanel Orientation="Horizontal" >
                             <Label 
                                 FontSize="15"
@@ -1036,7 +1037,7 @@
                                 Binding RowChedForm[6],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                        
+
                         <StackPanel Orientation="Horizontal" >
                             <Label 
                                 FontSize="15"
@@ -1067,7 +1068,7 @@
                                 Binding RowChedForm[7],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                        
+
                         <StackPanel Orientation="Horizontal">
                             <Label 
                                 FontSize="15"
@@ -1098,7 +1099,7 @@
                                 Binding RowChedForm[8],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                        
+
                         <StackPanel Orientation="Horizontal">
                             <Label 
                                 FontSize="15"
@@ -1129,7 +1130,7 @@
                                 Binding RowChedForm[9],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                        
+
                         <StackPanel Orientation="Horizontal">
                             <Label 
                                 FontSize="15"
@@ -1191,7 +1192,7 @@
                                 Binding RowChedForm[11],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                        
+
                         <StackPanel Orientation="Horizontal">
                             <Label 
                                 FontSize="15"
@@ -1222,7 +1223,7 @@
                                 Binding RowChedForm[12],
                                 Converter={
                                 StaticResource boolToVisibilityConverter}}"/>
-                        
+
 
                         <StackPanel Orientation="Horizontal">
                             <Label 
@@ -1654,7 +1655,7 @@
                                                             }" 
                                                             IsEnabled="{Binding Visible}"
                                                             />
-                                                        
+
                                                     </Grid>
                                                 </StackPanel>
                                             </DataTemplate>
@@ -2331,7 +2332,7 @@
                                             IsEditable="True"
                                             ItemsSource="{Binding Combo2Collection}"
                                             SelectedItem="{
-                                            Binding SelectedRaportRegistredCategory}">
+                                            Binding SelectedRaportRegistredCategory}" Margin="3,2,-3,-2">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger  EventName="SelectionChanged">
                                                     <i:InvokeCommandAction 
@@ -2410,7 +2411,7 @@
                                     <DataGrid 
                                         Margin="5"
                                         AutoGenerateColumns="False"
-                                        ItemsSource="{Binding RaportRegisteredVisitors}">
+                                        ItemsSource="{Binding RaportRegisteredVisitors}" Grid.ColumnSpan="2">
                                         <DataGrid.Resources>
                                             <vmi:BindingProxy 
                                                 x:Key="ColumnChecked1Raport"

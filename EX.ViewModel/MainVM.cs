@@ -755,33 +755,34 @@ namespace EX.ViewModel
         #region Collection for Desctop Operation
 
         string[] regionCollection = {
-            "Одеськая",
-            "Дніпропетровська",
-            "Чернігівська",
-            "Харьківская",
-            "Житомирська",
-            "Полтавська",
-            "Херсонська",
-            "Київська",
-            "Запорізька",
-            "Луганська", 
-            "Донецька",
-            "Вінницька",
-            "Крим",
-            "Миколаївська",
-            "Кировоградська",
-            "Сумська",
-            "Львівська",
-            "Черкаська",
-            "Хмельницька",
-            "Волинська",
-            "Рівненська",
-            "Івано-Франківська",
-            "Тернопільська",
-            "Закарпатська",
-            "Чернівецька",
-            "Молдова",
-            "Грузія"
+            //"Одеськая",
+            //"Дніпропетровська",
+            //"Чернігівська",
+            //"Харьківская",
+            //"Житомирська",
+            //"Полтавська",
+            //"Херсонська",
+            //"Київська",
+            //"Запорізька",
+            //"Луганська", 
+            //"Донецька",
+            //"Вінницька",
+            //"Крим",
+            //"Миколаївська",
+            //"Кировоградська",
+            //"Сумська",
+            //"Львівська",
+            //"Черкаська",
+            //"Хмельницька",
+            //"Волинська",
+            //"Рівненська",
+            //"Івано-Франківська",
+            //"Тернопільська",
+            //"Закарпатська",
+            //"Чернівецька",
+            //"Молдова",
+            //"Грузія"
+            "PAID", "UNPAID","FREE"
         };
 
 
@@ -2352,8 +2353,9 @@ namespace EX.ViewModel
 //интервеционист
 //интерн
 //студент
-                "Кардиохирург", "Кардиолог", "Анестезиолог", "Реаниматолог",
-                "Перфузиолог", "Педиатр", "Аритмолог", "Интервеционист", "Интерн","Cтудент"
+                //"Кардиохирург", "Кардиолог", "Анестезиолог", "Реаниматолог",
+                //"Перфузиолог", "Педиатр", "Аритмолог", "Интервеционист", "Интерн","Cтудент"
+                "DELEGATE", "ORGANIZER", "SPEAKER", "SPEX GUEST, PERSON", "MEDIA PARTNER", "GUEST"
             });
             combo3Collection = new ObservableCollection<string>(new List<string>
             {
@@ -2649,6 +2651,7 @@ namespace EX.ViewModel
                 p.Clear();
             });
             #endregion
+            
             #region Implementation command for Settings
             saveSettingToFile = new RelayCommand(c =>
             {
@@ -3627,7 +3630,7 @@ namespace EX.ViewModel
             #region Implementation command for Desctop Operation
             createVisitor = new RelayCommand(c =>
             {
-
+                Reconnecting();
                 var columns = isRequired;
                 //.GetAllDSCollumnSettingDTOs()
                 //.Where(s => s.DisplaySettingId == SelectedDisplaySettingForm.Id);
@@ -3640,7 +3643,7 @@ namespace EX.ViewModel
                     IsShowChanger = false;
                     createDesctopVisitor.Column1 = generateVisiorId;
                     createDesctopVisitor.Column12 = DateTime.Now.ToString(); // time collumn
-                    createDesctopVisitor.Column13 = "Iterator Star Mikronics Conference";
+                    createDesctopVisitor.Column13 = "";
                     if (dataMode != "Клиент службы баз данных")
                     {
                         var _createVisitor = visitorRepositoryDTO
@@ -3702,14 +3705,16 @@ namespace EX.ViewModel
             }, c => canExecuteCreateVisitor);
             editVisitor = new RelayCommand(c =>
             {
+
                 IsShowChanger = true;
-                if (selectDesctopVisitor == null)
-                //                if (selectDesctopVisitor == null || selectDesctopVisitor.Column4 == null)
+   //             if (selectDesctopVisitor == null)
+                                if (selectDesctopVisitor == null || selectDesctopVisitor.Column4 == null)
                 {
 
                 }
                 else
                 {
+                    Reconnecting();
                     EditDesctopVisitor = selectDesctopVisitor;
                     CanExecuteCreateVisitor = false;
                     CanExecuteEditVisitor = false;
@@ -4230,7 +4235,7 @@ namespace EX.ViewModel
                 Thread.Sleep(1000);
             }
         }
-        private void updateDataAsinc()
+        private void updateDsataAinc()
         {
             while (true)
             {
@@ -4361,9 +4366,23 @@ namespace EX.ViewModel
                 {                  
                     if (find == false)
                     {
-                        var _barcodeContainVisitors = clientExecutor.GetClient().
+                        Client.ServiceReference1.VisitorDTO[] _barcodeContainVisitors;
+                        try
+                        {
+                            _barcodeContainVisitors = clientExecutor.GetClient().
                                    GetAllVisitors().
                                    Where(s => s.Column1.ToUpper() == searchVisitor.ToUpper()).ToArray();
+                        }
+                        catch
+                        {
+                            Reconnecting();
+                            _barcodeContainVisitors = clientExecutor.GetClient().
+                                   GetAllVisitors().
+                                   Where(s => s.Column1.ToUpper() == searchVisitor.ToUpper()).ToArray();
+                        }
+                        //_barcodeContainVisitors = clientExecutor.GetClient().
+                        //           GetAllVisitors().
+                        //           Where(s => s.Column1.ToUpper() == searchVisitor.ToUpper()).ToArray();
                         if (_barcodeContainVisitors.Count() > 0)
                         {
                             var barcodeContainVisitor = _barcodeContainVisitors.
@@ -4670,14 +4689,16 @@ namespace EX.ViewModel
             string ve = visitor.Column13;
             string vc = visitor.Column11;
 
+            if (vb.Equals(" ")||vb.Equals("")||vb==null) { vb = "none"; }
+
             pv = vn + "\n" + vs;
             pvf = vn;
             pvl = vs;
 
             string vis = vn + "\n" + vs;
 
-            Run runEvent = new Run(ve);
-            Paragraph paragraphEvent = new Paragraph(runEvent);
+            //Run runEvent = new Run(ve);
+            //Paragraph paragraphEvent = new Paragraph(runEvent);
 
             Run runName = new Run(vis.ToUpper());
             Paragraph paragraphName = new Paragraph(runName);
@@ -4685,38 +4706,51 @@ namespace EX.ViewModel
             Run runCompany = new Run(vc.ToUpper());
             Paragraph paragraphCompany = new Paragraph(runCompany);
 
-            Paragraph paragraphIm = new Paragraph();
-            BlockUIContainer buk = new BlockUIContainer();
+            Run runAppCode = new Run(ve);
+            Paragraph paragraphAppCode = new Paragraph(runAppCode);
 
-            paragraphEvent.LineStackingStrategy = LineStackingStrategy.MaxHeight;
-            paragraphEvent.FontFamily = new System.Windows.Media.FontFamily("Verdana");
-            paragraphEvent.TextAlignment = TextAlignment.Center;
-            paragraphEvent.FontSize = 15;
-            paragraphEvent.FontWeight = FontWeight.FromOpenTypeWeight(300);
-            paragraphEvent.Padding = new Thickness(5);
-            paragraphEvent.Margin = new Thickness(0);
+            //Paragraph paragraphIm = new Paragraph();
+            //BlockUIContainer buk = new BlockUIContainer();
+
+            //paragraphEvent.LineStackingStrategy = LineStackingStrategy.MaxHeight;
+            //paragraphEvent.FontFamily = new System.Windows.Media.FontFamily("Verdana");
+            //paragraphEvent.TextAlignment = TextAlignment.Center;
+            //paragraphEvent.FontSize = 15;
+            //paragraphEvent.FontWeight = FontWeight.FromOpenTypeWeight(300);
+            //paragraphEvent.Padding = new Thickness(5);
+            //paragraphEvent.Margin = new Thickness(0);
 
             paragraphName.LineStackingStrategy = LineStackingStrategy.MaxHeight;
             paragraphName.FontFamily = new System.Windows.Media.FontFamily("Verdana");
             paragraphName.TextAlignment = TextAlignment.Center;
-            paragraphName.FontSize = 25;
-            paragraphName.FontWeight = FontWeight.FromOpenTypeWeight(900);
+            paragraphName.FontSize = 23;
+            paragraphName.FontWeight = FontWeight.FromOpenTypeWeight(400);
             paragraphName.Padding = new Thickness(0);
             paragraphName.Margin = new Thickness(5);
 
             paragraphCompany.LineStackingStrategy = LineStackingStrategy.MaxHeight;
             paragraphCompany.FontFamily = new System.Windows.Media.FontFamily("Verdana");
             paragraphCompany.TextAlignment = TextAlignment.Center;
-            paragraphCompany.FontSize = 15;
-            paragraphCompany.FontWeight = FontWeight.FromOpenTypeWeight(300);
+            paragraphCompany.FontSize = 23;
+            paragraphCompany.FontWeight = FontWeight.FromOpenTypeWeight(900);
             paragraphCompany.Padding = new Thickness(5);
             paragraphCompany.Margin = new Thickness(0);
 
+            paragraphAppCode.LineStackingStrategy = LineStackingStrategy.MaxHeight;
+            paragraphAppCode.FontFamily = new System.Windows.Media.FontFamily("Verdana");
+            paragraphAppCode.TextAlignment = TextAlignment.Right;            ;
+            paragraphAppCode.FontSize = 14;
+            paragraphAppCode.FontWeight = FontWeight.FromOpenTypeWeight(400);
+            paragraphAppCode.Padding = new Thickness(5);
+            paragraphAppCode.Margin = new Thickness(20);
+
+
             FlowDocument flowDocument = new FlowDocument();
 
-            flowDocument.Blocks.Add(paragraphEvent);
+ //           flowDocument.Blocks.Add(paragraphEvent);
             flowDocument.Blocks.Add(paragraphName);
             flowDocument.Blocks.Add(paragraphCompany);
+            flowDocument.Blocks.Add(paragraphAppCode);
 
             flowDocument.PagePadding = new Thickness(10);
             flowDocument.PageWidth = printDialog.PrintableAreaWidth;
@@ -4764,9 +4798,9 @@ namespace EX.ViewModel
                 Stretch = Stretch.None,
                 StretchDirection = StretchDirection.Both
             };
-            buk.Child = image;
-            buk.Padding = new Thickness(5);
-            flowDocument.Blocks.Add(buk);
+            //buk.Child = image;
+            //buk.Padding = new Thickness(5);
+            //flowDocument.Blocks.Add(buk);
 
             IDocumentPaginatorSource source = flowDocument;
             printDialog.PrintDocument(source.DocumentPaginator, "print Visitor - "
@@ -5062,6 +5096,11 @@ namespace EX.ViewModel
                     PaymentStatusFontsize = 36;
                     PaymentStatusForegraund = "Blue";
                     break;
+                case "FREE":
+                    PaymentStatusPresenter = "FREE";
+                    PaymentStatusFontsize = 36;
+                    PaymentStatusForegraund = "Blue";
+                    break;
                 case "CXLD":
                     PaymentStatusPresenter = "CXLD";
                     PaymentStatusFontsize = 36;
@@ -5074,52 +5113,57 @@ namespace EX.ViewModel
                     break;
             }
 
-            if (editDesctopVisitor.Column4.Equals("ORGANIZER"))
+            if (editDesctopVisitor.Column4.ToUpper().Equals("ORGANIZER"))
             {
                 BagePresenter = "";
                 BagePresenterBackGround = "Blue";
             }
-            else if (editDesctopVisitor.Column4.Equals("SPEX GUESTS"))
-            {
-                BagePresenter = "";
-                BagePresenterBackGround = "Blue";
-            }
-            else if (editDesctopVisitor.Column4.Equals("GUEST"))
-            {
-                BagePresenter = "";
-                BagePresenterBackGround = "Blue";
-            }
-            else if (editDesctopVisitor.Column4.Equals("PRESS PASS"))
-            {
-                BagePresenter = "";
-                BagePresenterBackGround = "Yellow";
-            }
-            else if (editDesctopVisitor.Column4.Equals("MEDIA"))
-            {
-                BagePresenter = "";
-                BagePresenterBackGround = "Blue";
-            }
-            else if (editDesctopVisitor.Column4.Equals("MEDIA"))
-            {
-                BagePresenter = "";
-                BagePresenterBackGround = "Blue";
-            }
-            else if (editDesctopVisitor.Column4.Equals("SPEAKER"))
-            {
-                BagePresenter = "";
-                BagePresenterBackGround = "Red";
-            }
-            else if (editDesctopVisitor.Column4.Trim().Equals("3 DAY PACKAGE"))
+            else if (editDesctopVisitor.Column4.ToUpper().Equals("SPEX GUEST, PERSON"))
             {
                 BagePresenter = "";
                 BagePresenterBackGround = "#FF00BFFF";
             }
-            else if (editDesctopVisitor.Column4.Trim().Equals("2 DAY PACKAGE"))
+            else if (editDesctopVisitor.Column4.ToUpper().Equals("GUEST"))
+            {
+                BagePresenter = "";
+                BagePresenterBackGround = "Green";
+            }
+            else if (editDesctopVisitor.Column4.ToUpper().Equals("PRESS PASS"))
+            {
+                BagePresenter = "";
+                BagePresenterBackGround = "Yellow";
+            }
+            else if (editDesctopVisitor.Column4.ToUpper().Equals("MEDIA PARTNER"))
+            {
+                BagePresenter = "";
+                BagePresenterBackGround = "Blue";
+            }
+            else if (editDesctopVisitor.Column4.ToUpper().Equals("MEDIA"))
+            {
+                BagePresenter = "";
+                BagePresenterBackGround = "Yellow";
+            }
+            else if (editDesctopVisitor.Column4.ToUpper().Equals("SPEAKER"))
+            {
+                BagePresenter = "";
+                BagePresenterBackGround = "Red";
+            }
+            else if (editDesctopVisitor.Column4.Trim().ToUpper().Equals("3 DAY PACKAGE"))
+            {
+                BagePresenter = "";
+                BagePresenterBackGround = "#FF00BFFF";
+            }
+            else if (editDesctopVisitor.Column4.Trim().ToUpper().Equals("2 DAY PACKAGE"))
             {
                 BagePresenter = "";
                 BagePresenterBackGround = "#FF9400D3";
             }
-            else if (editDesctopVisitor.Column4.Trim().Equals("FOCUS DAY"))
+            else if (editDesctopVisitor.Column4.Trim().ToUpper().Equals("DELEGATE"))
+            {
+                BagePresenter = "";
+                BagePresenterBackGround = "#FF9400D3";
+            }
+            else if (editDesctopVisitor.Column4.Trim().ToUpper().Equals("FOCUS DAY"))
             {
                 BagePresenter = "";
                 BagePresenterBackGround = "Green";
@@ -5303,7 +5347,7 @@ namespace EX.ViewModel
                             RaportAllVisitors = new ObservableCollection<VisitorDTO>
                                  (visitorRepositoryDTO.GetAllVisitors()
 //                                  .Where(s => s.Column4 == selectedRaportAllCategory));
-                                  .Where(s => s.Column4.Contains(textRaportCategory)));
+                                  .Where(s => s.Column4.ToUpper().Contains(textRaportCategory.ToUpper())));
                         }
                         if (selectedRaportAllPaymentStatus == null)
                         {
