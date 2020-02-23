@@ -4723,7 +4723,7 @@ namespace EX.ViewModel
             paragraphName.LineStackingStrategy = LineStackingStrategy.MaxHeight;
             paragraphName.FontFamily = new System.Windows.Media.FontFamily("Verdana");
             paragraphName.TextAlignment = TextAlignment.Center;
-            paragraphName.FontSize = 23;
+            paragraphName.FontSize = 18;
             paragraphName.FontWeight = FontWeight.FromOpenTypeWeight(400);
             paragraphName.Padding = new Thickness(0);
             paragraphName.Margin = new Thickness(5);
@@ -4731,7 +4731,7 @@ namespace EX.ViewModel
             paragraphCompany.LineStackingStrategy = LineStackingStrategy.MaxHeight;
             paragraphCompany.FontFamily = new System.Windows.Media.FontFamily("Verdana");
             paragraphCompany.TextAlignment = TextAlignment.Center;
-            paragraphCompany.FontSize = 23;
+            paragraphCompany.FontSize = 18;
             paragraphCompany.FontWeight = FontWeight.FromOpenTypeWeight(900);
             paragraphCompany.Padding = new Thickness(5);
             paragraphCompany.Margin = new Thickness(0);
@@ -5191,7 +5191,7 @@ namespace EX.ViewModel
                         {
                             RaportRegisteredVisitors = new ObservableCollection<VisitorDTO>
                                  (visitorRepositoryDTO.GetAllVisitors()
-                                  .Where(s => s.Column4 == selectedRaportRegistredCategory)
+                                  .Where(s => s.Column4.ToUpper() == selectedRaportRegistredCategory.ToUpper())
                                   .Where(s => s.CurrentStatus == "registered" ||
                                          s.CurrentStatus == "actual"));
                         }
@@ -5203,7 +5203,7 @@ namespace EX.ViewModel
                         {
                             RaportRegisteredVisitors = new ObservableCollection<VisitorDTO>
                                 (raportRegisteredVisitors
-                                .Where(s => s.Column2 == selectedRaportRegistredPaymentStatus)
+                                .Where(s => s.Column2.ToUpper() == selectedRaportRegistredPaymentStatus.ToUpper())
                                 .Where(s => s.CurrentStatus == "registered" ||
                                          s.CurrentStatus == "actual"));
                         }
@@ -5215,7 +5215,7 @@ namespace EX.ViewModel
                         {
                             RaportRegisteredVisitors = new ObservableCollection<VisitorDTO>
                                 (raportRegisteredVisitors
-                                .Where(s => s.Column6 == selectedRaportRegistredChanged)
+                                .Where(s => s.Column6.ToUpper() == selectedRaportRegistredChanged.ToUpper())
                                 .Where(s => s.CurrentStatus == "registered" ||
                                        s.CurrentStatus == "actual"));
                         }
@@ -5232,7 +5232,7 @@ namespace EX.ViewModel
                         {
                             RaportActualVisitors = new ObservableCollection<VisitorDTO>
                                  (visitorRepositoryDTO.GetAllVisitors()
-                                  .Where(s => s.Column4 == selectedRaportActualCategory)
+                                  .Where(s => s.Column4.ToUpper() == selectedRaportActualCategory.ToUpper())
                                   .Where(s => s.CurrentStatus == "actual"));
                         }
                         if (selectedRaportActualPaymentStatus == null)
@@ -5243,7 +5243,7 @@ namespace EX.ViewModel
                         {
                             RaportActualVisitors = new ObservableCollection<VisitorDTO>
                                 (raportActualVisitors
-                                .Where(s => s.Column2 == selectedRaportActualPaymentStatus)
+                                .Where(s => s.Column2.ToUpper() == selectedRaportActualPaymentStatus.ToUpper())
                                 .Where(s => s.CurrentStatus == "actual"));
                         }
                         if (selectedRaportActualChanged == null)
@@ -5254,7 +5254,7 @@ namespace EX.ViewModel
                         {
                             RaportActualVisitors = new ObservableCollection<VisitorDTO>
                                 (raportActualVisitors
-                                .Where(s => s.Column6 == selectedRaportActualChanged)
+                                .Where(s => s.Column6.ToUpper() == selectedRaportActualChanged.ToUpper())
                                 .Where(s => s.CurrentStatus == "actual"));
                         }
                         CountRaportActualVisitors = raportActualVisitors.Count();
@@ -5270,7 +5270,7 @@ namespace EX.ViewModel
                         {
                             RaportUnActualVisitors = new ObservableCollection<VisitorDTO>
                                  (visitorRepositoryDTO.GetAllVisitors()
-                                  .Where(s => s.Column4 == selectedRaportUnActualCategory)
+                                  .Where(s => s.Column4.ToUpper() == selectedRaportUnActualCategory.ToUpper())
                                   .Where(s => s.CurrentStatus == "registered"));
                         }
                         if (selectedRaportUnActualPaymentStatus == null)
@@ -5281,7 +5281,7 @@ namespace EX.ViewModel
                         {
                             RaportUnActualVisitors = new ObservableCollection<VisitorDTO>
                                 (raportUnActualVisitors
-                                .Where(s => s.Column2 == selectedRaportUnActualPaymentStatus)
+                                .Where(s => s.Column2.ToUpper() == selectedRaportUnActualPaymentStatus.ToUpper())
                                 .Where(s => s.CurrentStatus == "registered"));
                         }
                         if (selectedRaportUnActualChanged == null)
@@ -5292,7 +5292,7 @@ namespace EX.ViewModel
                         {
                             RaportUnActualVisitors = new ObservableCollection<VisitorDTO>
                                 (raportUnActualVisitors
-                                .Where(s => s.Column6 == selectedRaportUnActualChanged)
+                                .Where(s => s.Column6.ToUpper() == selectedRaportUnActualChanged.ToUpper())
                                 .Where(s => s.CurrentStatus == "registered"));
                         }
                         CountRaportUnActualVisitors = raportUnActualVisitors.Count();
@@ -5308,7 +5308,7 @@ namespace EX.ViewModel
                         {
                             RaportCreateVisitors = new ObservableCollection<VisitorDTO>
                                  (visitorRepositoryDTO.GetAllVisitors()
-                                  .Where(s => s.Column4 == selectedRaportCreateCategory)
+                                  .Where(s => s.Column4.ToUpper() == selectedRaportCreateCategory.ToUpper())
                                   .Where(s => s.CurrentStatus == "create"));
                         }
                         if (selectedRaportCreatePaymentStatus == null)
@@ -5319,7 +5319,7 @@ namespace EX.ViewModel
                         {
                             RaportCreateVisitors = new ObservableCollection<VisitorDTO>
                                 (raportCreateVisitors
-                                .Where(s => s.Column2 == selectedRaportCreatePaymentStatus)
+                                .Where(s => s.Column2.ToUpper() == selectedRaportCreatePaymentStatus.ToUpper())
                                 .Where(s => s.CurrentStatus == "create"));
                         }
                         if (selectedRaportCreateChanged == null)
@@ -5330,13 +5330,13 @@ namespace EX.ViewModel
                         {
                             RaportCreateVisitors = new ObservableCollection<VisitorDTO>
                                 (raportCreateVisitors
-                                .Where(s => s.Column6 == selectedRaportCreateChanged)
+                                .Where(s => s.Column6.ToUpper() == selectedRaportCreateChanged.ToUpper())
                                 .Where(s => s.CurrentStatus == "create"));
                         }
                         CountRaportCreateVisitors = raportCreateVisitors.Count();
                         break;
                     case "all":
-                        if (textRaportCategory == null)
+                        if (selectedRaportAllCategory == null)
  //                           if (selectedRaportAllCategory == null
                         {
                             RaportAllVisitors = new ObservableCollection<VisitorDTO>
@@ -5346,8 +5346,8 @@ namespace EX.ViewModel
                         {
                             RaportAllVisitors = new ObservableCollection<VisitorDTO>
                                  (visitorRepositoryDTO.GetAllVisitors()
-//                                  .Where(s => s.Column4 == selectedRaportAllCategory));
-                                  .Where(s => s.Column4.ToUpper().Contains(textRaportCategory.ToUpper())));
+//                                  .Where(s => s.Column4.ToUpper() == selectedRaportAllCategory.ToUpper()));
+                                  .Where(s => s.Column4.ToUpper().Contains(selectedRaportAllCategory.ToUpper())));
                         }
                         if (selectedRaportAllPaymentStatus == null)
                         {
@@ -5358,7 +5358,7 @@ namespace EX.ViewModel
                             RaportAllVisitors = new ObservableCollection<VisitorDTO>
                                 (raportAllVisitors
 //                                .Where(s => s.Column2 == selectedRaportAllPaymentStatus));
-                                .Where(s => s.Column2.Contains(selectedRaportAllPaymentStatus)));
+                                .Where(s => s.Column2.ToUpper().Contains(selectedRaportAllPaymentStatus.ToUpper())));
                         }
                         if (selectedRaportAllChanged == null)
                         {
@@ -5393,7 +5393,7 @@ namespace EX.ViewModel
                         else
                         {
                             _visitors = _visitors
-                                  .Where(s => s.Column4 == selectedRaportRegistredCategory)
+                                  .Where(s => s.Column4.ToUpper() == selectedRaportRegistredCategory.ToUpper())
                                   .Where(s => s.CurrentStatus == "registered" ||
                                          s.CurrentStatus == "actual");
                         }
@@ -5406,7 +5406,7 @@ namespace EX.ViewModel
                         {
                             RaportRegisteredVisitors = new ObservableCollection<VisitorDTO>
                                 (raportRegisteredVisitors
-                                .Where(s => s.Column2 == selectedRaportRegistredPaymentStatus)
+                                .Where(s => s.Column2.ToUpper() == selectedRaportRegistredPaymentStatus.ToUpper())
                                 .Where(s => s.CurrentStatus == "registered" ||
                                          s.CurrentStatus == "actual"));
                         }
@@ -5418,7 +5418,7 @@ namespace EX.ViewModel
                         {
                             RaportRegisteredVisitors = new ObservableCollection<VisitorDTO>
                                 (raportRegisteredVisitors
-                                .Where(s => s.Column6 == selectedRaportRegistredChanged)
+                                .Where(s => s.Column6.ToUpper() == selectedRaportRegistredChanged.ToUpper())
                                 .Where(s => s.CurrentStatus == "registered" ||
                                        s.CurrentStatus == "actual"));
                         }
@@ -5433,7 +5433,7 @@ namespace EX.ViewModel
                         else
                         {
                             _visitors = _visitors
-                                  .Where(s => s.Column4 == selectedRaportActualCategory)
+                                  .Where(s => s.Column4.ToUpper() == selectedRaportActualCategory.ToUpper())
                                   .Where(s => s.CurrentStatus == "actual");
                         }
                         RaportActualVisitors = new ObservableCollection<VisitorDTO>(_visitors);
@@ -5445,7 +5445,7 @@ namespace EX.ViewModel
                         {
                             RaportActualVisitors = new ObservableCollection<VisitorDTO>
                                 (raportActualVisitors
-                                .Where(s => s.Column2 == selectedRaportActualPaymentStatus)
+                                .Where(s => s.Column2.ToUpper() == selectedRaportActualPaymentStatus.ToUpper())
                                 .Where(s => s.CurrentStatus == "actual"));
                         }
                         if (selectedRaportActualChanged == null)
@@ -5456,7 +5456,7 @@ namespace EX.ViewModel
                         {
                             RaportActualVisitors = new ObservableCollection<VisitorDTO>
                                 (raportActualVisitors
-                                .Where(s => s.Column6 == selectedRaportActualChanged)
+                                .Where(s => s.Column6.ToUpper() == selectedRaportActualChanged.ToUpper())
                                 .Where(s => s.CurrentStatus == "actual"));
                         }
                         CountRaportActualVisitors = raportActualVisitors.Count();
@@ -5470,7 +5470,7 @@ namespace EX.ViewModel
                         else
                         {
                             _visitors = _visitors
-                                  .Where(s => s.Column4 == selectedRaportUnActualCategory)
+                                  .Where(s => s.Column4.ToUpper() == selectedRaportUnActualCategory.ToUpper())
                                   .Where(s => s.CurrentStatus == "registered");
                         }
                         RaportUnActualVisitors = new ObservableCollection<VisitorDTO>(_visitors);
@@ -5482,7 +5482,7 @@ namespace EX.ViewModel
                         {
                             RaportUnActualVisitors = new ObservableCollection<VisitorDTO>
                                 (raportUnActualVisitors
-                                .Where(s => s.Column2 == selectedRaportUnActualPaymentStatus)
+                                .Where(s => s.Column2.ToUpper() == selectedRaportUnActualPaymentStatus.ToUpper())
                                 .Where(s => s.CurrentStatus == "registered"));
                         }
                         if (selectedRaportUnActualChanged == null)
@@ -5493,7 +5493,7 @@ namespace EX.ViewModel
                         {
                             RaportUnActualVisitors = new ObservableCollection<VisitorDTO>
                                 (raportUnActualVisitors
-                                .Where(s => s.Column6 == selectedRaportUnActualChanged)
+                                .Where(s => s.Column6.ToUpper() == selectedRaportUnActualChanged.ToUpper())
                                 .Where(s => s.CurrentStatus == "registered"));
                         }
                         CountRaportUnActualVisitors = raportUnActualVisitors.Count();
@@ -5507,7 +5507,7 @@ namespace EX.ViewModel
                         else
                         {
                             _visitors = _visitors
-                                  .Where(s => s.Column4 == selectedRaportCreateCategory)
+                                  .Where(s => s.Column4.ToUpper() == selectedRaportCreateCategory.ToUpper())
                                   .Where(s => s.CurrentStatus == "create");
                         }
                         RaportCreateVisitors = new ObservableCollection<VisitorDTO>(_visitors);
@@ -5519,7 +5519,7 @@ namespace EX.ViewModel
                         {
                             RaportCreateVisitors = new ObservableCollection<VisitorDTO>
                                 (raportCreateVisitors
-                                .Where(s => s.Column2 == selectedRaportCreatePaymentStatus)
+                                .Where(s => s.Column2.ToUpper() == selectedRaportCreatePaymentStatus.ToUpper())
                                 .Where(s => s.CurrentStatus == "create"));
                         }
                         if (selectedRaportCreateChanged == null)
@@ -5530,7 +5530,7 @@ namespace EX.ViewModel
                         {
                             RaportCreateVisitors = new ObservableCollection<VisitorDTO>
                                 (raportCreateVisitors
-                                .Where(s => s.Column6 == selectedRaportCreateChanged)
+                                .Where(s => s.Column6.ToUpper() == selectedRaportCreateChanged.ToUpper())
                                 .Where(s => s.CurrentStatus == "create"));
                         }
                         CountRaportCreateVisitors = raportCreateVisitors.Count();
@@ -5544,7 +5544,7 @@ namespace EX.ViewModel
                         {
                             _visitors = _visitors
       //                          .Where(s => s.Column4 == selectedRaportAllCategory);
-                                  .Where(s => s.Column4.Contains(selectedRaportAllCategory));
+                                  .Where(s => s.Column4.ToUpper().Contains(selectedRaportAllCategory.ToUpper()));
                         }
                         RaportAllVisitors = new ObservableCollection<VisitorDTO>(_visitors);
                         if (selectedRaportAllPaymentStatus == null)
@@ -5556,7 +5556,7 @@ namespace EX.ViewModel
                             RaportAllVisitors = new ObservableCollection<VisitorDTO>
                                 (raportAllVisitors
  //                               .Where(s => s.Column2 == selectedRaportAllPaymentStatus));
-                                .Where(s => s.Column2.Contains(selectedRaportAllPaymentStatus)));
+                                .Where(s => s.Column2.ToUpper().Contains(selectedRaportAllPaymentStatus.ToUpper())));
                         }
                         if (selectedRaportAllChanged == null)
                         {
@@ -5567,7 +5567,7 @@ namespace EX.ViewModel
                             RaportAllVisitors = new ObservableCollection<VisitorDTO>
                                 (raportAllVisitors
  //                               .Where(s => s.Column6 == selectedRaportAllChanged));
-                                .Where(s => s.Column6.Contains(selectedRaportAllChanged)));
+                                .Where(s => s.Column6.ToUpper().Contains(selectedRaportAllChanged.ToUpper())));
                         }
                         CountRaportAllVisitors = raportAllVisitors.Count();
                         break;
