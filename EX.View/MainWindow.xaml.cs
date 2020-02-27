@@ -345,6 +345,16 @@ private void Button_Click_3(object sender, RoutedEventArgs e)
 
         }
 
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void Lb_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
         //private void CheckBox_Checked(object sender, RoutedEventArgs e)
         //{
         //    EX.ViewModel.MainVM vm = this.DataContext as EX.ViewModel.MainVM;

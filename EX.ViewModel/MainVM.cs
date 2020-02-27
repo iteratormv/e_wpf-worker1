@@ -2339,7 +2339,7 @@ namespace EX.ViewModel
 
             combo1Collection = new ObservableCollection<string>(new List<string>
             {
-      //          "PAID", "UNPAID", "FOC", "CXLD"
+  //              "PAID", "UNPAID", "FOC", "CXLD"
             });
             combo2Collection = new ObservableCollection<string>(new List<string>
             {
@@ -2355,7 +2355,8 @@ namespace EX.ViewModel
 //студент
                 //"Кардиохирург", "Кардиолог", "Анестезиолог", "Реаниматолог",
                 //"Перфузиолог", "Педиатр", "Аритмолог", "Интервеционист", "Интерн","Cтудент"
-                "DELEGATE", "ORGANIZER", "SPEAKER", "SPEX GUEST, PERSON", "MEDIA PARTNER", "GUEST"
+        //        "DELEGATE", "ORGANIZER", "SPEAKER", "SPEX GUEST, PERSON", "MEDIA PARTNER", "GUEST"
+        "PRESS","DELEGATE25FEB","DELEGATE3DAY","DELEGATE2DAY","DELEGATEFOCUS","WOMENLUNCH","SHIPPERS","MEDIAPARTNER","SPEXGUEST","GUEST","ORGANIZER","SPEAKER"
             });
             combo3Collection = new ObservableCollection<string>(new List<string>
             {
@@ -3643,7 +3644,7 @@ namespace EX.ViewModel
                     IsShowChanger = false;
                     createDesctopVisitor.Column1 = generateVisiorId;
                     createDesctopVisitor.Column12 = DateTime.Now.ToString(); // time collumn
-                    createDesctopVisitor.Column13 = "";
+              //      createDesctopVisitor.Column13 = "";
                     if (dataMode != "Клиент службы баз данных")
                     {
                         var _createVisitor = visitorRepositoryDTO
@@ -3759,6 +3760,7 @@ namespace EX.ViewModel
             });
             printAllVisitors = new RelayCommand(c =>
             {
+
                 var printvisitors = raportAllVisitors;
                 foreach(var item in printvisitors)
                 {
@@ -4278,6 +4280,9 @@ namespace EX.ViewModel
                             GetAllVisitors().
                             Where(s => s.Column1.ToUpper() == searchVisitor.ToUpper()).
                             ToArray();
+
+
+                        //если баркод
                         if (barcodeContainVisitors.Count()>0)
                         {
                             SelectedSearchVisitor = barcodeContainVisitors[0];
@@ -4314,10 +4319,14 @@ namespace EX.ViewModel
                             SearchVisitorForegraund = "Gray";
                             SearchVisitorCollection = new ObservableCollection<VisitorDTO>();
 
-                            PrintAndUpdateUnShow(selectedSearchVisitor);
+       //                     PrintAndUpdateUnShow(selectedSearchVisitor);
 
 
                         }
+
+
+
+
                           
                         IEnumerable<VisitorDTO> _searchVisitors;
                         search = searchVisitor.ToUpper();
@@ -4326,7 +4335,7 @@ namespace EX.ViewModel
                             .Where(v => v.Column9.ToUpper().Contains(search) ||
                                         v.Column8.ToUpper().Contains(search) //||
                                     //    v.Column1.ToUpper().Contains(search.ToUpper())
-                            //                                    ||   v.Column11.ToUpper().Contains(search))
+                                                                ||   v.Column11.ToUpper().Contains(search)
                             ).ToList();
                         SearchVisitorCollection = new ObservableCollection<VisitorDTO>(_searchVisitors);
 
@@ -4339,8 +4348,8 @@ namespace EX.ViewModel
                             var _searchVisitor = SearchVisitorCollection
                             .FirstOrDefault();
                             SearchVisitor = _searchVisitor.Column8.ToUpper() + " " +
-                                            _searchVisitor.Column9.ToUpper() /*+ " (" +
-                                            _searchVisitor.Column11.ToUpper() + ")"*/;
+                                            _searchVisitor.Column9.ToUpper() + " (" +
+                                            _searchVisitor.Column11.ToUpper() + ")";
                             SelectedSearchVisitor = searchVisitorCollection.FirstOrDefault();
                             find = true;
                         }
@@ -4383,6 +4392,10 @@ namespace EX.ViewModel
                         //_barcodeContainVisitors = clientExecutor.GetClient().
                         //           GetAllVisitors().
                         //           Where(s => s.Column1.ToUpper() == searchVisitor.ToUpper()).ToArray();
+
+
+
+                        //если баркод
                         if (_barcodeContainVisitors.Count() > 0)
                         {
                             var barcodeContainVisitor = _barcodeContainVisitors.
@@ -4433,8 +4446,11 @@ namespace EX.ViewModel
                             SearchVisitorForegraund = "Gray";
                             SearchVisitorCollection = new ObservableCollection<VisitorDTO>();
 
-                            PrintAndUpdateUnShow(bc);
+//                            PrintAndUpdateUnShow(bc);
                         }
+
+
+
 
                         search = searchVisitor.ToUpper();
 
@@ -4445,7 +4461,8 @@ namespace EX.ViewModel
                                              .Where(v => v.Column9.ToUpper().Contains(search) ||
                                                v.Column8.ToUpper().Contains(search)// ||
                                            //    v.Column1.ToUpper().Contains(search.ToUpper())
-                                             //                                      || v.Column11.ToUpper().Contains(search));
+                                                                                   || v.Column11.ToUpper().Contains(search)
+                                                                                   //);
                                              ).ToList();
                             var svi = _searchVisitors.Select(s => mapper.Map<VisitorDTO>(s));
                             SearchVisitorCollection = new ObservableCollection<VisitorDTO>();
@@ -4462,8 +4479,8 @@ namespace EX.ViewModel
                                 var _searchVisitor = SearchVisitorCollection
                                 .FirstOrDefault();
                                 SearchVisitor = _searchVisitor.Column8.ToUpper() + " " +
-                                                _searchVisitor.Column9.ToUpper() /*+ " (" +
-                                            _searchVisitor.Column11.ToUpper() + ")"*/;
+                                                _searchVisitor.Column9.ToUpper() + " (" +
+                                            _searchVisitor.Column11.ToUpper() + ")";
                                 SelectedSearchVisitor = searchVisitorCollection.FirstOrDefault();
                             }
                         }
@@ -4496,7 +4513,8 @@ namespace EX.ViewModel
                                                  .GetAllVisitors()
                                                  .Where(v => v.Column9.ToUpper().Contains(search) ||
                                                    v.Column8.ToUpper().Contains(search)
-                                                 //                                      || v.Column11.ToUpper().Contains(search));
+                                                                                       || v.Column11.ToUpper().Contains(search)
+                                                                                       //);
                                                  ).ToList();
                                 var svi = _searchVisitors.Select(s => mapper.Map<VisitorDTO>(s));
                                 SearchVisitorCollection = new ObservableCollection<VisitorDTO>();
@@ -4513,8 +4531,8 @@ namespace EX.ViewModel
                                     var _searchVisitor = SearchVisitorCollection
                                     .FirstOrDefault();
                                     SearchVisitor = _searchVisitor.Column8.ToUpper() + " " +
-                                                    _searchVisitor.Column9.ToUpper() /*+ " (" +
-                                            _searchVisitor.Column11.ToUpper() + ")"*/;
+                                                    _searchVisitor.Column9.ToUpper() + " (" +
+                                            _searchVisitor.Column11.ToUpper() + ")";
                                     SelectedSearchVisitor = searchVisitorCollection.FirstOrDefault();
                                 }
                             }
@@ -4723,7 +4741,7 @@ namespace EX.ViewModel
             paragraphName.LineStackingStrategy = LineStackingStrategy.MaxHeight;
             paragraphName.FontFamily = new System.Windows.Media.FontFamily("Verdana");
             paragraphName.TextAlignment = TextAlignment.Center;
-            paragraphName.FontSize = 18;
+            paragraphName.FontSize = 22;
             paragraphName.FontWeight = FontWeight.FromOpenTypeWeight(400);
             paragraphName.Padding = new Thickness(0);
             paragraphName.Margin = new Thickness(5);
@@ -4731,7 +4749,7 @@ namespace EX.ViewModel
             paragraphCompany.LineStackingStrategy = LineStackingStrategy.MaxHeight;
             paragraphCompany.FontFamily = new System.Windows.Media.FontFamily("Verdana");
             paragraphCompany.TextAlignment = TextAlignment.Center;
-            paragraphCompany.FontSize = 18;
+            paragraphCompany.FontSize = 22;
             paragraphCompany.FontWeight = FontWeight.FromOpenTypeWeight(900);
             paragraphCompany.Padding = new Thickness(5);
             paragraphCompany.Margin = new Thickness(0);
@@ -5116,19 +5134,49 @@ namespace EX.ViewModel
             if (editDesctopVisitor.Column4.ToUpper().Equals("ORGANIZER"))
             {
                 BagePresenter = "";
-                BagePresenterBackGround = "Blue";
+                BagePresenterBackGround = "#000066";
             }
-            else if (editDesctopVisitor.Column4.ToUpper().Equals("SPEX GUEST, PERSON"))
+            else if (editDesctopVisitor.Column4.ToUpper().Equals("WOMENLUNCH"))
             {
                 BagePresenter = "";
-                BagePresenterBackGround = "#FF00BFFF";
+                BagePresenterBackGround = "#0066CC";
+            }
+            else if (editDesctopVisitor.Column4.ToUpper().Equals("WOMEN LUNCH"))
+            {
+                BagePresenter = "";
+                BagePresenterBackGround = "#0066CC";
+            }
+            else if (editDesctopVisitor.Column4.ToUpper().Equals("SHIPPERS"))
+            {
+                BagePresenter = "";
+                BagePresenterBackGround = "#663300";
+            }
+            else if (editDesctopVisitor.Column4.ToUpper().Equals("SPEX GUEST"))
+            {
+                BagePresenter = "";
+                BagePresenterBackGround = "#0066CC";
+            }
+            else if (editDesctopVisitor.Column4.ToUpper().Equals("SPEXGUEST"))
+            {
+                BagePresenter = "";
+                BagePresenterBackGround = "#0066CC";
             }
             else if (editDesctopVisitor.Column4.ToUpper().Equals("GUEST"))
             {
                 BagePresenter = "";
-                BagePresenterBackGround = "Green";
+                BagePresenterBackGround = "#0066CC";
             }
             else if (editDesctopVisitor.Column4.ToUpper().Equals("PRESS PASS"))
+            {
+                BagePresenter = "";
+                BagePresenterBackGround = "Yellow";
+            }
+            else if (editDesctopVisitor.Column4.ToUpper().Equals("PRESSPASS"))
+            {
+                BagePresenter = "";
+                BagePresenterBackGround = "Yellow";
+            }
+            else if (editDesctopVisitor.Column4.ToUpper().Equals("PRESS"))
             {
                 BagePresenter = "";
                 BagePresenterBackGround = "Yellow";
@@ -5136,34 +5184,39 @@ namespace EX.ViewModel
             else if (editDesctopVisitor.Column4.ToUpper().Equals("MEDIA PARTNER"))
             {
                 BagePresenter = "";
-                BagePresenterBackGround = "Blue";
+                BagePresenterBackGround = "#0066CC";
             }
-            else if (editDesctopVisitor.Column4.ToUpper().Equals("MEDIA"))
+            else if (editDesctopVisitor.Column4.ToUpper().Equals("MEDIAPARTNER"))
             {
                 BagePresenter = "";
-                BagePresenterBackGround = "Yellow";
+                BagePresenterBackGround = "#0066CC";
             }
             else if (editDesctopVisitor.Column4.ToUpper().Equals("SPEAKER"))
             {
                 BagePresenter = "";
                 BagePresenterBackGround = "Red";
             }
-            else if (editDesctopVisitor.Column4.Trim().ToUpper().Equals("3 DAY PACKAGE"))
+            else if (editDesctopVisitor.Column4.Trim().ToUpper().Equals("DELEGATE3DAY"))
             {
                 BagePresenter = "";
-                BagePresenterBackGround = "#FF00BFFF";
+                BagePresenterBackGround = "#0066CC";
             }
-            else if (editDesctopVisitor.Column4.Trim().ToUpper().Equals("2 DAY PACKAGE"))
+            else if (editDesctopVisitor.Column4.Trim().ToUpper().Equals("DELEGATE2DAY"))
             {
                 BagePresenter = "";
-                BagePresenterBackGround = "#FF9400D3";
+                BagePresenterBackGround = "#990066";
             }
             else if (editDesctopVisitor.Column4.Trim().ToUpper().Equals("DELEGATE"))
             {
                 BagePresenter = "";
-                BagePresenterBackGround = "#FF9400D3";
+                BagePresenterBackGround = "#FF9900";
             }
-            else if (editDesctopVisitor.Column4.Trim().ToUpper().Equals("FOCUS DAY"))
+            else if (editDesctopVisitor.Column4.Trim().ToUpper().Equals("DELEGATE25FEB"))
+            {
+                BagePresenter = "";
+                BagePresenterBackGround = "#FF9900";
+            }
+            else if (editDesctopVisitor.Column4.Trim().ToUpper().Equals("DELEGATEFOCUS"))
             {
                 BagePresenter = "";
                 BagePresenterBackGround = "Green";
@@ -5919,9 +5972,9 @@ namespace EX.ViewModel
             //    foreach (var v in _visitors) { Visitors.Add(mapper.Map<VisitorDTO>(v)); }
             //    UpdateAllVisitorFields(visitors, _editVisitor.Id);
             //}
-            //CanExecuteCreateVisitor = true;
+            //CanExecuteCreateVisitor = true;BAGE
             //CanExecuteEditVisitor = true;
-            //CanExecuteSaveEditVisitor = false;
+            //CanExecuteSaveEditVisitor = falseBAGE
             //EditDesctopVisitor = new VisitorDTO();
             //BagePresenter = "Цвет бейджа";
             //BagePresenterBackGround = "#FFE5E5E5";
@@ -5951,6 +6004,37 @@ namespace EX.ViewModel
             CanExecuteCreateVisitor = true;
             CanExecuteEditVisitor = true;
             CanExecuteSaveEditVisitor = false;
+
+
+            PaymentStatusPresenter = "Статус Оплаты";
+            PaymentStatusFontsize = 12;
+            PaymentStatusForegraund = "Gray";
+
+
+            BagePresenter = "Цвет бейджа";
+            BagePresenterBackGround = "#FFE5E5E5";
+
+            ////FocusName = "lb";
+
+            ////isListFocuce = false;
+
+            ////IsShowChanger = false;
+
+            bagePresenter = "Цвет бейджа";
+            bagePresenterBackGround = "#FFE5E5E5";
+            paymentStatusPresenter = "Статус Оплаты";
+            paymentStatusFontsize = 12;
+            paymentStatusForegraund = "Gray";
+            searchVisitor = "Введите информацию для поиска";
+            searchVisitorFontsize = 25;
+            searchVisitorBackGround = "White";
+            searchVisitorForegraund = "Gray";
+
+
+
+
+
+
         } 
         private void UpdateVisitoAfterPrint(VisitorDTO editDesctopVisitor)
         {

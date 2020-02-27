@@ -212,7 +212,11 @@
                                         Mode=TwoWay}"
 
                                         Foreground="Black"   
-                                        FontSize="15" Margin="0,0,0,1" KeyDown="lb_KeyDown" Grid.ColumnSpan="2" 
+                                        FontSize="15"
+                                        Margin="0,0,0,1"
+                                        KeyDown="lb_KeyDown"
+                                        Grid.ColumnSpan="2" 
+                                        SelectionChanged="Lb_SelectionChanged" 
                                         
                                         
                                                                                                
@@ -1254,7 +1258,7 @@
                                 Visibility="{
                                 Binding RowChedForm[13],
                                 Converter={
-                                StaticResource boolToVisibilityConverter}}"/>
+                                StaticResource boolToVisibilityConverter}}" TextChanged="TextBox_TextChanged"/>
 
 
                         <StackPanel Orientation="Horizontal">
